@@ -100,7 +100,7 @@ export default function Home() {
                 </div>
                 
                 <a 
-                  href={`#${project.id}`} 
+                  href={`/projects/${project.slug}`} 
                   className="project-hover block text-4xl md:text-6xl lg:text-8xl leading-none text-right text-black"
                 >
                   {formatProjectTitle(project.title)}

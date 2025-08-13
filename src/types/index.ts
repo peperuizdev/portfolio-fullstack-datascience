@@ -5,6 +5,11 @@ export interface Project {
   description: string
   longDescription?: string
   image: string
+  images: {          
+    desktop: string
+    tablet: string
+    mobile: string[]
+  }
   technologies: string[]
   liveUrl?: string
   githubUrl?: string
@@ -24,6 +29,7 @@ export interface Skill {
 // Tipo para experiencia laboral
 export interface Experience {
   id: string
+  slug: string 
   title: string
   company: string
   location: string
