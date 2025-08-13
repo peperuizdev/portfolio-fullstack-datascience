@@ -3,7 +3,7 @@ import { Project } from '@/types'
 export const projects: Project[] = [
   {
     id: 'predictor-academico',
-    title: 'Predictor Académico',
+    title: 'PREDICTOR ACADEMICO',
     description: 'Sistema de predicción del rendimiento académico utilizando algoritmos de Machine Learning con XGBoost para clasificación multiclase.',
     longDescription: 'Aplicación web completa que predice el rendimiento académico de estudiantes. Implementa un modelo XGBoost entrenado con datos históricos y ofrece predicciones en tiempo real a través de una API REST desarrollada con FastAPI.',
     image: '/images/projects/predictor-academico.jpg',
@@ -16,7 +16,7 @@ export const projects: Project[] = [
   },
   {
     id: 'orange-digital-center',
-    title: 'Orange Digital Center Manager',
+    title: 'ODC MANAGER',
     description: 'Aplicación web para centralizar y optimizar la gestión de inscripciones con panel administrativo y estadísticas en tiempo real.',
     longDescription: 'Sistema completo de gestión para Orange Digital Center que incluye panel administrativo con estadísticas en tiempo real, generación de informes descargables y gestión de base de datos relacional escalable.',
     image: '/images/projects/orange-manager.jpg',
@@ -28,7 +28,7 @@ export const projects: Project[] = [
   },
   {
     id: 'critical-lens',
-    title: 'The Critical Lens',
+    title: 'THE CRITICAL LENS',
     description: 'Aplicación web para combatir la desinformación mediante análisis automatizado de credibilidad de noticias.',
     longDescription: 'Plataforma desarrollada en Django que implementa scraping automatizado para extraer fact-checks utilizando Selenium y BeautifulSoup. Incluye sistema de evaluación de contenidos y arquitectura modular escalable.',
     image: '/images/projects/critical-lens.jpg',

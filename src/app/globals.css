@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 :root {
   --background: #ffffff;
@@ -23,4 +24,36 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.project-hover {
+  transition: all 0.6s ease;
+  -webkit-text-stroke: 0px transparent;
+  color: black;
+  font-family: 'Arial Black', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.project-hover:hover {
+  -webkit-text-stroke: 1px black;
+  color: transparent;
+}
+
+/* Hover unificado para el nombre */
+.name-hover {
+  transition: all 0.6s ease;
+}
+
+.name-hover:hover .name-text {
+  -webkit-text-stroke: 1px black;
+  color: transparent;
+}
+
+.name-text {
+  font-family: 'Arial Black', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  transition: all 0.6s ease;
+  -webkit-text-stroke: 0px transparent;
 }

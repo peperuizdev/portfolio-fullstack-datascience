@@ -1,103 +1,115 @@
-import Image from 'next/image'
+import { SITE_CONFIG } from '@/lib/constants'
+import { projects } from '@/data/projects'
 
 export default function Home() {
-  return (
-    <div className="grid min-h-screen grid-rows-[20px_1fr_20px] items-center justify-items-center gap-16 p-8 pb-20 font-sans sm:p-20">
-      <main className="row-start-2 flex flex-col items-center gap-[32px] sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-center font-mono text-sm/6 sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{' '}
-            <code className="rounded bg-black/[.05] px-1 py-0.5 font-mono font-semibold dark:bg-white/[.06]">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const formatProjectTitle = (title: string) => {
+    const words = title.split(' ')
+    
+    if (words.length === 1) {
+      return [
+        <span key="first" className="block">{words[0]}</span>,
+        <span key="second" className="block opacity-0">.</span>
+      ]
+    } else if (words.length === 2) {
+      return [
+        <span key="first" className="block">{words[0]}</span>,
+        <span key="second" className="block">{words[1]}</span>
+      ]
+    } else {
+      const mid = Math.ceil(words.length / 2)
+      const firstLine = words.slice(0, mid).join(' ')
+      const secondLine = words.slice(mid).join(' ')
+      return [
+        <span key="first" className="block">{firstLine}</span>,
+        <span key="second" className="block">{secondLine}</span>
+      ]
+    }
+  }
 
-        <div className="flex flex-col items-center gap-4 sm:flex-row">
-          <a
-            className="bg-foreground text-background flex h-10 items-center justify-center gap-2 rounded-full border border-solid border-transparent px-4 text-sm font-medium transition-colors hover:bg-[#383838] sm:h-12 sm:w-auto sm:px-5 sm:text-base dark:hover:bg-[#ccc]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  const formatDate = (dateString: string) => {
+    const [year, month] = dateString.split('-')
+    const months = {
+      '01': 'ENE', '02': 'FEB', '03': 'MAR', '04': 'ABR',
+      '05': 'MAY', '06': 'JUN', '07': 'JUL', '08': 'AGO',
+      '09': 'SEP', '10': 'OCT', '11': 'NOV', '12': 'DIC'
+    }
+    return `${months[month]} ${year}`
+  }
+
+  return (
+    <div className="min-h-screen bg-white text-black relative overflow-x-hidden">
+      
+      {/* Nombre - responsive positioning */}
+      <div className="fixed top-4 left-4 md:top-8 md:left-8 lg:top-12 lg:left-12 z-20">
+        <a href="/" className="name-hover block">
+          <div className="space-y-0">
+            <h1 className="name-text text-2xl md:text-4xl lg:text-6xl font-black leading-[0.9] uppercase">
+              {SITE_CONFIG.name.split(' ')[0]}
+            </h1>
+            <h1 className="name-text text-2xl md:text-4xl lg:text-6xl font-black leading-[0.9] uppercase">
+              {SITE_CONFIG.name.split(' ')[1]}
+            </h1>
+            <p className="text-xs md:text-lg lg:text-xl font-medium text-primary-600 mt-2 md:mt-4 lg:mt-6">
+              {SITE_CONFIG.title}
+            </p>
+          </div>
+        </a>
+      </div>
+      
+      {/* Contacto - responsive positioning */}
+      <div className="fixed bottom-4 left-4 md:bottom-8 md:left-8 lg:bottom-12 lg:left-12 z-20">
+        <div className="space-y-2 md:space-y-3">
+          <h3 className="text-xs md:text-sm uppercase tracking-wider text-primary-500 font-semibold mb-2 md:mb-4">
+            Contacto
+          </h3>
+          <a 
+            href={SITE_CONFIG.links.github} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="block text-sm md:text-base font-medium text-primary-700 hover:text-black transition-colors duration-300"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
+            GitHub
           </a>
-          <a
-            className="flex h-10 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-4 text-sm font-medium transition-colors hover:border-transparent hover:bg-[#f2f2f2] sm:h-12 sm:w-auto sm:px-5 sm:text-base md:w-[158px] dark:border-white/[.145] dark:hover:bg-[#1a1a1a]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+          <a 
+            href={SITE_CONFIG.links.linkedin} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="block text-sm md:text-base font-medium text-primary-700 hover:text-black transition-colors duration-300"
           >
-            Read our docs
+            LinkedIn
+          </a>
+          <a 
+            href={SITE_CONFIG.links.email} 
+            className="block text-sm md:text-base font-medium text-primary-700 hover:text-black transition-colors duration-300"
+          >
+            Email
           </a>
         </div>
+      </div>
+      
+      {/* Proyectos - responsive layout */}
+      <main className="w-full min-h-screen">
+        <div className="ml-auto w-full md:w-4/5 lg:w-3/4 min-h-screen pt-32 md:pt-24 lg:pt-12 pb-32 pr-4 md:pr-8 lg:pr-12">
+          <div className="space-y-16 md:space-y-20 lg:space-y-24">
+            {projects.map((project) => (
+              <div key={project.id} className="space-y-2 md:space-y-4">
+                <div className="text-right">
+                  <span className="text-xs md:text-sm text-primary-400 font-medium tracking-wider">
+                    {formatDate(project.completedAt)}
+                  </span>
+                </div>
+                
+                <a 
+                  href={`#${project.id}`} 
+                  className="project-hover block text-4xl md:text-6xl lg:text-8xl leading-none text-right text-black"
+                >
+                  {formatProjectTitle(project.title)}
+                </a>
+              </div>
+            ))}
+          </div>
+        </div>
       </main>
-      <footer className="row-start-3 flex flex-wrap items-center justify-center gap-[24px]">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
   )
 }
