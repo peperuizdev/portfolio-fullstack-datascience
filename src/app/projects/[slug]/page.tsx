@@ -30,7 +30,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
 
   return (
     <div className="min-h-screen bg-white text-black relative">
-      {/* Header */}
+      {/* Header transparente */}
       <header className="fixed top-0 left-0 right-0 z-30">
         <nav className="flex justify-between items-start p-4 md:p-8 lg:p-12">
           <a href="/" className="name-hover block">
@@ -78,154 +78,138 @@ export default function ProjectPage({ params }: ProjectPageProps) {
         </div>
       </section>
 
-      {/* Layout */}
-      <div className="relative">
-        
-        {/* Descripción + Info flotante */}
-        <section className="relative py-20 md:py-32">
-          <div className="max-w-7xl mx-auto px-4 md:px-8">
-            <div className="grid lg:grid-cols-12 gap-16 lg:gap-24 items-start">
+      {/* Descripción + Info */}
+      <section className="py-16 md:py-20">
+        <div className="max-w-4xl mx-auto px-8 md:px-12">
+          <div className="grid md:grid-cols-3 gap-12 md:gap-16">
+            
+            <div className="md:col-span-2">
+              <p className="text-xl md:text-2xl leading-relaxed font-light text-primary-700">
+                {project.longDescription || project.description}
+              </p>
               
-              {/* Descripción principal */}
-              <div className="lg:col-span-8">
-                <p className="text-2xl md:text-3xl lg:text-4xl leading-relaxed font-light text-black">
-                  {project.longDescription || project.description}
-                </p>
+              <div className="flex gap-8 mt-8">
+                {project.liveUrl && (
+                  <a 
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-base font-medium text-black hover:opacity-60 transition-opacity"
+                  >
+                    Ver proyecto ↗
+                  </a>
+                )}
                 
-                {/* Enlaces integrados en el texto */}
-                <div className="flex gap-8 mt-12">
-                  {project.liveUrl && (
-                    <a 
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-lg font-medium text-black hover:opacity-60 transition-opacity"
-                    >
-                      Ver proyecto ↗
-                    </a>
-                  )}
-                  
-                  {project.githubUrl && (
-                    <a 
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-lg font-medium text-primary-600 hover:text-black transition-colors"
-                    >
-                      GitHub ↗
-                    </a>
-                  )}
-                </div>
-              </div>
-              
-              {/* Info lateral  */}
-              <div className="lg:col-span-4">
-                <div className="sticky top-32 space-y-8">
-                  <div>
-                    <h3 className="text-xs uppercase tracking-wider text-primary-400 font-semibold mb-3">
-                      Categoría
-                    </h3>
-                    <p className="text-base font-medium capitalize">
-                      {project.category}
-                    </p>
-                  </div>
-                  
-                  <div>
-                    <h3 className="text-xs uppercase tracking-wider text-primary-400 font-semibold mb-3">
-                      Fecha
-                    </h3>
-                    <p className="text-base font-medium">
-                      {new Date(project.completedAt + '-01').toLocaleDateString('es-ES', { 
-                        year: 'numeric', 
-                        month: 'long' 
-                      })}
-                    </p>
-                  </div>
-                </div>
+                {project.githubUrl && (
+                  <a 
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-base font-medium text-primary-600 hover:text-black transition-colors"
+                  >
+                    GitHub ↗
+                  </a>
+                )}
               </div>
             </div>
-          </div>
-        </section>
-
-        {/* Desktop Image - Full Width */}
-        <section className="w-full py-16 md:py-24">
-          <img 
-            src={project.images.desktop} 
-            alt={`${project.title} - Vista desktop`}
-            className="w-full object-contain"
-          />
-        </section>
-
-        {/* Tablet + Mobile  */}
-        <section className="py-16 md:py-24">
-          <div className="max-w-7xl mx-auto px-4 md:px-8">
-            <div className="grid lg:grid-cols-12 gap-16 lg:gap-24 items-center">
-              
-              {/* Tablet - lado izquierdo */}
-              <div className="lg:col-span-5">
-                <img 
-                  src={project.images.tablet} 
-                  alt={`${project.title} - Vista tablet`}
-                  className="w-full object-contain"
-                />
+            
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-xs uppercase tracking-wider text-primary-400 font-semibold mb-2">
+                  Categoría
+                </h3>
+                <p className="text-sm font-medium capitalize">
+                  {project.category}
+                </p>
               </div>
               
-              {/* Mobile stack - lado derecho */}
-              <div className="lg:col-span-7">
-                <div className="grid grid-cols-3 gap-6 md:gap-8">
-                  {project.images.mobile.map((mobileImage, index) => (
-                    <img 
-                      key={index}
-                      src={mobileImage} 
-                      alt={`${project.title} - Vista móvil ${index + 1}`}
-                      className="w-full object-contain"
-                    />
+              <div>
+                <h3 className="text-xs uppercase tracking-wider text-primary-400 font-semibold mb-2">
+                  Fecha
+                </h3>
+                <p className="text-sm font-medium">
+                  {new Date(project.completedAt + '-01').toLocaleDateString('es-ES', { 
+                    year: 'numeric', 
+                    month: 'long' 
+                  })}
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-xs uppercase tracking-wider text-primary-400 font-semibold mb-2">
+                  Stack
+                </h3>
+                <div className="space-y-1">
+                  {project.technologies.map((tech) => (
+                    <p key={tech} className="text-sm text-primary-700">
+                      {tech}
+                    </p>
                   ))}
                 </div>
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Tecnologías */}
-        <section className="py-16 md:py-24 bg-primary-25">
-          <div className="max-w-7xl mx-auto px-4 md:px-8">
-            <h2 className="text-lg uppercase tracking-wider text-primary-500 font-semibold mb-12">
-              Stack tecnológico
-            </h2>
+      {/* Bloque unificado de imágenes */}
+      <section className="py-12 md:py-16">
+        <div className="max-w-6xl mx-auto px-8 md:px-12">
+          <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
             
-            <div className="flex flex-wrap gap-3 md:gap-4">
-              {project.technologies.map((tech) => (
-                <span 
-                  key={tech}
-                  className="px-4 py-2 text-sm font-medium text-black border border-primary-200 rounded-full hover:bg-black hover:text-white transition-colors"
-                >
-                  {tech}
-                </span>
-              ))}
+            {/* Desktop - Fondo blanco */}
+            <div className="bg-white p-8 md:p-12 lg:p-16">
+              <img 
+                src={project.images.desktop} 
+                alt={`${project.title} - Vista desktop`}
+                className="w-full object-contain rounded-lg"
+              />
+            </div>
+
+            {/* Tablet */}
+            <div className="bg-gray-50 p-8 md:p-12 lg:p-16 flex justify-center">
+              <img 
+                src={project.images.tablet} 
+                alt={`${project.title} - Vista tablet`}
+                className="w-full max-w-md object-contain"
+              />
+            </div>
+
+            {/* Mobile */}
+            <div className="bg-gray-100 p-8 md:p-12 lg:p-16">
+              <div className="grid grid-cols-3 gap-6 md:gap-8">
+                {project.images.mobile.map((mobileImage, index) => (
+                  <img 
+                    key={index}
+                    src={mobileImage} 
+                    alt={`${project.title} - Vista móvil ${index + 1}`}
+                    className="w-full object-contain"
+                  />
+                ))}
+              </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Siguiente proyecto  */}
-        <section className="py-20 md:py-24">
-          <div className="max-w-7xl mx-auto px-4 md:px-8 text-right">
-            <p className="text-sm uppercase tracking-wider text-primary-500 font-semibold mb-6">
-              next project
-            </p>
-            <a 
-              href={`/projects/${nextProject.slug}`}
-              className="next-project-hover block text-4xl md:text-6xl lg:text-7xl font-black leading-[0.8]"
-            >
-              {nextProject.title.split(' ').map((word, index) => (
-                <span key={index} className="block">
-                  {word}
-                </span>
-              ))}
-            </a>
-          </div>
-        </section>
-      </div>
+      {/* Siguiente proyecto */}
+      <section className="py-20 md:py-24">
+        <div className="max-w-4xl mx-auto px-8 md:px-12 text-right">
+          <p className="text-sm uppercase tracking-wider text-primary-500 font-semibold mb-6">
+            next project
+          </p>
+          <a 
+            href={`/projects/${nextProject.slug}`}
+            className="next-project-hover block text-4xl md:text-6xl lg:text-7xl font-black leading-[0.8]"
+          >
+            {nextProject.title.split(' ').map((word, index) => (
+              <span key={index} className="block">
+                {word}
+              </span>
+            ))}
+          </a>
+        </div>
+      </section>
     </div>
   )
 }
