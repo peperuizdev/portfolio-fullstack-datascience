@@ -1,6 +1,4 @@
-import { SITE_CONFIG } from '@/lib/constants'
 import { projects } from '@/data/projects'
-import Navbar from '@/components/Navbar'
 
 export default function Home() {
   const formatProjectTitle = (title: string) => {
@@ -60,9 +58,6 @@ export default function Home() {
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-white text-black">
-      {/* Navbar unificado */}
-      <Navbar />
-
       {/* Proyectos */}
       <main className="min-h-screen w-full">
         <div className="ml-auto min-h-screen w-full pt-32 pr-4 pb-32 md:w-4/5 md:pt-24 md:pr-8 lg:w-3/4 lg:pt-12 lg:pr-12">

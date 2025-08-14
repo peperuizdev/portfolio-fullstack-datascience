@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import { ArrowLeft, ExternalLink, Github } from 'lucide-react'
+import { ExternalLink, Github } from 'lucide-react'
 import { projects } from '@/data/projects'
 import { SITE_CONFIG } from '@/lib/constants'
 import Navbar from '@/components/Navbar'
@@ -46,17 +46,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     <div className="relative min-h-screen bg-white text-black">
       {/* Navbar unificado */}
       <Navbar />
-
-      {/* Botón volver */}
-      <div className="fixed top-4 right-4 z-20 md:top-8 md:right-8 lg:top-12 lg:right-12">
-        <a
-          href="/"
-          className="p-2 text-black transition-opacity hover:opacity-60"
-          aria-label="Volver al inicio"
-        >
-          <ArrowLeft className="h-6 w-6 md:h-8 md:w-8" />
-        </a>
-      </div>
 
       {/* Hero Section */}
       <section className="relative mt-40 h-[50vh] w-full md:mt-44 md:h-[55vh] lg:mt-48 lg:h-[60vh]">

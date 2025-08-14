@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
-import { Menu, X, ArrowLeft } from 'lucide-react'
+import Link from 'next/link'
 import { SITE_CONFIG } from '@/lib/constants'
 
 export default function Navbar() {
@@ -11,6 +11,8 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
 
   const isProjectPage = pathname.startsWith('/projects/')
+  const isAboutPage = pathname === '/about'
+  const isIndexPage = pathname === '/'
 
   // Efecto scroll solo en páginas de proyecto
   useEffect(() => {
@@ -25,11 +27,118 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [isProjectPage])
 
+  // Cerrar menú al hacer clic fuera
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement
+      if (isMenuOpen && !target.closest('.menu-container')) {
+        setIsMenuOpen(false)
+      }
+    }
+
+    if (isMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [isMenuOpen])
+
+  const isContactPage = pathname === '/contact'
+
+  // Navegación contextual según la página
+  const getDesktopNavigation = () => {
+    if (isIndexPage) {
+      return (
+        <div className="hidden space-x-8 lg:flex">
+          <Link 
+            href="/about" 
+            className="text-sm font-medium text-black transition-opacity hover:opacity-60"
+          >
+            About
+          </Link>
+          <Link 
+            href="/contact"
+            className="text-sm font-medium text-black transition-opacity hover:opacity-60"
+          >
+            Contact
+          </Link>
+        </div>
+      )
+    }
+
+    if (isProjectPage) {
+      return (
+        <div className="hidden space-x-8 lg:flex">
+          <Link 
+            href="/" 
+            className="text-sm font-medium text-black transition-opacity hover:opacity-60"
+          >
+            ← Home
+          </Link>
+          <Link 
+            href="/about" 
+            className="text-sm font-medium text-black transition-opacity hover:opacity-60"
+          >
+            About
+          </Link>
+          <Link 
+            href="/contact"
+            className="text-sm font-medium text-black transition-opacity hover:opacity-60"
+          >
+            Contact
+          </Link>
+        </div>
+      )
+    }
+
+    if (isAboutPage) {
+      return (
+        <div className="hidden space-x-8 lg:flex">
+          <Link 
+            href="/" 
+            className="text-sm font-medium text-black transition-opacity hover:opacity-60"
+          >
+            Projects
+          </Link>
+          <Link 
+            href="/contact"
+            className="text-sm font-medium text-black transition-opacity hover:opacity-60"
+          >
+            Contact
+          </Link>
+        </div>
+      )
+    }
+
+    if (isContactPage) {
+      return (
+        <div className="hidden space-x-8 lg:flex">
+          <Link 
+            href="/" 
+            className="text-sm font-medium text-black transition-opacity hover:opacity-60"
+          >
+            Projects
+          </Link>
+          <Link 
+            href="/about" 
+            className="text-sm font-medium text-black transition-opacity hover:opacity-60"
+          >
+            About
+          </Link>
+        </div>
+      )
+    }
+
+    return null
+  }
+
   return (
     <>
       {/* Logo */}
       <div className="fixed top-4 left-4 z-20 md:top-8 md:left-8 lg:top-12 lg:left-12">
-        <a href="/" className="name-hover group block">
+        <Link href="/" className="name-hover group block">
           <div className="space-y-0">
             <h1
               className={`name-text leading-[0.9] font-black uppercase transition-all duration-500 ${
@@ -68,125 +177,131 @@ export default function Navbar() {
               {SITE_CONFIG.name.split(' ')[1]}
             </h1>
             {/* Solo mostrar subtitle en index */}
-            {!isProjectPage && (
+            {isIndexPage && (
               <p className="text-primary-600 mt-2 text-xs font-medium md:mt-4 md:text-lg lg:mt-6 lg:text-xl">
                 {SITE_CONFIG.title}
               </p>
             )}
           </div>
-        </a>
+        </Link>
       </div>
 
-      {/* Contacto desktop */}
-      <div className="fixed bottom-4 left-4 z-20 hidden md:bottom-8 md:left-8 md:block lg:bottom-12 lg:left-12">
-        <div className="space-y-2 md:space-y-3">
-          <h3 className="text-primary-500 mb-2 text-xs font-semibold tracking-wider uppercase md:mb-4 md:text-sm">
-            Contacto
-          </h3>
-          <a
-            href={SITE_CONFIG.links.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-primary-700 block text-sm font-medium transition-colors duration-300 hover:text-black md:text-base"
+      {/* Navegación superior derecha */}
+      <div className="fixed top-4 right-4 z-50 md:top-8 md:right-8 lg:top-12 lg:right-12">
+        {/* Desktop: navegación contextual */}
+        {getDesktopNavigation()}
+
+        {/* Mobile: menú hamburguesa */}
+        <div className="menu-container lg:hidden">
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="group relative h-10 w-10"
+            aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
           >
-            GitHub
-          </a>
-          <a
-            href={SITE_CONFIG.links.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-primary-700 block text-sm font-medium transition-colors duration-300 hover:text-black md:text-base"
-          >
-            LinkedIn
-          </a>
-          <a
-            href={SITE_CONFIG.links.email}
-            className="text-primary-700 block text-sm font-medium transition-colors duration-300 hover:text-black md:text-base"
-          >
-            Email
-          </a>
+            <span className="sr-only">Menú</span>
+            <div className="absolute left-1/2 top-1/2 block w-5 -translate-x-1/2 -translate-y-1/2 transform">
+              <span
+                className={`absolute block h-0.5 w-5 transform bg-black transition duration-300 ease-in-out ${
+                  isMenuOpen ? 'rotate-45' : '-translate-y-1.5'
+                }`}
+              ></span>
+              <span
+                className={`absolute block h-0.5 w-5 transform bg-black transition duration-300 ease-in-out ${
+                  isMenuOpen ? 'opacity-0' : ''
+                }`}
+              ></span>
+              <span
+                className={`absolute block h-0.5 w-5 transform bg-black transition duration-300 ease-in-out ${
+                  isMenuOpen ? '-rotate-45' : 'translate-y-1.5'
+                }`}
+              ></span>
+            </div>
+          </button>
         </div>
       </div>
 
-      {/* Menú móvil hamburguesa - SOLO en proyectos - reemplaza flecha */}
-      {isProjectPage && (
-        <div className="fixed top-4 right-4 z-30 md:hidden">
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="rounded-full bg-black p-3 text-white shadow-lg transition-colors hover:bg-gray-800"
-            aria-label="Abrir menú"
-          >
-            {isMenuOpen ? (
-              <X className="h-6 w-6" />
-            ) : (
-              <Menu className="h-6 w-6" />
-            )}
-          </button>
+      {/* Menú fullscreen mobile */}
+      {isMenuOpen && (
+        <div 
+          className="fixed inset-0 z-40 lg:hidden"
+          style={{ backgroundColor: 'rgba(248, 250, 252, 0.9)' }}
+        >
+          <div className="flex h-full w-full items-center justify-center">
+            <div className="w-full max-w-md px-8">
+              {/* Información personal */}
+              <div className="mb-16 text-center">
+                <h2 className="name-text mb-6 text-3xl font-black uppercase leading-[0.9]">
+                  {SITE_CONFIG.name.split(' ')[0]}
+                  <br />
+                  {SITE_CONFIG.name.split(' ')[1]}
+                </h2>
+                <p className="mb-3 text-sm font-medium text-gray-600">
+                  {SITE_CONFIG.title}
+                </p>
+                <p className="text-sm text-gray-500">
+                  {SITE_CONFIG.location}
+                </p>
+              </div>
 
-          {/* Menú desplegable vertical */}
-          {isMenuOpen && (
-            <div className="absolute top-16 right-0 min-w-64 rounded-lg border border-gray-200 bg-white p-8 shadow-xl">
-              <div className="space-y-6">
-                <div className="flex items-center space-x-4">
-                  <span className="font-mono text-xs text-gray-400">01</span>
-                  <a
+              {/* Enlaces de navegación */}
+              <div className="space-y-8">
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-sm text-gray-400">01</span>
+                  <Link
                     href="/"
-                    className="text-sm font-medium text-gray-800 transition-colors hover:text-black"
+                    className="text-lg font-medium text-black transition-opacity hover:opacity-60"
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    inicio
-                  </a>
+                    Home
+                  </Link>
                 </div>
-                <div className="flex items-center space-x-4">
-                  <span className="font-mono text-xs text-gray-400">02</span>
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-sm text-gray-400">02</span>
+                  <Link
+                    href="/about"
+                    className="text-lg font-medium text-black transition-opacity hover:opacity-60"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    About
+                  </Link>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-sm text-gray-400">03</span>
+                  <Link
+                    href="/contact"
+                    className="text-lg font-medium text-black transition-opacity hover:opacity-60"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Contact
+                  </Link>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-sm text-gray-400">04</span>
                   <a
                     href={SITE_CONFIG.links.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm font-medium text-gray-800 transition-colors hover:text-black"
+                    className="text-lg font-medium text-black transition-opacity hover:opacity-60"
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    github
+                    GitHub
                   </a>
                 </div>
-                <div className="flex items-center space-x-4">
-                  <span className="font-mono text-xs text-gray-400">03</span>
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-sm text-gray-400">05</span>
                   <a
                     href={SITE_CONFIG.links.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm font-medium text-gray-800 transition-colors hover:text-black"
+                    className="text-lg font-medium text-black transition-opacity hover:opacity-60"
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    linkedin
-                  </a>
-                </div>
-                <div className="flex items-center space-x-4">
-                  <span className="font-mono text-xs text-gray-400">04</span>
-                  <a
-                    href={SITE_CONFIG.links.email}
-                    className="text-sm font-medium text-gray-800 transition-colors hover:text-black"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    email
+                    LinkedIn
                   </a>
                 </div>
               </div>
             </div>
-          )}
-        </div>
-      )}
-
-      {/* Flecha volver - SOLO desktop en proyectos */}
-      {isProjectPage && (
-        <div className="fixed top-4 right-4 z-20 hidden md:top-8 md:right-8 md:block lg:top-12 lg:right-12">
-          <a
-            href="/"
-            className="p-2 text-black transition-opacity hover:opacity-60"
-            aria-label="Volver al inicio"
-          >
-            <ArrowLeft className="h-6 w-6 md:h-8 md:w-8" />
-          </a>
+          </div>
         </div>
       )}
     </>
