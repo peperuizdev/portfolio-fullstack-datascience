@@ -52,18 +52,20 @@ export const skills: Skill[] = [
   { name: 'Figma', category: 'tools', level: 'intermediate' },
   { name: 'Vitest', category: 'tools', level: 'advanced' },
   { name: 'Jest', category: 'tools', level: 'advanced' },
-  { name: 'Pytest', category: 'tools', level: 'advanced' }
+  { name: 'Pytest', category: 'tools', level: 'advanced' },
 ]
 
 // Función helper para obtener skills por categoría
 export const getSkillsByCategory = (category: Skill['category']) => {
-  return skills.filter(skill => skill.category === category)
+  return skills.filter((skill) => skill.category === category)
 }
 
 // Función helper para obtener skills destacadas
 export const getFeaturedSkills = () => {
-  return skills.filter(skill => 
-    skill.level === 'expert' || 
-    (skill.level === 'advanced' && ['React', 'Python', 'Django', 'Machine Learning'].includes(skill.name))
+  return skills.filter(
+    (skill) =>
+      skill.level === 'expert' ||
+      (skill.level === 'advanced' &&
+        ['React', 'Python', 'Django', 'Machine Learning'].includes(skill.name))
   )
 }

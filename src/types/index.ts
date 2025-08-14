@@ -1,11 +1,15 @@
 // Tipo para proyectos del portfolio
 export interface Project {
   id: string
+  slug: string
   title: string
   description: string
   longDescription?: string
+  problem?: string
+  solution?: string
+  impact?: string
   image: string
-  images: {          
+  images: {
     desktop: string
     tablet: string
     mobile: string[]
@@ -15,7 +19,9 @@ export interface Project {
   githubUrl?: string
   category: 'fullstack' | 'ai' | 'frontend' | 'backend'
   featured: boolean
-  completedAt: string // YYYY-MM
+  completedAt: string
+  highlights?: string[]
+  keyFeatures?: string[]
 }
 
 // Tipo para habilidades técnicas
@@ -23,18 +29,18 @@ export interface Skill {
   name: string
   category: 'frontend' | 'backend' | 'ai' | 'database' | 'tools'
   level: 'beginner' | 'intermediate' | 'advanced' | 'expert'
-  icon?: string // Para mostrar iconos personalizados
+  icon?: string
 }
 
 // Tipo para experiencia laboral
 export interface Experience {
   id: string
-  slug: string 
+  slug: string
   title: string
   company: string
   location: string
-  startDate: string // YYYY-MM
-  endDate?: string // YYYY-MM o 'present'
+  startDate: string
+  endDate?: string
   description: string[]
   technologies?: string[]
 }

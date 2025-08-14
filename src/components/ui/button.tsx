@@ -11,15 +11,15 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <button
         className={cn(
-          // Base styles 
+          // Base styles
           'text-sm font-medium transition-colors duration-200 focus:outline-none',
-          
+
           // Variants
           {
-            'text-black hover:text-primary-600': variant === 'default',
+            'hover:text-primary-600 text-black': variant === 'default',
             'text-primary-500 hover:text-black': variant === 'ghost',
           },
-          
+
           className
         )}
         ref={ref}

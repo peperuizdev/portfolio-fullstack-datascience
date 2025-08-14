@@ -1,74 +1,75 @@
 import { notFound } from 'next/navigation'
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, ExternalLink, Github } from 'lucide-react'
 import { projects } from '@/data/projects'
 import { SITE_CONFIG } from '@/lib/constants'
+import Navbar from '@/components/Navbar'
 
 interface ProjectPageProps {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
 function getProjectBySlug(slug: string) {
-  return projects.find(project => project.slug === slug)
+  return projects.find((project) => project.slug === slug)
 }
 
 function getNextProject(currentSlug: string) {
-  const currentIndex = projects.findIndex(project => project.slug === currentSlug)
+  const currentIndex = projects.findIndex(
+    (project) => project.slug === currentSlug
+  )
   const nextIndex = (currentIndex + 1) % projects.length
   return projects[nextIndex]
 }
 
-export default function ProjectPage({ params }: ProjectPageProps) {
-  const project = getProjectBySlug(params.slug)
-  
+export default async function ProjectPage({ params }: ProjectPageProps) {
+  const { slug } = await params
+  const project = getProjectBySlug(slug)
+
   if (!project) {
     notFound()
   }
 
-  const nextProject = getNextProject(params.slug)
+  const nextProject = getNextProject(slug)
+
+  const getCategoryLabel = (category: string) => {
+    const categories = {
+      ai: 'Inteligencia Artificial',
+      fullstack: 'Full Stack',
+      frontend: 'Frontend',
+      backend: 'Backend',
+    }
+    return categories[category as keyof typeof categories] || category
+  }
 
   return (
-    <div className="min-h-screen bg-white text-black relative">
-      {/* Header transparente */}
-      <header className="fixed top-0 left-0 right-0 z-30">
-        <nav className="flex justify-between items-start p-4 md:p-8 lg:p-12">
-          <a href="/" className="name-hover block">
-            <div className="space-y-0">
-              <h1 className="name-text text-xl md:text-3xl lg:text-4xl font-black leading-[0.9] uppercase">
-                {SITE_CONFIG.name.split(' ')[0]}
-              </h1>
-              <h1 className="name-text text-xl md:text-3xl lg:text-4xl font-black leading-[0.9] uppercase">
-                {SITE_CONFIG.name.split(' ')[1]}
-              </h1>
-              <p className="text-xs md:text-sm lg:text-base font-medium text-primary-600 mt-2 lg:mt-3">
-                {SITE_CONFIG.title}
-              </p>
-            </div>
-          </a>
-          
-          <a 
-            href="/" 
-            className="text-black hover:opacity-60 transition-opacity p-2"
-            aria-label="Volver al inicio"
-          >
-            <ArrowLeft className="w-6 h-6 md:w-8 md:h-8" />
-          </a>
-        </nav>
-      </header>
+    <div className="relative min-h-screen bg-white text-black">
+      {/* Navbar unificado */}
+      <Navbar />
+
+      {/* Botón volver */}
+      <div className="fixed top-4 right-4 z-20 md:top-8 md:right-8 lg:top-12 lg:right-12">
+        <a
+          href="/"
+          className="p-2 text-black transition-opacity hover:opacity-60"
+          aria-label="Volver al inicio"
+        >
+          <ArrowLeft className="h-6 w-6 md:h-8 md:w-8" />
+        </a>
+      </div>
 
       {/* Hero Section */}
-      <section className="relative w-full h-[50vh] md:h-[55vh] lg:h-[60vh] mt-40 md:mt-44 lg:mt-48">
-        <div className="w-full h-full">
-          <img 
-            src={project.image} 
+      <section className="relative mt-40 h-[50vh] w-full md:mt-44 md:h-[55vh] lg:mt-48 lg:h-[60vh]">
+        <div className="h-full w-full">
+          <img
+            src={project.image}
             alt={project.title}
-            className="w-full h-full object-cover"
+            className="h-full w-full object-cover"
           />
         </div>
-        
-        <div className="absolute top-0 right-1/4 transform -translate-y-1/2 z-10">
-          <h1 className="project-title-outline text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-black leading-[0.8] text-right">
+
+        <div className="absolute top-0 right-1/4 z-10 -translate-y-1/2 transform">
+          <h1 className="project-title-outline text-right text-3xl leading-[0.8] font-black md:text-5xl lg:text-6xl xl:text-7xl">
             {project.title.split(' ').map((word, index) => (
               <span key={index} className="block">
                 {word}
@@ -78,72 +79,159 @@ export default function ProjectPage({ params }: ProjectPageProps) {
         </div>
       </section>
 
-      {/* Descripción + Info */}
-      <section className="py-16 md:py-20">
-        <div className="max-w-4xl mx-auto px-8 md:px-12">
-          <div className="grid md:grid-cols-3 gap-12 md:gap-16">
-            
-            <div className="md:col-span-2">
-              <p className="text-xl md:text-2xl leading-relaxed font-light text-primary-700">
-                {project.longDescription || project.description}
-              </p>
-              
-              <div className="flex gap-8 mt-8">
+      {/* Información principal */}
+      <section className="bg-white py-20 md:py-24">
+        <div className="mx-auto max-w-6xl px-8 md:px-12">
+          <div className="grid gap-16 lg:grid-cols-3">
+            {/* Descripción detallada */}
+            <div className="space-y-12 lg:col-span-2">
+              <div>
+                <h2 className="mb-6 text-3xl font-black uppercase md:text-4xl">
+                  Sobre el proyecto
+                </h2>
+                <p className="mb-8 text-lg leading-relaxed text-gray-700 md:text-xl">
+                  {project.longDescription || project.description}
+                </p>
+              </div>
+
+              {/* El Problema */}
+              {project.problem && (
+                <div>
+                  <h2 className="mb-6 text-3xl font-black uppercase md:text-4xl">
+                    El Problema
+                  </h2>
+                  <p className="text-lg leading-relaxed text-gray-700 md:text-xl">
+                    {project.problem}
+                  </p>
+                </div>
+              )}
+
+              {/* La Solución */}
+              {project.solution && (
+                <div>
+                  <h2 className="mb-6 text-3xl font-black uppercase md:text-4xl">
+                    La Solución
+                  </h2>
+                  <p className="text-lg leading-relaxed text-gray-700 md:text-xl">
+                    {project.solution}
+                  </p>
+                </div>
+              )}
+
+              {/* Impacto */}
+              {project.impact && (
+                <div>
+                  <h2 className="mb-6 text-3xl font-black uppercase md:text-4xl">
+                    Impacto
+                  </h2>
+                  <p className="text-lg leading-relaxed text-gray-700 md:text-xl">
+                    {project.impact}
+                  </p>
+                </div>
+              )}
+
+              {/* Características principales */}
+              {project.keyFeatures && (
+                <div>
+                  <h3 className="mb-4 text-xl font-bold tracking-wide uppercase">
+                    Características principales
+                  </h3>
+                  <ul className="space-y-3">
+                    {project.keyFeatures.map((feature, index) => (
+                      <li key={index} className="flex items-start">
+                        <span className="mt-3 mr-4 h-2 w-2 flex-shrink-0 rounded-full bg-black"></span>
+                        <span className="text-gray-700">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Puntos destacados */}
+              {project.highlights && (
+                <div>
+                  <h3 className="mb-4 text-xl font-bold tracking-wide uppercase">
+                    Puntos destacados
+                  </h3>
+                  <ul className="space-y-3">
+                    {project.highlights.map((highlight, index) => (
+                      <li key={index} className="flex items-start">
+                        <span className="mt-3 mr-4 h-2 w-2 flex-shrink-0 rounded-full bg-gray-400"></span>
+                        <span className="text-sm text-gray-600">
+                          {highlight}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Enlaces del proyecto */}
+              <div className="flex flex-wrap gap-6 pt-8">
                 {project.liveUrl && (
-                  <a 
+                  <a
                     href={project.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-base font-medium text-black hover:opacity-60 transition-opacity"
+                    className="inline-flex items-center gap-2 bg-black px-6 py-3 font-medium text-white transition-colors hover:bg-gray-800"
                   >
-                    Ver proyecto ↗
+                    <ExternalLink className="h-4 w-4" />
+                    Ver proyecto en vivo
                   </a>
                 )}
-                
+
                 {project.githubUrl && (
-                  <a 
+                  <a
                     href={project.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-base font-medium text-primary-600 hover:text-black transition-colors"
+                    className="inline-flex items-center gap-2 border-2 border-black px-6 py-3 font-medium text-black transition-colors hover:bg-black hover:text-white"
                   >
-                    GitHub ↗
+                    <Github className="h-4 w-4" />
+                    Ver en GitHub
                   </a>
                 )}
               </div>
             </div>
-            
-            <div className="space-y-6">
+
+            {/* Información lateral */}
+            <div className="space-y-8">
               <div>
-                <h3 className="text-xs uppercase tracking-wider text-primary-400 font-semibold mb-2">
+                <h3 className="mb-3 text-xs font-semibold tracking-wider text-gray-400 uppercase">
                   Categoría
                 </h3>
-                <p className="text-sm font-medium capitalize">
-                  {project.category}
-                </p>
-              </div>
-              
-              <div>
-                <h3 className="text-xs uppercase tracking-wider text-primary-400 font-semibold mb-2">
-                  Fecha
-                </h3>
-                <p className="text-sm font-medium">
-                  {new Date(project.completedAt + '-01').toLocaleDateString('es-ES', { 
-                    year: 'numeric', 
-                    month: 'long' 
-                  })}
+                <p className="text-lg font-medium">
+                  {getCategoryLabel(project.category)}
                 </p>
               </div>
 
               <div>
-                <h3 className="text-xs uppercase tracking-wider text-primary-400 font-semibold mb-2">
-                  Stack
+                <h3 className="mb-3 text-xs font-semibold tracking-wider text-gray-400 uppercase">
+                  Fecha de finalización
                 </h3>
-                <div className="space-y-1">
+                <p className="text-lg font-medium">
+                  {new Date(project.completedAt + '-01').toLocaleDateString(
+                    'es-ES',
+                    {
+                      year: 'numeric',
+                      month: 'long',
+                    }
+                  )}
+                </p>
+              </div>
+
+              <div>
+                <h3 className="mb-3 text-xs font-semibold tracking-wider text-gray-400 uppercase">
+                  Stack tecnológico
+                </h3>
+                <div className="flex flex-wrap gap-2">
                   {project.technologies.map((tech) => (
-                    <p key={tech} className="text-sm text-primary-700">
+                    <span
+                      key={tech}
+                      className="inline-block bg-gray-100 px-3 py-1 text-sm font-medium text-gray-800"
+                    >
                       {tech}
-                    </p>
+                    </span>
                   ))}
                 </div>
               </div>
@@ -152,40 +240,60 @@ export default function ProjectPage({ params }: ProjectPageProps) {
         </div>
       </section>
 
-      {/* Bloque unificado de imágenes */}
-      <section className="py-12 md:py-16">
-        <div className="max-w-6xl mx-auto px-8 md:px-12">
-          <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
-            
-            {/* Desktop - Fondo blanco */}
-            <div className="bg-white p-8 md:p-12 lg:p-16">
-              <img 
-                src={project.images.desktop} 
+      {/* Galería de imágenes */}
+      <section className="bg-gray-50 py-16 md:py-20">
+        <div className="mx-auto max-w-7xl px-8 md:px-12">
+          <h2 className="mb-12 text-center text-3xl font-black uppercase md:text-4xl">
+            Capturas del proyecto
+          </h2>
+
+          {/* Vista Desktop - Imagen grande */}
+          <div className="mb-16">
+            <h3 className="mb-6 text-center text-lg font-bold text-gray-600">
+              Vista Desktop
+            </h3>
+            <div className="rounded-2xl bg-white p-8 shadow-xl md:p-12">
+              <img
+                src={project.images.desktop}
                 alt={`${project.title} - Vista desktop`}
-                className="w-full object-contain rounded-lg"
+                className="w-full rounded-lg object-contain"
               />
             </div>
+          </div>
 
+          {/* Vista Tablet y Mobile - Grid */}
+          <div className="grid gap-12 lg:grid-cols-2">
             {/* Tablet */}
-            <div className="bg-gray-50 p-8 md:p-12 lg:p-16 flex justify-center">
-              <img 
-                src={project.images.tablet} 
-                alt={`${project.title} - Vista tablet`}
-                className="w-full max-w-md object-contain"
-              />
+            <div>
+              <h3 className="mb-6 text-center text-lg font-bold text-gray-600">
+                Vista Tablet
+              </h3>
+              <div className="flex justify-center rounded-2xl bg-white p-8 shadow-lg">
+                <img
+                  src={project.images.tablet}
+                  alt={`${project.title} - Vista tablet`}
+                  className="w-full max-w-sm object-contain"
+                />
+              </div>
             </div>
 
             {/* Mobile */}
-            <div className="bg-gray-100 p-8 md:p-12 lg:p-16">
-              <div className="grid grid-cols-3 gap-6 md:gap-8">
-                {project.images.mobile.map((mobileImage, index) => (
-                  <img 
-                    key={index}
-                    src={mobileImage} 
-                    alt={`${project.title} - Vista móvil ${index + 1}`}
-                    className="w-full object-contain"
-                  />
-                ))}
+            <div>
+              <h3 className="mb-6 text-center text-lg font-bold text-gray-600">
+                Vista Móvil
+              </h3>
+              <div className="rounded-2xl bg-white p-8 shadow-lg">
+                <div className="grid grid-cols-3 gap-4">
+                  {project.images.mobile.map((mobileImage, index) => (
+                    <div key={index} className="flex justify-center">
+                      <img
+                        src={mobileImage}
+                        alt={`${project.title} - Vista móvil ${index + 1}`}
+                        className="w-full max-w-32 object-contain"
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -193,14 +301,14 @@ export default function ProjectPage({ params }: ProjectPageProps) {
       </section>
 
       {/* Siguiente proyecto */}
-      <section className="py-20 md:py-24">
-        <div className="max-w-4xl mx-auto px-8 md:px-12 text-right">
-          <p className="text-sm uppercase tracking-wider text-primary-500 font-semibold mb-6">
-            next project
+      <section className="bg-white py-20 md:py-24">
+        <div className="mx-auto max-w-6xl px-8 text-right md:px-12">
+          <p className="mb-6 text-sm font-semibold tracking-wider text-gray-500 uppercase">
+            Siguiente proyecto
           </p>
-          <a 
+          <a
             href={`/projects/${nextProject.slug}`}
-            className="next-project-hover block text-4xl md:text-6xl lg:text-7xl font-black leading-[0.8]"
+            className="next-project-hover block text-4xl leading-[0.8] font-black md:text-6xl lg:text-7xl"
           >
             {nextProject.title.split(' ').map((word, index) => (
               <span key={index} className="block">
@@ -215,11 +323,12 @@ export default function ProjectPage({ params }: ProjectPageProps) {
 }
 
 export async function generateMetadata({ params }: ProjectPageProps) {
-  const project = getProjectBySlug(params.slug)
-  
+  const { slug } = await params
+  const project = getProjectBySlug(slug)
+
   if (!project) {
     return {
-      title: 'Proyecto no encontrado'
+      title: 'Proyecto no encontrado',
     }
   }
 
