@@ -2,7 +2,6 @@ import { notFound } from 'next/navigation'
 import { ExternalLink, Github } from 'lucide-react'
 import { projects } from '@/data/projects'
 import { SITE_CONFIG } from '@/lib/constants'
-import Navbar from '@/components/Navbar'
 
 interface ProjectPageProps {
   params: Promise<{
@@ -44,9 +43,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
   return (
     <div className="relative min-h-screen bg-white text-black">
-      {/* Navbar unificado */}
-      <Navbar />
-
       {/* Hero Section */}
       <section className="relative mt-40 h-[50vh] w-full md:mt-44 md:h-[55vh] lg:mt-48 lg:h-[60vh]">
         <div className="h-full w-full">

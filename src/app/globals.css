@@ -40,28 +40,29 @@ body {
   color: transparent;
 }
 
-/* Hover unificado para el nombre */
-.name-hover {
-  transition: all 0.6s ease;
-}
-
-/* Hover normal: negro → blanco con borde negro */
-.name-hover:hover .name-text:not(.text-transparent) {
-  -webkit-text-stroke: 1px black !important;
-  color: white !important;
-}
-
-/* Hover especial para estado scrolled: outline → relleno negro */
-.name-hover:hover .name-text.text-transparent {
-  -webkit-text-stroke: 0px transparent !important;
-  color: black !important;
-}
-
+/* Logo principal - con transiciones suaves */
 .name-text {
   font-family: 'Arial Black', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 900;
   letter-spacing: -0.02em;
-  transition: all 0.6s ease;
+  transition: font-size 0.5s ease, color 0.3s ease, -webkit-text-stroke 0.3s ease;
+}
+
+/* Estado de scroll: transparente con borde fino */
+.name-text.text-transparent {
+  color: transparent;
+  -webkit-text-stroke: 0.5px rgba(0, 0, 0, 0.3);
+}
+
+/* Hover del logo: Negro → Transparente con borde negro */
+.name-hover:hover .name-text {
+  color: transparent;
+  -webkit-text-stroke: 0.5px rgba(0, 0, 0, 0.3);
+}
+
+/* Hover cuando está scrolled (ya transparente): Transparente con borde → Negro relleno */
+.name-hover:hover .name-text.text-transparent {
+  color: black;
   -webkit-text-stroke: 0px transparent;
 }
 

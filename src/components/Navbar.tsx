@@ -3,20 +3,50 @@
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
+import { ChevronDown } from 'lucide-react'
 import { SITE_CONFIG } from '@/lib/constants'
+import { projects } from '@/data/projects'
 
 export default function Navbar() {
   const pathname = usePathname()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const [isProjectsDropdownOpen, setIsProjectsDropdownOpen] = useState(false)
+  const [isMobileProjectsOpen, setIsMobileProjectsOpen] = useState(false)
+  const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null)
 
-  const isProjectPage = pathname.startsWith('/projects/')
   const isAboutPage = pathname === '/about'
   const isIndexPage = pathname === '/'
+  const isContactPage = pathname === '/contact'
+  const isProjectPage = pathname.startsWith('/projects/')
 
-  // Efecto scroll solo en páginas de proyecto
+  // Funciones para manejar hover con delay
+  const handleMouseEnter = () => {
+    if (hoverTimeout) {
+      clearTimeout(hoverTimeout)
+    }
+    setIsProjectsDropdownOpen(true)
+  }
+
+  const handleMouseLeave = () => {
+    const timeout = setTimeout(() => {
+      setIsProjectsDropdownOpen(false)
+    }, 200) // 200ms de delay antes de cerrar
+    setHoverTimeout(timeout)
+  }
+
+  // Limpiar timeout al desmontar
   useEffect(() => {
-    if (!isProjectPage) return
+    return () => {
+      if (hoverTimeout) {
+        clearTimeout(hoverTimeout)
+      }
+    }
+  }, [hoverTimeout])
+
+  // Efecto scroll solo para páginas que NO son home
+  useEffect(() => {
+    if (isIndexPage) return
 
     const handleScroll = () => {
       const scrolled = window.scrollY > 100
@@ -25,113 +55,132 @@ export default function Navbar() {
 
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [isProjectPage])
+  }, [isIndexPage])
 
   // Cerrar menú al hacer clic fuera
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement
-      if (isMenuOpen && !target.closest('.menu-container')) {
+      if (isMenuOpen && !target.closest('.menu-container') && !target.closest('.menu-overlay')) {
         setIsMenuOpen(false)
+      }
+      if (isProjectsDropdownOpen && !target.closest('.projects-dropdown')) {
+        setIsProjectsDropdownOpen(false)
       }
     }
 
-    if (isMenuOpen) {
-      document.addEventListener('mousedown', handleClickOutside)
-    }
-
+    document.addEventListener('mousedown', handleClickOutside)
     return () => {
       document.removeEventListener('mousedown', handleClickOutside)
     }
-  }, [isMenuOpen])
+  }, [isMenuOpen, isProjectsDropdownOpen])
 
-  const isContactPage = pathname === '/contact'
+  // Cerrar dropdown al cambiar de ruta
+  useEffect(() => {
+    setIsProjectsDropdownOpen(false)
+    setIsMobileProjectsOpen(false)
+  }, [pathname])
 
-  // Navegación contextual según la página
   const getDesktopNavigation = () => {
-    if (isIndexPage) {
-      return (
-        <div className="hidden space-x-8 lg:flex">
-          <Link 
-            href="/about" 
-            className="text-sm font-medium text-black transition-opacity hover:opacity-60"
-          >
-            About
-          </Link>
-          <Link 
-            href="/contact"
-            className="text-sm font-medium text-black transition-opacity hover:opacity-60"
-          >
-            Contact
-          </Link>
-        </div>
-      )
-    }
-
-    if (isProjectPage) {
-      return (
-        <div className="hidden space-x-8 lg:flex">
-          <Link 
-            href="/" 
-            className="text-sm font-medium text-black transition-opacity hover:opacity-60"
-          >
-            ← Home
-          </Link>
-          <Link 
-            href="/about" 
-            className="text-sm font-medium text-black transition-opacity hover:opacity-60"
-          >
-            About
-          </Link>
-          <Link 
-            href="/contact"
-            className="text-sm font-medium text-black transition-opacity hover:opacity-60"
-          >
-            Contact
-          </Link>
-        </div>
-      )
-    }
-
-    if (isAboutPage) {
-      return (
-        <div className="hidden space-x-8 lg:flex">
-          <Link 
-            href="/" 
-            className="text-sm font-medium text-black transition-opacity hover:opacity-60"
+    return (
+      <div className="hidden space-x-8 lg:flex">
+        {/* Projects con dropdown */}
+        <div 
+          className="projects-dropdown relative"
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          <button
+            onClick={() => setIsProjectsDropdownOpen(!isProjectsDropdownOpen)}
+            className={`flex items-center gap-1 text-base font-medium transition-opacity hover:opacity-60 ${
+              isIndexPage || isProjectPage ? 'text-black' : 'text-gray-600'
+            }`}
           >
             Projects
-          </Link>
-          <Link 
-            href="/contact"
-            className="text-sm font-medium text-black transition-opacity hover:opacity-60"
-          >
-            Contact
-          </Link>
-        </div>
-      )
-    }
+            <ChevronDown 
+              className={`h-4 w-4 transition-transform duration-200 ${
+                isProjectsDropdownOpen ? 'rotate-180' : ''
+              }`} 
+            />
+          </button>
 
-    if (isContactPage) {
-      return (
-        <div className="hidden space-x-8 lg:flex">
-          <Link 
-            href="/" 
-            className="text-sm font-medium text-black transition-opacity hover:opacity-60"
-          >
-            Projects
-          </Link>
+          {/* Indicador activo para Projects */}
+          {(isIndexPage || isProjectPage) && (
+            <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-black"></div>
+          )}
+
+          {/* Dropdown */}
+          {isProjectsDropdownOpen && (
+            <div 
+              className="absolute top-full left-0 mt-1 w-64 bg-white border border-gray-200 rounded-lg shadow-lg z-50"
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
+              <div className="py-2">
+                <Link
+                  href="/"
+                  className={`block px-4 py-2 text-sm transition-colors hover:bg-gray-50 ${
+                    isIndexPage ? 'text-black bg-gray-50' : 'text-gray-700'
+                  }`}
+                  onClick={() => setIsProjectsDropdownOpen(false)}
+                >
+                  <span className="font-medium">All Projects</span>
+                  <span className="block text-xs text-gray-500 mt-1">Ver todos los proyectos</span>
+                </Link>
+                <hr className="my-1" />
+                {projects.map((project) => (
+                  <Link
+                    key={project.id}
+                    href={`/projects/${project.slug}`}
+                    className={`block px-4 py-2 text-sm transition-colors hover:bg-gray-50 ${
+                      pathname === `/projects/${project.slug}` 
+                        ? 'text-black bg-gray-50' 
+                        : 'text-gray-700'
+                    }`}
+                    onClick={() => setIsProjectsDropdownOpen(false)}
+                  >
+                    <span className="font-medium">{project.title}</span>
+                    <span className="block text-xs text-gray-500 mt-1">{project.category}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* About */}
+        <div className="relative">
           <Link 
             href="/about" 
-            className="text-sm font-medium text-black transition-opacity hover:opacity-60"
+            className={`text-base font-medium transition-opacity hover:opacity-60 ${
+              isAboutPage ? 'text-black' : 'text-gray-600'
+            }`}
           >
             About
           </Link>
+          {/* Indicador activo para About */}
+          {isAboutPage && (
+            <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-black"></div>
+          )}
         </div>
-      )
-    }
 
-    return null
+        {/* Contact */}
+        <div className="relative">
+          <Link 
+            href="/contact"
+            className={`text-base font-medium transition-opacity hover:opacity-60 ${
+              isContactPage ? 'text-black' : 'text-gray-600'
+            }`}
+          >
+            Contact
+          </Link>
+          {/* Indicador activo para Contact */}
+          {isContactPage && (
+            <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-black"></div>
+          )}
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -141,54 +190,45 @@ export default function Navbar() {
         <Link href="/" className="name-hover group block">
           <div className="space-y-0">
             <h1
-              className={`name-text leading-[0.9] font-black uppercase transition-all duration-500 ${
-                isProjectPage
-                  ? 'text-xl md:text-2xl lg:text-3xl'
-                  : 'text-2xl md:text-4xl lg:text-6xl'
+              className={`name-text leading-[0.9] font-black uppercase ${
+                isIndexPage
+                  ? 'text-2xl md:text-4xl lg:text-6xl'
+                  : 'text-xl md:text-2xl lg:text-3xl'
               } ${
-                isProjectPage && isScrolled
-                  ? 'text-transparent group-hover:text-black'
-                  : 'text-black group-hover:text-transparent'
+                !isIndexPage && isScrolled ? 'text-transparent' : 'text-black'
               }`}
-              style={{
-                WebkitTextStroke:
-                  isProjectPage && isScrolled ? '1px black' : '0px transparent',
-                transition: 'all 0.5s ease',
-              }}
             >
               {SITE_CONFIG.name.split(' ')[0]}
             </h1>
             <h1
-              className={`name-text leading-[0.9] font-black uppercase transition-all duration-500 ${
-                isProjectPage
-                  ? 'text-xl md:text-2xl lg:text-3xl'
-                  : 'text-2xl md:text-4xl lg:text-6xl'
+              className={`name-text leading-[0.9] font-black uppercase ${
+                isIndexPage
+                  ? 'text-2xl md:text-4xl lg:text-6xl'
+                  : 'text-xl md:text-2xl lg:text-3xl'
               } ${
-                isProjectPage && isScrolled
-                  ? 'text-transparent group-hover:text-black'
-                  : 'text-black group-hover:text-transparent'
+                !isIndexPage && isScrolled ? 'text-transparent' : 'text-black'
               }`}
-              style={{
-                WebkitTextStroke:
-                  isProjectPage && isScrolled ? '1px black' : '0px transparent',
-                transition: 'all 0.5s ease',
-              }}
             >
               {SITE_CONFIG.name.split(' ')[1]}
             </h1>
-            {/* Solo mostrar subtitle en index */}
-            {isIndexPage && (
-              <p className="text-primary-600 mt-2 text-xs font-medium md:mt-4 md:text-lg lg:mt-6 lg:text-xl">
-                {SITE_CONFIG.title}
-              </p>
-            )}
+            {/* Subtitle */}
+            <p 
+              className={`text-primary-600 font-medium transition-all duration-500 ${
+                isIndexPage
+                  ? 'mt-2 text-xs md:mt-4 md:text-lg lg:mt-6 lg:text-xl'
+                  : 'mt-1 text-xs md:mt-2 md:text-sm lg:mt-3 lg:text-base'
+              } ${
+                !isIndexPage && isScrolled ? 'opacity-0 transform -translate-y-2' : 'opacity-100 transform translate-y-0'
+              }`}
+            >
+              {SITE_CONFIG.title}
+            </p>
           </div>
         </Link>
       </div>
 
       {/* Navegación superior derecha */}
       <div className="fixed top-4 right-4 z-50 md:top-8 md:right-8 lg:top-12 lg:right-12">
-        {/* Desktop: navegación contextual */}
         {getDesktopNavigation()}
 
         {/* Mobile: menú hamburguesa */}
@@ -223,7 +263,7 @@ export default function Navbar() {
       {/* Menú fullscreen mobile */}
       {isMenuOpen && (
         <div 
-          className="fixed inset-0 z-40 lg:hidden"
+          className="menu-overlay fixed inset-0 z-40 lg:hidden"
           style={{ backgroundColor: 'rgba(248, 250, 252, 0.9)' }}
         >
           <div className="flex h-full w-full items-center justify-center">
@@ -244,60 +284,89 @@ export default function Navbar() {
               </div>
 
               {/* Enlaces de navegación */}
-              <div className="space-y-8">
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-sm text-gray-400">01</span>
-                  <Link
-                    href="/"
-                    className="text-lg font-medium text-black transition-opacity hover:opacity-60"
-                    onClick={() => setIsMenuOpen(false)}
+              <div className="space-y-6">
+                {/* Projects con submenú */}
+                <div>
+                  <button
+                    onClick={() => setIsMobileProjectsOpen(!isMobileProjectsOpen)}
+                    className={`flex w-full items-center justify-between text-lg font-medium transition-opacity hover:opacity-60 ${
+                      isIndexPage || isProjectPage ? 'text-black' : 'text-gray-600'
+                    }`}
                   >
-                    Home
-                  </Link>
+                    Projects
+                    <ChevronDown 
+                      className={`h-5 w-5 transition-transform duration-200 ${
+                        isMobileProjectsOpen ? 'rotate-180' : ''
+                      }`} 
+                    />
+                  </button>
+                  
+                  {/* Indicador activo para Projects en mobile */}
+                  {(isIndexPage || isProjectPage) && (
+                    <div className="mt-1 h-0.5 w-8 bg-black"></div>
+                  )}
+                  
+                  {isMobileProjectsOpen && (
+                    <div className="mt-3 ml-4 space-y-3">
+                      <Link
+                        href="/"
+                        className={`block text-base transition-opacity hover:opacity-60 ${
+                          isIndexPage ? 'text-black font-medium' : 'text-gray-600'
+                        }`}
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        All Projects
+                      </Link>
+                      {projects.map((project) => (
+                        <Link
+                          key={project.id}
+                          href={`/projects/${project.slug}`}
+                          className={`block text-base transition-opacity hover:opacity-60 ${
+                            pathname === `/projects/${project.slug}` 
+                              ? 'text-black font-medium' 
+                              : 'text-gray-600'
+                          }`}
+                          onClick={() => setIsMenuOpen(false)}
+                        >
+                          {project.title}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-sm text-gray-400">02</span>
+
+                {/* About */}
+                <div>
                   <Link
                     href="/about"
-                    className="text-lg font-medium text-black transition-opacity hover:opacity-60"
+                    className={`block text-lg font-medium transition-opacity hover:opacity-60 ${
+                      isAboutPage ? 'text-black' : 'text-gray-600'
+                    }`}
                     onClick={() => setIsMenuOpen(false)}
                   >
                     About
                   </Link>
+                  {/* Indicador activo para About en mobile */}
+                  {isAboutPage && (
+                    <div className="mt-1 h-0.5 w-8 bg-black"></div>
+                  )}
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-sm text-gray-400">03</span>
+
+                {/* Contact */}
+                <div>
                   <Link
                     href="/contact"
-                    className="text-lg font-medium text-black transition-opacity hover:opacity-60"
+                    className={`block text-lg font-medium transition-opacity hover:opacity-60 ${
+                      isContactPage ? 'text-black' : 'text-gray-600'
+                    }`}
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Contact
                   </Link>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-sm text-gray-400">04</span>
-                  <a
-                    href={SITE_CONFIG.links.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-lg font-medium text-black transition-opacity hover:opacity-60"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    GitHub
-                  </a>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-sm text-gray-400">05</span>
-                  <a
-                    href={SITE_CONFIG.links.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-lg font-medium text-black transition-opacity hover:opacity-60"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    LinkedIn
-                  </a>
+                  {/* Indicador activo para Contact en mobile */}
+                  {isContactPage && (
+                    <div className="mt-1 h-0.5 w-8 bg-black"></div>
+                  )}
                 </div>
               </div>
             </div>
