@@ -9,42 +9,39 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Verde Bosque Vibrante
+        background: '#059669',
+        foreground: '#ffffff',
         primary: {
-          50: '#f8f9fa',
-          100: '#f1f3f4',
-          200: '#e8eaed',
-          300: '#dadce0',
-          400: '#bdc1c6',
-          500: '#9aa0a6',
-          600: '#80868b',
-          700: '#5f6368',
-          800: '#3c4043',
-          900: '#202124',
-          950: '#111111',
+          50: '#f0fdf4',
+          100: '#dcfce7',
+          500: '#059669', // Verde principal
+          600: '#047857',
+          700: '#065f46',
         },
-        accent: {
-          DEFAULT: '#000000',
-          light: '#333333',
-          dark: '#000000',
+        // Colores específicos para el diseño
+        'project-title': '#000000', // Negro para títulos de proyectos
+        'project-date': '#ffffff', // Blanco para fechas
+        // Grises personalizados para otras secciones
+        gray: {
+          50: '#f9fafb',
+          100: '#f3f4f6',
+          200: '#e5e7eb',
+          300: '#d1d5db',
+          400: '#9ca3af',
+          500: '#6b7280',
+          600: '#4b5563',
+          700: '#374151',
+          800: '#1f2937',
+          900: '#111827',
         },
+        // Colores básicos
+        black: '#000000',
+        white: '#ffffff',
       },
       fontFamily: {
-        sans: ['Helvetica Neue', 'Arial Black', 'Arial', 'sans-serif'],
-        display: ['Arial Black', 'Helvetica Neue', 'Arial', 'sans-serif'],
-      },
-      animation: {
-        'fade-in': 'fadeIn 0.6s ease-in-out',
-        'slide-up': 'slideUp 0.6s ease-out',
-      },
-      keyframes: {
-        fadeIn: {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
-        },
-        slideUp: {
-          '0%': { opacity: '0', transform: 'translateY(20px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
-        },
+        sans: ['var(--font-geist-sans)', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-geist-mono)', 'monospace'],
       },
     },
   },

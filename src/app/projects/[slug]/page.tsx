@@ -42,17 +42,20 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   }
 
   return (
-    <div className="relative min-h-screen bg-white text-black">
+    <div className="relative min-h-screen bg-gray-50 text-black">
       {/* Hero Section */}
-      <section className="relative mt-40 h-[50vh] w-full md:mt-44 md:h-[55vh] lg:mt-48 lg:h-[60vh]">
+      <section className="relative mt-40 h-[60vh] w-full md:mt-44 md:h-[65vh] lg:mt-48 lg:h-[70vh]">
         <div className="h-full w-full">
           <img
             src={project.image}
             alt={project.title}
             className="h-full w-full object-cover"
           />
+          {/* Overlay para contraste */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-black/20"></div>
         </div>
 
+        {/* Título principal */}
         <div className="absolute top-0 right-1/4 z-10 -translate-y-1/2 transform">
           <h1 className="project-title-outline text-right text-3xl leading-[0.8] font-black md:text-5xl lg:text-6xl xl:text-7xl">
             {project.title.split(' ').map((word, index) => (
@@ -62,23 +65,38 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             ))}
           </h1>
         </div>
+
+        {/* Descripción y enlace */}
+        <div className="absolute bottom-8 left-8 right-8 z-10 md:bottom-12 md:left-12 md:right-12">
+          <div className="max-w-6xl mx-auto">
+            <div className="mb-6">
+              <p className="text-lg leading-relaxed text-white md:text-xl lg:text-2xl font-medium drop-shadow-lg max-w-4xl">
+                {project.description}
+              </p>
+            </div>
+            <div className="flex justify-start">
+              {project.githubUrl && (
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-white/90 backdrop-blur-sm px-6 py-3 font-medium text-black transition-all hover:bg-white hover:scale-105"
+                >
+                  <Github className="h-4 w-4" />
+                  Ver en GitHub
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
       </section>
 
-      {/* Información principal */}
+      {/* Contexto del proyecto */}
       <section className="bg-white py-20 md:py-24">
         <div className="mx-auto max-w-6xl px-8 md:px-12">
           <div className="grid gap-16 lg:grid-cols-3">
-            {/* Descripción detallada */}
+            {/* Contenido principal */}
             <div className="space-y-12 lg:col-span-2">
-              <div>
-                <h2 className="mb-6 text-3xl font-black uppercase md:text-4xl">
-                  Sobre el proyecto
-                </h2>
-                <p className="mb-8 text-lg leading-relaxed text-gray-700 md:text-xl">
-                  {project.longDescription || project.description}
-                </p>
-              </div>
-
               {/* El Problema */}
               {project.problem && (
                 <div>
@@ -115,74 +133,26 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 </div>
               )}
 
-              {/* Características principales */}
-              {project.keyFeatures && (
-                <div>
-                  <h3 className="mb-4 text-xl font-bold tracking-wide uppercase">
-                    Características principales
-                  </h3>
-                  <ul className="space-y-3">
-                    {project.keyFeatures.map((feature, index) => (
-                      <li key={index} className="flex items-start">
-                        <span className="mt-3 mr-4 h-2 w-2 flex-shrink-0 rounded-full bg-black"></span>
-                        <span className="text-gray-700">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {/* Puntos destacados */}
-              {project.highlights && (
-                <div>
-                  <h3 className="mb-4 text-xl font-bold tracking-wide uppercase">
-                    Puntos destacados
-                  </h3>
-                  <ul className="space-y-3">
-                    {project.highlights.map((highlight, index) => (
-                      <li key={index} className="flex items-start">
-                        <span className="mt-3 mr-4 h-2 w-2 flex-shrink-0 rounded-full bg-gray-400"></span>
-                        <span className="text-sm text-gray-600">
-                          {highlight}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {/* Enlaces del proyecto */}
-              <div className="flex flex-wrap gap-6 pt-8">
-                {project.liveUrl && (
+              {/* Botón de acción */}
+              {project.liveUrl && (
+                <div className="pt-6">
                   <a
                     href={project.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 bg-black px-6 py-3 font-medium text-white transition-colors hover:bg-gray-800"
+                    className="inline-flex items-center gap-2 bg-green-600 px-8 py-4 font-medium text-white transition-colors hover:bg-green-700 text-lg"
                   >
-                    <ExternalLink className="h-4 w-4" />
+                    <ExternalLink className="h-5 w-5" />
                     Ver proyecto en vivo
                   </a>
-                )}
-
-                {project.githubUrl && (
-                  <a
-                    href={project.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 border-2 border-black px-6 py-3 font-medium text-black transition-colors hover:bg-black hover:text-white"
-                  >
-                    <Github className="h-4 w-4" />
-                    Ver en GitHub
-                  </a>
-                )}
-              </div>
+                </div>
+              )}
             </div>
 
             {/* Información lateral */}
             <div className="space-y-8">
               <div>
-                <h3 className="mb-3 text-xs font-semibold tracking-wider text-gray-400 uppercase">
+                <h3 className="mb-2 text-xs font-semibold tracking-wider text-gray-400 uppercase">
                   Categoría
                 </h3>
                 <p className="text-lg font-medium">
@@ -191,7 +161,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               </div>
 
               <div>
-                <h3 className="mb-3 text-xs font-semibold tracking-wider text-gray-400 uppercase">
+                <h3 className="mb-2 text-xs font-semibold tracking-wider text-gray-400 uppercase">
                   Fecha de finalización
                 </h3>
                 <p className="text-lg font-medium">
@@ -206,7 +176,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               </div>
 
               <div>
-                <h3 className="mb-3 text-xs font-semibold tracking-wider text-gray-400 uppercase">
+                <h3 className="mb-2 text-xs font-semibold tracking-wider text-gray-400 uppercase">
                   Stack tecnológico
                 </h3>
                 <div className="flex flex-wrap gap-2">
@@ -220,73 +190,112 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                   ))}
                 </div>
               </div>
+
+              {/* Puntos destacados en sidebar */}
+              {project.highlights && (
+                <div>
+                  <h3 className="mb-4 text-xs font-semibold tracking-wider text-gray-400 uppercase">
+                    Puntos destacados
+                  </h3>
+                  <ul className="space-y-3">
+                    {project.highlights.map((highlight, index) => (
+                      <li key={index} className="flex items-start">
+                        <span className="mt-2 mr-3 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-green-600"></span>
+                        <span className="text-sm text-gray-600">
+                          {highlight}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Galería de imágenes */}
-      <section className="bg-gray-50 py-16 md:py-20">
-        <div className="mx-auto max-w-7xl px-8 md:px-12">
-          <h2 className="mb-12 text-center text-3xl font-black uppercase md:text-4xl">
-            Capturas del proyecto
-          </h2>
-
-          {/* Vista Desktop - Imagen grande */}
-          <div className="mb-16">
-            <h3 className="mb-6 text-center text-lg font-bold text-gray-600">
+      {/* Capturas del proyecto  */}
+      <section>
+        {/* Vista Desktop */}
+        <div className="bg-gray-50 py-16 md:py-20">
+          <div className="mx-auto max-w-7xl px-8 md:px-12">
+            <h3 className="mb-12 text-center text-2xl font-bold text-gray-900">
               Vista Desktop
             </h3>
-            <div className="rounded-2xl bg-white p-8 shadow-xl md:p-12">
+            <div className="mx-auto max-w-6xl">
               <img
                 src={project.images.desktop}
                 alt={`${project.title} - Vista desktop`}
-                className="w-full rounded-lg object-contain"
+                className="w-full rounded-lg object-contain shadow-2xl"
               />
             </div>
           </div>
+        </div>
 
-          {/* Vista Tablet y Mobile - Grid */}
-          <div className="grid gap-12 lg:grid-cols-2">
-            {/* Tablet */}
-            <div>
-              <h3 className="mb-6 text-center text-lg font-bold text-gray-600">
-                Vista Tablet
-              </h3>
-              <div className="flex justify-center rounded-2xl bg-white p-8 shadow-lg">
-                <img
-                  src={project.images.tablet}
-                  alt={`${project.title} - Vista tablet`}
-                  className="w-full max-w-sm object-contain"
-                />
+        {/* Vista Tablet */}
+        <div className="bg-white py-16 md:py-20">
+          <div className="mx-auto max-w-7xl px-8 md:px-12">
+            <h3 className="mb-12 text-center text-2xl font-bold text-gray-900">
+              Vista Tablet
+            </h3>
+            <div className="flex justify-center">
+              <img
+                src={project.images.tablet}
+                alt={`${project.title} - Vista tablet`}
+                className="w-full max-w-lg object-contain shadow-xl rounded-lg"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Vista Mobile */}
+        <div className="bg-gray-50 py-16 md:py-20">
+          <div className="mx-auto max-w-7xl px-8 md:px-12">
+            <h3 className="mb-12 text-center text-2xl font-bold text-gray-900">
+              Vista Móvil
+            </h3>
+            <div className="flex justify-center">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-2xl">
+                {project.images.mobile.map((mobileImage, index) => (
+                  <div key={index} className="flex justify-center">
+                    <img
+                      src={mobileImage}
+                      alt={`${project.title} - Vista móvil ${index + 1}`}
+                      className="w-full max-w-40 object-contain shadow-lg rounded-lg"
+                    />
+                  </div>
+                ))}
               </div>
             </div>
+          </div>
+        </div>
+      </section>
 
-            {/* Mobile */}
-            <div>
-              <h3 className="mb-6 text-center text-lg font-bold text-gray-600">
-                Vista Móvil
-              </h3>
-              <div className="rounded-2xl bg-white p-8 shadow-lg">
-                <div className="grid grid-cols-3 gap-4">
-                  {project.images.mobile.map((mobileImage, index) => (
-                    <div key={index} className="flex justify-center">
-                      <img
-                        src={mobileImage}
-                        alt={`${project.title} - Vista móvil ${index + 1}`}
-                        className="w-full max-w-32 object-contain"
-                      />
-                    </div>
+      {/* Características principales */}
+      <section className="bg-white py-20 md:py-24">
+        <div className="mx-auto max-w-6xl px-8 md:px-12">
+          <div className="max-w-4xl mx-auto">
+            {project.keyFeatures && (
+              <div>
+                <h2 className="mb-12 text-3xl font-black uppercase md:text-4xl text-center">
+                  Características principales
+                </h2>
+                <ul className="space-y-6">
+                  {project.keyFeatures.map((feature, index) => (
+                    <li key={index} className="flex items-start">
+                      <span className="mt-3 mr-4 h-2 w-2 flex-shrink-0 rounded-full bg-green-600"></span>
+                      <span className="text-lg text-gray-700 leading-relaxed">{feature}</span>
+                    </li>
                   ))}
-                </div>
+                </ul>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </section>
 
       {/* Siguiente proyecto */}
-      <section className="bg-white py-20 md:py-24">
+      <section className="bg-gray-50 py-20 md:py-24">
         <div className="mx-auto max-w-6xl px-8 text-right md:px-12">
           <p className="mb-6 text-sm font-semibold tracking-wider text-gray-500 uppercase">
             Siguiente proyecto
