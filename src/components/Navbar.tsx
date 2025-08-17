@@ -172,21 +172,21 @@ export default function Navbar() {
                 className={`absolute block h-0.5 w-5 transform transition duration-300 ease-in-out ${
                   isMenuOpen 
                     ? (isIndexPage ? 'rotate-45 bg-white' : 'rotate-45 bg-black')
-                    : `-translate-y-1.5 ${isIndexPage ? 'bg-white-warm' : 'bg-black'}`
+                    : `-translate-y-1.5 ${isIndexPage ? 'bg-white' : 'bg-black'}`
                 }`}
               ></span>
               <span
                 className={`absolute block h-0.5 w-5 transform transition duration-300 ease-in-out ${
                   isMenuOpen 
                     ? (isIndexPage ? 'opacity-0 bg-white' : 'opacity-0 bg-black')
-                    : `${isIndexPage ? 'bg-white-warm' : 'bg-black'}`
+                    : `${isIndexPage ? 'bg-white' : 'bg-black'}`
                 }`}
               ></span>
               <span
                 className={`absolute block h-0.5 w-5 transform transition duration-300 ease-in-out ${
                   isMenuOpen 
                     ? (isIndexPage ? '-rotate-45 bg-white' : '-rotate-45 bg-black')
-                    : `translate-y-1.5 ${isIndexPage ? 'bg-white-warm' : 'bg-black'}`
+                    : `translate-y-1.5 ${isIndexPage ? 'bg-white' : 'bg-black'}`
                 }`}
               ></span>
             </div>
