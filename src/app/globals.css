@@ -21,7 +21,7 @@
 }
 
 body {
-  background: var(--background);
+  background: #F5F5F5;
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -54,15 +54,32 @@ body {
   -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.3);
 }
 
-/* Hover del logo: Negro → Transparente con borde negro más grueso */
-.name-hover:hover .name-text {
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.8);
+/* Estado de scroll en páginas NO-INDEX: transparente con borde negro fino */
+.name-text.text-transparent.black-stroke {
+  -webkit-text-stroke: 0.5px rgba(0, 0, 0, 0.3);
 }
 
-/* Hover cuando está scrolled (ya transparente): Transparente con borde → Negro relleno */
-.name-hover:hover .name-text.text-transparent {
-  color: #ffffff;
+/* Hover del logo en INDEX: white-warm relleno → Transparente con borde white-warm */
+.name-hover.index-page:hover .name-text {
+  color: transparent;
+  -webkit-text-stroke: 1px #F5F5F5;
+}
+
+/* Hover cuando está scrolled en INDEX (ya transparente): Transparente con borde → white-warm relleno */
+.name-hover.index-page:hover .name-text.text-transparent {
+  color: #F5F5F5;
+  -webkit-text-stroke: 0px transparent;
+}
+
+/* Hover del logo en páginas NO-INDEX: Negro relleno → Transparente con borde negro */
+.name-hover:not(.index-page):hover .name-text {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(0, 0, 0, 0.8);
+}
+
+/* Hover cuando está scrolled en páginas NO-INDEX (ya transparente): Transparente con borde → Negro relleno */
+.name-hover:not(.index-page):hover .name-text.text-transparent {
+  color: #000000;
   -webkit-text-stroke: 0px transparent;
 }
 

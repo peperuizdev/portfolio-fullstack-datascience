@@ -51,13 +51,13 @@ export default function Navbar() {
           <Link 
             href="/" 
             className={`text-base font-medium transition-opacity hover:opacity-60 ${
-              isIndexPage || isProjectPage ? (isIndexPage ? 'text-white' : 'text-black') : (isIndexPage ? 'text-white' : 'text-gray-600')
+              isIndexPage || isProjectPage ? (isIndexPage ? 'text-white-warm' : 'text-black') : (isIndexPage ? 'text-white-warm' : 'text-gray-600')
             }`}
           >
             Projects
           </Link>
           {(isIndexPage || isProjectPage) && (
-            <div className={`absolute -bottom-1 left-0 right-0 h-0.5 ${isIndexPage ? 'bg-white' : 'bg-black'}`}></div>
+            <div className={`absolute -bottom-1 left-0 right-0 h-0.5 ${isIndexPage ? 'bg-white-warm' : 'bg-black'}`}></div>
           )}
         </div>
 
@@ -66,13 +66,13 @@ export default function Navbar() {
           <Link 
             href="/about" 
             className={`text-base font-medium transition-opacity hover:opacity-60 ${
-              isAboutPage ? (isIndexPage ? 'text-white' : 'text-black') : (isIndexPage ? 'text-white' : 'text-gray-600')
+              isAboutPage ? (isIndexPage ? 'text-white-warm' : 'text-black') : (isIndexPage ? 'text-white-warm' : 'text-gray-600')
             }`}
           >
             About
           </Link>
           {isAboutPage && (
-            <div className={`absolute -bottom-1 left-0 right-0 h-0.5 ${isIndexPage ? 'bg-white' : 'bg-black'}`}></div>
+            <div className={`absolute -bottom-1 left-0 right-0 h-0.5 ${isIndexPage ? 'bg-white-warm' : 'bg-black'}`}></div>
           )}
         </div>
 
@@ -81,13 +81,13 @@ export default function Navbar() {
           <Link 
             href="/contact"
             className={`text-base font-medium transition-opacity hover:opacity-60 ${
-              isContactPage ? (isIndexPage ? 'text-white' : 'text-black') : (isIndexPage ? 'text-white' : 'text-gray-600')
+              isContactPage ? (isIndexPage ? 'text-white-warm' : 'text-black') : (isIndexPage ? 'text-white-warm' : 'text-gray-600')
             }`}
           >
             Contact
           </Link>
           {isContactPage && (
-            <div className={`absolute -bottom-1 left-0 right-0 h-0.5 ${isIndexPage ? 'bg-white' : 'bg-black'}`}></div>
+            <div className={`absolute -bottom-1 left-0 right-0 h-0.5 ${isIndexPage ? 'bg-white-warm' : 'bg-black'}`}></div>
           )}
         </div>
       </div>
@@ -98,7 +98,7 @@ export default function Navbar() {
     <>
       {/* Logo */}
       <div className="fixed top-4 left-4 z-50 md:top-8 md:left-8 lg:top-12 lg:left-12">
-        <Link href="/" className="name-hover group block">
+        <Link href="/" className={`name-hover group block ${isIndexPage ? 'index-page' : ''}`}>
           <div className="space-y-0">
             <h1
               className={`name-text leading-[0.9] font-black uppercase ${
@@ -107,11 +107,11 @@ export default function Navbar() {
                   : 'text-xl md:text-2xl lg:text-3xl'
               } ${
                 isMenuOpen 
-                  ? 'text-white'
+                  ? (isIndexPage ? 'text-white-warm' : 'text-black')
                   : !isIndexPage && isScrolled 
-                    ? 'text-transparent' 
+                    ? 'text-transparent' + (!isIndexPage ? ' black-stroke' : '')
                     : isIndexPage 
-                      ? 'text-white' 
+                      ? 'text-white-warm' 
                       : 'text-black'
               }`}
             >
@@ -124,11 +124,11 @@ export default function Navbar() {
                   : 'text-xl md:text-2xl lg:text-3xl'
               } ${
                 isMenuOpen 
-                  ? 'text-white'
+                  ? (isIndexPage ? 'text-white-warm' : 'text-black')
                   : !isIndexPage && isScrolled 
-                    ? 'text-transparent' 
+                    ? 'text-transparent' + (!isIndexPage ? ' black-stroke' : '')
                     : isIndexPage 
-                      ? 'text-white' 
+                      ? 'text-white-warm' 
                       : 'text-black'
               }`}
             >
@@ -141,12 +141,12 @@ export default function Navbar() {
                   : 'mt-1 text-xs md:mt-2 md:text-sm lg:mt-3 lg:text-base'
               } ${
                 isMenuOpen 
-                  ? 'text-white opacity-100 transform translate-y-0'
+                  ? (isIndexPage ? 'text-white-warm opacity-100 transform translate-y-0' : 'text-black opacity-100 transform translate-y-0')
                   : !isIndexPage && isScrolled 
                     ? 'opacity-0 transform -translate-y-2' 
                     : isIndexPage 
-                      ? 'text-white opacity-100 transform translate-y-0'
-                      : 'opacity-100 transform translate-y-0'
+                      ? 'text-white-warm opacity-100 transform translate-y-0'
+                      : 'text-black opacity-100 transform translate-y-0'
               }`}
             >
               {SITE_CONFIG.title}
@@ -170,17 +170,23 @@ export default function Navbar() {
             <div className="absolute left-1/2 top-1/2 block w-5 -translate-x-1/2 -translate-y-1/2 transform">
               <span
                 className={`absolute block h-0.5 w-5 transform transition duration-300 ease-in-out ${
-                  isMenuOpen ? 'rotate-45 bg-white' : `-translate-y-1.5 ${isIndexPage ? 'bg-white' : 'bg-black'}`
+                  isMenuOpen 
+                    ? (isIndexPage ? 'rotate-45 bg-white' : 'rotate-45 bg-black')
+                    : `-translate-y-1.5 ${isIndexPage ? 'bg-white-warm' : 'bg-black'}`
                 }`}
               ></span>
               <span
                 className={`absolute block h-0.5 w-5 transform transition duration-300 ease-in-out ${
-                  isMenuOpen ? 'opacity-0 bg-white' : `${isIndexPage ? 'bg-white' : 'bg-black'}`
+                  isMenuOpen 
+                    ? (isIndexPage ? 'opacity-0 bg-white' : 'opacity-0 bg-black')
+                    : `${isIndexPage ? 'bg-white-warm' : 'bg-black'}`
                 }`}
               ></span>
               <span
                 className={`absolute block h-0.5 w-5 transform transition duration-300 ease-in-out ${
-                  isMenuOpen ? '-rotate-45 bg-white' : `translate-y-1.5 ${isIndexPage ? 'bg-white' : 'bg-black'}`
+                  isMenuOpen 
+                    ? (isIndexPage ? '-rotate-45 bg-white' : '-rotate-45 bg-black')
+                    : `translate-y-1.5 ${isIndexPage ? 'bg-white-warm' : 'bg-black'}`
                 }`}
               ></span>
             </div>
@@ -192,7 +198,7 @@ export default function Navbar() {
       {isMenuOpen && (
         <div 
           className="menu-overlay fixed inset-0 z-40 lg:hidden"
-          style={{ backgroundColor: '#047857' }}
+          style={{ backgroundColor: isIndexPage ? '#047857' : '#E5E5E5' }}
         >
           <div className="flex h-full w-full flex-col items-center justify-center">
             <div className="w-full max-w-md px-8">
@@ -203,14 +209,16 @@ export default function Navbar() {
                   <Link
                     href="/"
                     className={`block text-2xl font-bold transition-opacity hover:opacity-60 ${
-                      isIndexPage || isProjectPage ? 'text-white' : 'text-white opacity-70'
+                      isIndexPage || isProjectPage 
+                        ? (isIndexPage ? 'text-white-warm' : 'text-black') 
+                        : (isIndexPage ? 'text-white-warm opacity-70' : 'text-black opacity-70')
                     }`}
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Projects
                   </Link>
                   {(isIndexPage || isProjectPage) && (
-                    <div className="mx-auto mt-2 h-0.5 w-12 bg-white"></div>
+                    <div className={`mx-auto mt-2 h-0.5 w-12 ${isIndexPage ? 'bg-white-warm' : 'bg-black'}`}></div>
                   )}
                 </div>
 
@@ -219,14 +227,16 @@ export default function Navbar() {
                   <Link
                     href="/about"
                     className={`block text-2xl font-bold transition-opacity hover:opacity-60 ${
-                      isAboutPage ? 'text-white' : 'text-white opacity-70'
+                      isAboutPage 
+                        ? (isIndexPage ? 'text-white-warm' : 'text-black') 
+                        : (isIndexPage ? 'text-white-warm opacity-70' : 'text-black opacity-70')
                     }`}
                     onClick={() => setIsMenuOpen(false)}
                   >
                     About
                   </Link>
                   {isAboutPage && (
-                    <div className="mx-auto mt-2 h-0.5 w-12 bg-white"></div>
+                    <div className={`mx-auto mt-2 h-0.5 w-12 ${isIndexPage ? 'bg-white-warm' : 'bg-black'}`}></div>
                   )}
                 </div>
 
@@ -235,14 +245,16 @@ export default function Navbar() {
                   <Link
                     href="/contact"
                     className={`block text-2xl font-bold transition-opacity hover:opacity-60 ${
-                      isContactPage ? 'text-white' : 'text-white opacity-70'
+                      isContactPage 
+                        ? (isIndexPage ? 'text-white-warm' : 'text-black') 
+                        : (isIndexPage ? 'text-white-warm opacity-70' : 'text-black opacity-70')
                     }`}
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Contact
                   </Link>
                   {isContactPage && (
-                    <div className="mx-auto mt-2 h-0.5 w-12 bg-white"></div>
+                    <div className={`mx-auto mt-2 h-0.5 w-12 ${isIndexPage ? 'bg-white-warm' : 'bg-black'}`}></div>
                   )}
                 </div>
               </div>
@@ -251,33 +263,33 @@ export default function Navbar() {
               <div className="space-y-6 text-center">
                 {/* Contact info */}
                 <div className="space-y-2">
-                  <p className="text-sm font-medium text-white">
+                  <p className={`text-sm font-medium ${isIndexPage ? 'text-white-warm' : 'text-black'}`}>
                     Contact
                   </p>
                   <a
                     href={SITE_CONFIG.links.email}
-                    className="block text-sm text-white opacity-70 transition-opacity hover:opacity-100"
+                    className={`block text-sm transition-opacity hover:opacity-100 ${isIndexPage ? 'text-white-warm opacity-70' : 'text-black opacity-70'}`}
                   >
                     {SITE_CONFIG.email}
                   </a>
-                  <p className="text-sm text-white opacity-70">
+                  <p className={`text-sm ${isIndexPage ? 'text-white-warm opacity-70' : 'text-black opacity-70'}`}>
                     {SITE_CONFIG.phone}
                   </p>
                 </div>
 
                 {/* Location */}
                 <div className="space-y-2">
-                  <p className="text-sm font-medium text-white">
+                  <p className={`text-sm font-medium ${isIndexPage ? 'text-white-warm' : 'text-black'}`}>
                     Location
                   </p>
-                  <p className="text-sm text-white opacity-70">
+                  <p className={`text-sm ${isIndexPage ? 'text-white-warm opacity-70' : 'text-black opacity-70'}`}>
                     {SITE_CONFIG.location}
                   </p>
                 </div>
 
                 {/* Social links */}
                 <div className="space-y-2">
-                  <p className="text-sm font-medium text-white">
+                  <p className={`text-sm font-medium ${isIndexPage ? 'text-white-warm' : 'text-black'}`}>
                     Follow
                   </p>
                   <div className="flex justify-center space-x-6">
@@ -285,7 +297,7 @@ export default function Navbar() {
                       href={SITE_CONFIG.links.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm text-white opacity-70 transition-opacity hover:opacity-100"
+                      className={`text-sm transition-opacity hover:opacity-100 ${isIndexPage ? 'text-white-warm opacity-70' : 'text-black opacity-70'}`}
                     >
                       GitHub
                     </a>
@@ -293,7 +305,7 @@ export default function Navbar() {
                       href={SITE_CONFIG.links.linkedin}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm text-white opacity-70 transition-opacity hover:opacity-100"
+                      className={`text-sm transition-opacity hover:opacity-100 ${isIndexPage ? 'text-white-warm opacity-70' : 'text-black opacity-70'}`}
                     >
                       LinkedIn
                     </a>

@@ -15,7 +15,7 @@ const config: Config = {
         primary: {
           50: '#f0fdf4',
           100: '#dcfce7',
-          500: '#059669', // Verde principal
+          500: '#059669',
           600: '#047857',
           700: '#065f46',
         },
@@ -37,7 +37,10 @@ const config: Config = {
         },
         // Colores básicos
         black: '#000000',
-        white: '#ffffff',
+        white: {
+          DEFAULT: '#ffffff',
+          warm: '#FAFAFA', 
+        },
       },
       fontFamily: {
         sans: ['var(--font-geist-sans)', 'system-ui', 'sans-serif'],

@@ -92,7 +92,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       </section>
 
       {/* Contexto del proyecto */}
-      <section className="bg-white py-20 md:py-24">
+      <section className="bg-white-warm py-20 md:py-24">
         <div className="mx-auto max-w-6xl px-8 md:px-12">
           <div className="grid gap-16 lg:grid-cols-3">
             {/* Contenido principal */}
@@ -140,7 +140,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                     href={project.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 bg-green-600 px-8 py-4 font-medium text-white transition-colors hover:bg-green-700 text-lg"
+                    className="inline-flex items-center gap-2 bg-green-600 px-8 py-4 font-medium text-white-warm transition-colors hover:bg-green-700 text-lg"
                   >
                     <ExternalLink className="h-5 w-5" />
                     Ver proyecto en vivo
@@ -217,7 +217,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       {/* Capturas del proyecto  */}
       <section>
         {/* Vista Desktop */}
-        <div className="bg-gray-50 py-16 md:py-20">
+        <div className="bg-white py-16 md:py-20">
           <div className="mx-auto max-w-7xl px-8 md:px-12">
             <h3 className="mb-12 text-center text-2xl font-bold text-gray-900">
               Vista Desktop
@@ -226,14 +226,14 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               <img
                 src={project.images.desktop}
                 alt={`${project.title} - Vista desktop`}
-                className="w-full rounded-lg object-contain shadow-2xl"
+                className="w-full rounded-lg object-contain"
               />
             </div>
           </div>
         </div>
 
         {/* Vista Tablet */}
-        <div className="bg-white py-16 md:py-20">
+        <div className="bg-white-warm py-16 md:py-20">
           <div className="mx-auto max-w-7xl px-8 md:px-12">
             <h3 className="mb-12 text-center text-2xl font-bold text-gray-900">
               Vista Tablet
@@ -242,26 +242,26 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               <img
                 src={project.images.tablet}
                 alt={`${project.title} - Vista tablet`}
-                className="w-full max-w-lg object-contain shadow-xl rounded-lg"
+                className="w-full max-w-lg object-contain rounded-lg"
               />
             </div>
           </div>
         </div>
 
         {/* Vista Mobile */}
-        <div className="bg-gray-50 py-16 md:py-20">
+        <div className="bg-white py-16 md:py-20">
           <div className="mx-auto max-w-7xl px-8 md:px-12">
             <h3 className="mb-12 text-center text-2xl font-bold text-gray-900">
               Vista Móvil
             </h3>
             <div className="flex justify-center">
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-2xl">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-4xl">
                 {project.images.mobile.map((mobileImage, index) => (
                   <div key={index} className="flex justify-center">
                     <img
                       src={mobileImage}
                       alt={`${project.title} - Vista móvil ${index + 1}`}
-                      className="w-full max-w-40 object-contain shadow-lg rounded-lg"
+                      className="w-full max-w-52 object-contain rounded-lg"
                     />
                   </div>
                 ))}
@@ -272,7 +272,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       </section>
 
       {/* Características principales */}
-      <section className="bg-white py-20 md:py-24">
+      <section className="bg-white-warm py-20 md:py-24">
         <div className="mx-auto max-w-6xl px-8 md:px-12">
           <div className="max-w-4xl mx-auto">
             {project.keyFeatures && (
@@ -295,7 +295,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       </section>
 
       {/* Siguiente proyecto */}
-      <section className="bg-gray-50 py-20 md:py-24">
+      <section className="bg-warm-white py-20 md:py-24">
         <div className="mx-auto max-w-6xl px-8 text-right md:px-12">
           <p className="mb-6 text-sm font-semibold tracking-wider text-gray-500 uppercase">
             Siguiente proyecto
