@@ -2,10 +2,12 @@ import { notFound } from 'next/navigation'
 import { ExternalLink, Github } from 'lucide-react'
 import { projects } from '@/data/projects'
 import { SITE_CONFIG } from '@/lib/constants'
+import { Locale } from '@/lib/i18n'
 
 interface ProjectPageProps {
   params: Promise<{
     slug: string
+    lang: Locale
   }>
 }
 
@@ -22,7 +24,7 @@ function getNextProject(currentSlug: string) {
 }
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
-  const { slug } = await params
+  const { slug, lang } = await params
   const project = getProjectBySlug(slug)
 
   if (!project) {
@@ -33,13 +35,59 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
   const getCategoryLabel = (category: string) => {
     const categories = {
-      ai: 'Inteligencia Artificial',
-      fullstack: 'Full Stack',
-      frontend: 'Frontend',
-      backend: 'Backend',
+      es: {
+        ai: 'Inteligencia Artificial',
+        fullstack: 'Full Stack',
+        frontend: 'Frontend',
+        backend: 'Backend',
+      },
+      en: {
+        ai: 'Artificial Intelligence',
+        fullstack: 'Full Stack',
+        frontend: 'Frontend',
+        backend: 'Backend',
+      }
     }
-    return categories[category as keyof typeof categories] || category
+    return categories[lang][category as keyof typeof categories.es] || category
   }
+
+  // Textos por idioma
+  const texts = {
+    es: {
+      problem: 'El Problema',
+      solution: 'La Solución',
+      impact: 'Impacto',
+      category: 'Categoría',
+      completedAt: 'Fecha de finalización',
+      techStack: 'Stack tecnológico',
+      highlights: 'Puntos destacados',
+      keyFeatures: 'Características principales',
+      nextProject: 'Siguiente proyecto',
+      desktopView: 'Vista Desktop',
+      tabletView: 'Vista Tablet',
+      mobileView: 'Vista Móvil',
+      viewOnGithub: 'Ver en GitHub',
+      viewLive: 'Ver proyecto en vivo',
+    },
+    en: {
+      problem: 'The Problem',
+      solution: 'The Solution',
+      impact: 'Impact',
+      category: 'Category',
+      completedAt: 'Completion date',
+      techStack: 'Tech Stack',
+      highlights: 'Highlights',
+      keyFeatures: 'Key Features',
+      nextProject: 'Next project',
+      desktopView: 'Desktop View',
+      tabletView: 'Tablet View',
+      mobileView: 'Mobile View',
+      viewOnGithub: 'View on GitHub',
+      viewLive: 'View live project',
+    }
+  }
+
+  const t = texts[lang]
 
   return (
     <div
@@ -86,7 +134,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                   className="inline-flex items-center gap-2 bg-white/90 px-4 py-2 text-sm font-medium text-black backdrop-blur-sm transition-all hover:scale-105 hover:bg-white md:px-6 md:py-3 md:text-base"
                 >
                   <Github className="h-4 w-4" />
-                  Ver en GitHub
+                  {t.viewOnGithub}
                 </a>
               )}
               {project.liveUrl && (
@@ -97,7 +145,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                   className="inline-flex items-center gap-2 bg-white/90 px-4 py-2 text-sm font-medium text-black backdrop-blur-sm transition-all hover:scale-105 hover:bg-white md:px-6 md:py-3 md:text-base"
                 >
                   <ExternalLink className="h-4 w-4" />
-                  Ver proyecto en vivo
+                  {t.viewLive}
                 </a>
               )}
             </div>
@@ -118,7 +166,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               {project.problem && (
                 <div>
                   <h2 className="mb-4 text-2xl font-black uppercase md:text-3xl lg:mb-6 lg:text-4xl">
-                    El Problema
+                    {t.problem}
                   </h2>
                   <p className="text-base leading-relaxed text-gray-700 md:text-lg lg:text-xl">
                     {project.problem}
@@ -130,7 +178,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               {project.solution && (
                 <div>
                   <h2 className="mb-4 text-2xl font-black uppercase md:text-3xl lg:mb-6 lg:text-4xl">
-                    La Solución
+                    {t.solution}
                   </h2>
                   <p className="text-base leading-relaxed text-gray-700 md:text-lg lg:text-xl">
                     {project.solution}
@@ -142,7 +190,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               {project.impact && (
                 <div>
                   <h2 className="mb-4 text-2xl font-black uppercase md:text-3xl lg:mb-6 lg:text-4xl">
-                    Impacto
+                    {t.impact}
                   </h2>
                   <p className="text-base leading-relaxed text-gray-700 md:text-lg lg:text-xl">
                     {project.impact}
@@ -155,7 +203,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             <div className="space-y-6 lg:space-y-8">
               <div>
                 <h3 className="mb-2 text-xs font-semibold tracking-wider text-gray-400 uppercase lg:mb-3">
-                  Categoría
+                  {t.category}
                 </h3>
                 <p className="text-base font-medium md:text-lg">
                   {getCategoryLabel(project.category)}
@@ -164,11 +212,11 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
               <div>
                 <h3 className="mb-2 text-xs font-semibold tracking-wider text-gray-400 uppercase lg:mb-3">
-                  Fecha de finalización
+                  {t.completedAt}
                 </h3>
                 <p className="text-base font-medium md:text-lg">
                   {new Date(project.completedAt + '-01').toLocaleDateString(
-                    'es-ES',
+                    lang === 'es' ? 'es-ES' : 'en-US',
                     {
                       year: 'numeric',
                       month: 'long',
@@ -179,7 +227,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
               <div>
                 <h3 className="mb-2 text-xs font-semibold tracking-wider text-gray-400 uppercase lg:mb-3">
-                  Stack tecnológico
+                  {t.techStack}
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {project.technologies.map((tech) => (
@@ -197,7 +245,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               {project.highlights && (
                 <div>
                   <h3 className="mb-3 text-xs font-semibold tracking-wider text-gray-400 uppercase lg:mb-4">
-                    Puntos destacados
+                    {t.highlights}
                   </h3>
                   <ul className="space-y-2 lg:space-y-3">
                     {project.highlights.map((highlight, index) => (
@@ -222,12 +270,12 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         <div className="bg-white py-12 md:py-16 lg:py-20">
           <div className="mx-auto max-w-7xl px-8 md:px-12">
             <h3 className="mb-8 text-center text-xl font-bold text-gray-900 md:text-2xl lg:mb-12">
-              Vista Desktop
+              {t.desktopView}
             </h3>
             <div className="mx-auto max-w-6xl">
               <img
                 src={project.images.desktop}
-                alt={`${project.title} - Vista desktop`}
+                alt={`${project.title} - ${t.desktopView}`}
                 className="w-full rounded-lg object-contain"
               />
             </div>
@@ -241,12 +289,12 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         >
           <div className="mx-auto max-w-7xl px-8 md:px-12">
             <h3 className="mb-8 text-center text-xl font-bold text-gray-900 md:text-2xl lg:mb-12">
-              Vista Tablet
+              {t.tabletView}
             </h3>
             <div className="flex justify-center">
               <img
                 src={project.images.tablet}
-                alt={`${project.title} - Vista tablet`}
+                alt={`${project.title} - ${t.tabletView}`}
                 className="w-full max-w-lg rounded-lg object-contain"
               />
             </div>
@@ -257,7 +305,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         <div className="bg-white py-12 md:py-16 lg:py-20">
           <div className="mx-auto max-w-7xl px-8 md:px-12">
             <h3 className="mb-8 text-center text-xl font-bold text-gray-900 md:text-2xl lg:mb-12">
-              Vista Móvil
+              {t.mobileView}
             </h3>
             <div className="flex justify-center">
               <div className="grid max-w-2xl grid-cols-1 gap-6 sm:grid-cols-3 lg:gap-8">
@@ -265,7 +313,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                   <div key={index} className="flex justify-center">
                     <img
                       src={mobileImage}
-                      alt={`${project.title} - Vista móvil ${index + 1}`}
+                      alt={`${project.title} - ${t.mobileView} ${index + 1}`}
                       className="w-full max-w-40 rounded-lg object-contain"
                     />
                   </div>
@@ -286,7 +334,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             {project.keyFeatures && (
               <div>
                 <h2 className="mb-8 text-center text-2xl font-black uppercase md:text-3xl lg:mb-12 lg:text-4xl">
-                  Características principales
+                  {t.keyFeatures}
                 </h2>
                 <ul className="space-y-4 lg:space-y-6">
                   {project.keyFeatures.map((feature, index) => (
@@ -311,10 +359,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       >
         <div className="mx-auto max-w-6xl px-8 text-right md:px-12">
           <p className="mb-4 text-xs font-semibold tracking-wider text-gray-500 uppercase md:text-sm lg:mb-6">
-            Siguiente proyecto
+            {t.nextProject}
           </p>
           <a
-            href={`/projects/${nextProject.slug}`}
+            href={`/${lang}/projects/${nextProject.slug}`}
             className="next-project-hover block text-3xl leading-[0.8] font-black md:text-5xl lg:text-6xl xl:text-7xl"
           >
             {nextProject.title.split(' ').map((word, index) => (
@@ -330,12 +378,12 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 }
 
 export async function generateMetadata({ params }: ProjectPageProps) {
-  const { slug } = await params
+  const { slug, lang } = await params
   const project = getProjectBySlug(slug)
 
   if (!project) {
     return {
-      title: 'Proyecto no encontrado',
+      title: lang === 'es' ? 'Proyecto no encontrado' : 'Project not found',
     }
   }
 

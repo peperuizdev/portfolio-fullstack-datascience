@@ -1,8 +1,17 @@
 import { SITE_CONFIG } from '@/lib/constants'
 import Link from 'next/link'
 import { Download } from 'lucide-react'
+import { Locale } from '@/lib/i18n'
 
-export default function AboutPage() {
+interface AboutPageProps {
+  params: Promise<{
+    lang: Locale
+  }>
+}
+
+export default async function AboutPage({ params }: AboutPageProps) {
+  const { lang } = await params
+
   return (
     <div
       className="relative min-h-screen text-black"
@@ -14,16 +23,16 @@ export default function AboutPage() {
           {/* Título principal desktop - justificado a la izquierda */}
           <div className="mb-16 hidden text-left md:mb-20 lg:block">
             <h1 className="name-text text-6xl leading-[0.8] font-black uppercase lg:text-8xl">
-              SOBRE MÍ
+              ABOUT ME
             </h1>
           </div>
 
           {/* Título móvil centrado */}
           <div className="mb-16 text-center lg:hidden">
             <h1 className="name-text text-5xl leading-[0.8] font-black uppercase md:text-6xl">
-              SOBRE
+              ABOUT
               <br />
-              MÍ
+              ME
             </h1>
           </div>
 
@@ -32,7 +41,7 @@ export default function AboutPage() {
             <div className="relative">
               <img
                 src={SITE_CONFIG.profileImage}
-                alt={`${SITE_CONFIG.name} - Foto de perfil`}
+                alt={`${SITE_CONFIG.name} - Profile picture`}
                 className="h-40 w-40 rounded-full object-cover shadow-lg md:h-48 md:w-48"
               />
             </div>
@@ -44,45 +53,43 @@ export default function AboutPage() {
             <div className="space-y-8 lg:col-span-2">
               <div>
                 <h2 className="mb-6 text-2xl font-black uppercase md:text-3xl">
-                  ¿Quién soy?
+                  Who am I?
                 </h2>
                 <p className="mb-6 text-lg leading-relaxed text-gray-700 md:text-xl">
-                  Soy {SITE_CONFIG.name}, un desarrollador Full Stack apasionado
-                  por la inteligencia artificial y la ciencia de datos. Me
-                  especializo en crear soluciones web escalables que integran
-                  tecnologías modernas con algoritmos de machine learning.
+                  I'm {SITE_CONFIG.name}, a Full Stack developer passionate about
+                  artificial intelligence and data science. I specialize in creating
+                  scalable web solutions that integrate modern technologies with
+                  machine learning algorithms.
                 </p>
                 <p className="text-lg leading-relaxed text-gray-700 md:text-xl">
-                  Mi experiencia abarca desde el desarrollo de interfaces
-                  responsivas con React y Next.js hasta la implementación de
-                  modelos predictivos con Python, XGBoost y redes neuronales.
-                  Disfruto transformando ideas complejas en aplicaciones
-                  funcionales y elegantes.
-                </p>
-              </div>
-
-              <div>
-                <h2 className="mb-6 text-2xl font-black uppercase md:text-3xl">
-                  Mi enfoque
-                </h2>
-                <p className="text-lg leading-relaxed text-gray-700 md:text-xl">
-                  Creo en el poder de la tecnología para resolver problemas
-                  reales. Mi enfoque combina buenas prácticas de desarrollo con
-                  las últimas innovaciones en IA, siempre buscando el equilibrio
-                  perfecto entre funcionalidad, rendimiento y experiencia de
-                  usuario.
+                  My experience spans from developing responsive interfaces with
+                  React and Next.js to implementing predictive models with Python,
+                  XGBoost, and neural networks. I enjoy transforming complex ideas
+                  into functional and elegant applications.
                 </p>
               </div>
 
               <div>
                 <h2 className="mb-6 text-2xl font-black uppercase md:text-3xl">
-                  Experiencia
+                  My approach
                 </h2>
                 <p className="text-lg leading-relaxed text-gray-700 md:text-xl">
-                  He trabajado en proyectos que van desde aplicaciones de
-                  análisis predictivo hasta plataformas de gestión educativa. Mi
-                  stack principal incluye React, Django, FastAPI y herramientas
-                  de machine learning como Scikit-Learn y XGBoost.
+                  I believe in the power of technology to solve real problems. My
+                  approach combines good development practices with the latest
+                  innovations in AI, always seeking the perfect balance between
+                  functionality, performance, and user experience.
+                </p>
+              </div>
+
+              <div>
+                <h2 className="mb-6 text-2xl font-black uppercase md:text-3xl">
+                  Experience
+                </h2>
+                <p className="text-lg leading-relaxed text-gray-700 md:text-xl">
+                  I have worked on projects ranging from predictive analysis
+                  applications to educational management platforms. My main stack
+                  includes React, Django, FastAPI, and machine learning tools like
+                  Scikit-Learn and XGBoost.
                 </p>
               </div>
             </div>
@@ -94,7 +101,7 @@ export default function AboutPage() {
                 <div className="relative">
                   <img
                     src={SITE_CONFIG.profileImage}
-                    alt={`${SITE_CONFIG.name} - Foto de perfil`}
+                    alt={`${SITE_CONFIG.name} - Profile picture`}
                     className="h-40 w-40 rounded-full object-cover shadow-lg lg:h-48 lg:w-48"
                   />
                 </div>
@@ -102,21 +109,21 @@ export default function AboutPage() {
 
               <div>
                 <h3 className="mb-3 text-xs font-semibold tracking-wider text-gray-400 uppercase">
-                  Ubicación
+                  Location
                 </h3>
                 <p className="text-lg font-medium">{SITE_CONFIG.location}</p>
               </div>
 
               <div>
                 <h3 className="mb-3 text-xs font-semibold tracking-wider text-gray-400 uppercase">
-                  Especialización
+                  Specialization
                 </h3>
                 <p className="text-lg font-medium">{SITE_CONFIG.title}</p>
               </div>
 
               <div>
                 <h3 className="mb-3 text-xs font-semibold tracking-wider text-gray-400 uppercase">
-                  Stack principal
+                  Main Stack
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {SITE_CONFIG.primaryStack.map((tech) => (
@@ -132,7 +139,7 @@ export default function AboutPage() {
 
               <div>
                 <h3 className="mb-3 text-xs font-semibold tracking-wider text-gray-400 uppercase">
-                  Enlaces
+                  Links
                 </h3>
                 <div className="space-y-3">
                   <a
@@ -157,7 +164,7 @@ export default function AboutPage() {
               {/* Botón de descarga CV */}
               <div>
                 <h3 className="mb-3 text-xs font-semibold tracking-wider text-gray-400 uppercase">
-                  Currículum
+                  Resume
                 </h3>
                 <a
                   href={SITE_CONFIG.links.cv}
@@ -165,7 +172,7 @@ export default function AboutPage() {
                   className="inline-flex items-center gap-2 bg-black px-6 py-3 text-sm font-medium text-white transition-all hover:scale-105 hover:bg-gray-800"
                 >
                   <Download className="h-4 w-4" />
-                  Descargar CV
+                  Download CV
                 </a>
               </div>
             </div>
@@ -177,24 +184,24 @@ export default function AboutPage() {
       <section className="bg-gray-50 py-20 md:py-24">
         <div className="mx-auto max-w-6xl px-8 text-center md:px-12">
           <h2 className="mb-8 text-3xl font-black uppercase md:text-4xl">
-            ¿Trabajamos juntos?
+            Let's work together?
           </h2>
           <p className="mb-8 text-lg text-gray-700 md:text-xl">
-            Si tienes un proyecto interesante o quieres colaborar, me encantaría
-            conocer más detalles.
+            If you have an interesting project or want to collaborate, I'd love to
+            learn more details.
           </p>
           <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
             <Link
-              href="/contact"
+              href={`/${lang}/contact`}
               className="inline-block bg-black px-8 py-3 font-medium text-white transition-all hover:scale-105 hover:bg-gray-800"
             >
-              Contactar
+              Contact
             </Link>
             <Link
-              href="/"
+              href={`/${lang}`}
               className="inline-block border-2 border-black px-8 py-3 font-medium text-black transition-all hover:scale-105 hover:bg-black hover:text-white"
             >
-              Ver proyectos
+              View projects
             </Link>
           </div>
         </div>
@@ -203,9 +210,11 @@ export default function AboutPage() {
   )
 }
 
-export async function generateMetadata() {
+export async function generateMetadata({ params }: AboutPageProps) {
+  const { lang } = await params
+  
   return {
     title: `About - ${SITE_CONFIG.name}`,
-    description: `Conoce más sobre ${SITE_CONFIG.name}, ${SITE_CONFIG.title} especializado en crear soluciones web escalables con IA.`,
+    description: `Learn more about ${SITE_CONFIG.name}, ${SITE_CONFIG.title} specialized in creating scalable web solutions with AI.`,
   }
 }

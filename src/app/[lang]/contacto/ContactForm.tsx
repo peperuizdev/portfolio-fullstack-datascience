@@ -1,8 +1,13 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { Locale } from '@/lib/i18n'
 
-export default function ContactForm() {
+interface ContactFormProps {
+  lang: Locale
+}
+
+export default function ContactForm({ lang }: ContactFormProps) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',

@@ -1,86 +1,14 @@
-import { projects } from '@/data/projects'
+import { redirect } from 'next/navigation'
+import { headers } from 'next/headers'
 
-export default function Home() {
-  const formatProjectTitle = (title: string) => {
-    const words = title.split(' ')
-
-    if (words.length === 1) {
-      return [
-        <span key="first" className="block">
-          {words[0]}
-        </span>,
-        <span key="second" className="block opacity-0">
-          .
-        </span>,
-      ]
-    } else if (words.length === 2) {
-      return [
-        <span key="first" className="block">
-          {words[0]}
-        </span>,
-        <span key="second" className="block">
-          {words[1]}
-        </span>,
-      ]
-    } else {
-      const mid = Math.ceil(words.length / 2)
-      const firstLine = words.slice(0, mid).join(' ')
-      const secondLine = words.slice(mid).join(' ')
-      return [
-        <span key="first" className="block">
-          {firstLine}
-        </span>,
-        <span key="second" className="block">
-          {secondLine}
-        </span>,
-      ]
-    }
-  }
-
-  const formatDate = (dateString: string) => {
-    const [year, month] = dateString.split('-')
-    const months = {
-      '01': 'ENE',
-      '02': 'FEB',
-      '03': 'MAR',
-      '04': 'ABR',
-      '05': 'MAY',
-      '06': 'JUN',
-      '07': 'JUL',
-      '08': 'AGO',
-      '09': 'SEP',
-      '10': 'OCT',
-      '11': 'NOV',
-      '12': 'DIC',
-    }
-    return `${months[month as keyof typeof months] || month} ${year}`
-  }
-
-  return (
-    <div className="bg-background text-foreground relative min-h-screen overflow-x-hidden">
-      {/* Proyectos */}
-      <main className="min-h-screen w-full">
-        <div className="ml-auto min-h-screen w-full pt-32 pr-4 pb-32 md:w-4/5 md:pt-40 md:pr-8 lg:w-3/4 lg:pt-48 lg:pr-12">
-          <div className="space-y-16 md:space-y-20 lg:space-y-24">
-            {projects.map((project) => (
-              <div key={project.id} className="space-y-2 md:space-y-4">
-                <div className="text-right">
-                  <span className="text-xs font-medium tracking-wider text-black md:text-sm">
-                    {formatDate(project.completedAt)}
-                  </span>
-                </div>
-
-                <a
-                  href={`/projects/${project.slug}`}
-                  className="project-hover text-project-title block text-right text-4xl leading-none md:text-6xl lg:text-8xl"
-                >
-                  {formatProjectTitle(project.title)}
-                </a>
-              </div>
-            ))}
-          </div>
-        </div>
-      </main>
-    </div>
-  )
+export default async function RootPage() {
+  // Obtener el idioma preferido del navegador
+  const headersList = await headers()
+  const acceptLanguage = headersList.get('accept-language') || ''
+  
+  // Detectar idioma (español por defecto)
+  const preferredLanguage = acceptLanguage.includes('en') ? 'en' : 'es'
+  
+  // Redirigir al idioma detectado
+  redirect(`/${preferredLanguage}`)
 }

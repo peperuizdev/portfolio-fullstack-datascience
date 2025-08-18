@@ -1,19 +1,27 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { SITE_CONFIG } from '@/lib/constants'
+import { Locale, getLocalizedPath, isValidLocale } from '@/lib/i18n'
 
 export default function Navbar() {
   const pathname = usePathname()
+  const router = useRouter()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
 
-  const isAboutPage = pathname === '/about'
-  const isIndexPage = pathname === '/'
-  const isContactPage = pathname === '/contact'
-  const isProjectPage = pathname.startsWith('/projects/')
+  // Extraer idioma de la URL
+  const pathSegments = pathname.split('/').filter(Boolean)
+  const currentLang = (pathSegments[0] && isValidLocale(pathSegments[0]) ? pathSegments[0] : 'es') as Locale
+
+  // Determinar en qué página estamos
+  const currentPath = pathname.replace(`/${currentLang}`, '') || '/'
+  const isAboutPage = currentPath === '/sobre-mi' || currentPath === '/about'
+  const isIndexPage = currentPath === '/'
+  const isContactPage = currentPath === '/contacto' || currentPath === '/contact'
+  const isProjectPage = currentPath.startsWith('/projects/')
 
   // Efecto scroll solo para páginas que NO son home
   useEffect(() => {
@@ -50,83 +58,170 @@ export default function Navbar() {
     }
   }, [isMenuOpen])
 
+  // Función para cambiar idioma
+  const switchLanguage = (newLang: Locale) => {
+    // Guardar preferencia en cookie
+    document.cookie = `NEXT_LOCALE=${newLang}; path=/; max-age=31536000` // 1 año
+
+    // Obtener la nueva ruta
+    const newPath = getLocalizedPath(pathname, currentLang, newLang)
+    
+    // Navegar a la nueva ruta
+    router.push(newPath)
+    
+    // Cerrar menú si está abierto
+    setIsMenuOpen(false)
+  }
+
+  // Textos por idioma
+  const navTexts = {
+    es: {
+      projects: 'Proyectos',
+      about: 'Sobre mí',
+      contact: 'Contacto',
+      location: 'Ubicación',
+      followMe: 'Sígueme',
+    },
+    en: {
+      projects: 'Projects',
+      about: 'About me', 
+      contact: 'Contact',
+      location: 'Location',
+      followMe: 'Follow me',
+    }
+  }
+
+  const t = navTexts[currentLang]
+
+  // Enlaces de navegación según idioma
+  const getNavLinks = () => {
+    if (currentLang === 'es') {
+      return {
+        projects: `/${currentLang}`,
+        about: `/${currentLang}/sobre-mi`,
+        contact: `/${currentLang}/contacto`,
+      }
+    } else {
+      return {
+        projects: `/${currentLang}`,
+        about: `/${currentLang}/about`,
+        contact: `/${currentLang}/contact`,
+      }
+    }
+  }
+
+  const navLinks = getNavLinks()
+
   const getDesktopNavigation = () => {
     return (
-      <div className="hidden space-x-8 lg:flex">
-        {/* Proyectos */}
-        <div className="relative">
-          <Link
-            href="/"
-            className="text-base font-medium transition-opacity hover:opacity-60"
-            style={{
-              color:
-                isIndexPage || isProjectPage
+      <div className="hidden space-x-8 lg:flex lg:items-center">
+        {/* Enlaces de navegación */}
+        <div className="flex space-x-8">
+          {/* Proyectos */}
+          <div className="relative">
+            <Link
+              href={navLinks.projects}
+              className="text-base font-medium transition-opacity hover:opacity-60"
+              style={{
+                color:
+                  isIndexPage || isProjectPage
+                    ? isIndexPage
+                      ? '#f5f5f5'
+                      : '#000000'
+                    : isIndexPage
+                      ? '#f5f5f5'
+                      : '#4b5563',
+              }}
+            >
+              {t.projects}
+            </Link>
+            {(isIndexPage || isProjectPage) && (
+              <div
+                className="absolute right-0 -bottom-1 left-0 h-0.5"
+                style={{ backgroundColor: isIndexPage ? '#f5f5f5' : '#000000' }}
+              ></div>
+            )}
+          </div>
+
+          {/* Sobre mí */}
+          <div className="relative">
+            <Link
+              href={navLinks.about}
+              className="text-base font-medium transition-opacity hover:opacity-60"
+              style={{
+                color: isAboutPage
                   ? isIndexPage
                     ? '#f5f5f5'
                     : '#000000'
                   : isIndexPage
                     ? '#f5f5f5'
                     : '#4b5563',
-            }}
-          >
-            Proyectos
-          </Link>
-          {(isIndexPage || isProjectPage) && (
-            <div
-              className="absolute right-0 -bottom-1 left-0 h-0.5"
-              style={{ backgroundColor: isIndexPage ? '#f5f5f5' : '#000000' }}
-            ></div>
-          )}
+              }}
+            >
+              {t.about}
+            </Link>
+            {isAboutPage && (
+              <div
+                className="absolute right-0 -bottom-1 left-0 h-0.5"
+                style={{ backgroundColor: isIndexPage ? '#f5f5f5' : '#000000' }}
+              ></div>
+            )}
+          </div>
+
+          {/* Contacto */}
+          <div className="relative">
+            <Link
+              href={navLinks.contact}
+              className="text-base font-medium transition-opacity hover:opacity-60"
+              style={{
+                color: isContactPage
+                  ? isIndexPage
+                    ? '#f5f5f5'
+                    : '#000000'
+                  : isIndexPage
+                    ? '#f5f5f5'
+                    : '#4b5563',
+              }}
+            >
+              {t.contact}
+            </Link>
+            {isContactPage && (
+              <div
+                className="absolute right-0 -bottom-1 left-0 h-0.5"
+                style={{ backgroundColor: isIndexPage ? '#f5f5f5' : '#000000' }}
+              ></div>
+            )}
+          </div>
         </div>
 
-        {/* Sobre mí */}
-        <div className="relative">
-          <Link
-            href="/about"
-            className="text-base font-medium transition-opacity hover:opacity-60"
-            style={{
-              color: isAboutPage
-                ? isIndexPage
-                  ? '#f5f5f5'
-                  : '#000000'
-                : isIndexPage
-                  ? '#f5f5f5'
-                  : '#4b5563',
-            }}
-          >
-            Sobre mí
-          </Link>
-          {isAboutPage && (
-            <div
-              className="absolute right-0 -bottom-1 left-0 h-0.5"
-              style={{ backgroundColor: isIndexPage ? '#f5f5f5' : '#000000' }}
-            ></div>
-          )}
-        </div>
-
-        {/* Contacto */}
-        <div className="relative">
-          <Link
-            href="/contact"
-            className="text-base font-medium transition-opacity hover:opacity-60"
-            style={{
-              color: isContactPage
-                ? isIndexPage
-                  ? '#f5f5f5'
-                  : '#000000'
-                : isIndexPage
-                  ? '#f5f5f5'
-                  : '#4b5563',
-            }}
-          >
-            Contacto
-          </Link>
-          {isContactPage && (
-            <div
-              className="absolute right-0 -bottom-1 left-0 h-0.5"
-              style={{ backgroundColor: isIndexPage ? '#f5f5f5' : '#000000' }}
-            ></div>
-          )}
+        {/* Selector de idioma - Desktop */}
+        <div className="flex items-center">
+          <span className="mx-3 text-sm opacity-30" style={{ color: isIndexPage ? '#f5f5f5' : '#000000' }}>
+            |
+          </span>
+          <div className="flex items-center space-x-2">
+            <button
+              onClick={() => switchLanguage('es')}
+              className={`text-sm font-medium transition-opacity hover:opacity-60 ${
+                currentLang === 'es' ? '' : 'opacity-50'
+              }`}
+              style={{ color: isIndexPage ? '#f5f5f5' : '#000000' }}
+            >
+              ES
+            </button>
+            <span className="text-sm opacity-30" style={{ color: isIndexPage ? '#f5f5f5' : '#000000' }}>
+              |
+            </span>
+            <button
+              onClick={() => switchLanguage('en')}
+              className={`text-sm font-medium transition-opacity hover:opacity-60 ${
+                currentLang === 'en' ? '' : 'opacity-50'
+              }`}
+              style={{ color: isIndexPage ? '#f5f5f5' : '#000000' }}
+            >
+              EN
+            </button>
+          </div>
         </div>
       </div>
     )
@@ -137,7 +232,7 @@ export default function Navbar() {
       {/* Logo */}
       <div className="fixed top-4 left-4 z-50 md:top-8 md:left-8 lg:top-12 lg:left-12">
         <Link
-          href="/"
+          href={navLinks.projects}
           className={`name-hover group block ${isIndexPage ? 'index-page' : ''}`}
         >
           <div className="space-y-0">
@@ -219,56 +314,84 @@ export default function Navbar() {
       <div className="fixed top-4 right-4 z-50 md:top-8 md:right-8 lg:top-12 lg:right-12">
         {getDesktopNavigation()}
 
-        {/* Mobile: menú hamburguesa */}
-        <div className="menu-container lg:hidden">
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="group relative h-10 w-10"
-            aria-label={isMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
-          >
-            <span className="sr-only">Menú</span>
-            <div className="absolute top-1/2 left-1/2 block w-5 -translate-x-1/2 -translate-y-1/2 transform">
-              <span
-                className="absolute block h-0.5 w-5 transform transition duration-300 ease-in-out"
-                style={{
-                  backgroundColor: isMenuOpen
-                    ? isIndexPage
-                      ? '#f5f5f5'
-                      : '#000000'
-                    : isIndexPage
-                      ? '#f5f5f5'
-                      : '#000000',
-                  transform: isMenuOpen ? 'rotate(45deg)' : 'translateY(-6px)',
-                }}
-              ></span>
-              <span
-                className="absolute block h-0.5 w-5 transform transition duration-300 ease-in-out"
-                style={{
-                  backgroundColor: isMenuOpen
-                    ? isIndexPage
-                      ? '#f5f5f5'
-                      : '#000000'
-                    : isIndexPage
-                      ? '#f5f5f5'
-                      : '#000000',
-                  opacity: isMenuOpen ? 0 : 1,
-                }}
-              ></span>
-              <span
-                className="absolute block h-0.5 w-5 transform transition duration-300 ease-in-out"
-                style={{
-                  backgroundColor: isMenuOpen
-                    ? isIndexPage
-                      ? '#f5f5f5'
-                      : '#000000'
-                    : isIndexPage
-                      ? '#f5f5f5'
-                      : '#000000',
-                  transform: isMenuOpen ? 'rotate(-45deg)' : 'translateY(6px)',
-                }}
-              ></span>
-            </div>
-          </button>
+        {/* Mobile: selector de idioma + menú hamburguesa */}
+        <div className="flex items-center space-x-4 lg:hidden">
+          {/* Selector de idioma - Mobile */}
+          <div className="flex items-center space-x-1">
+            <button
+              onClick={() => switchLanguage('es')}
+              className={`text-sm font-medium transition-opacity hover:opacity-60 ${
+                currentLang === 'es' ? '' : 'opacity-50'
+              }`}
+              style={{ color: isIndexPage ? '#f5f5f5' : '#000000' }}
+            >
+              ES
+            </button>
+            <span className="text-xs opacity-30" style={{ color: isIndexPage ? '#f5f5f5' : '#000000' }}>
+              |
+            </span>
+            <button
+              onClick={() => switchLanguage('en')}
+              className={`text-sm font-medium transition-opacity hover:opacity-60 ${
+                currentLang === 'en' ? '' : 'opacity-50'
+              }`}
+              style={{ color: isIndexPage ? '#f5f5f5' : '#000000' }}
+            >
+              EN
+            </button>
+          </div>
+
+          {/* Menú hamburguesa */}
+          <div className="menu-container">
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="group relative h-10 w-10"
+              aria-label={isMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
+            >
+              <span className="sr-only">Menú</span>
+              <div className="absolute top-1/2 left-1/2 block w-5 -translate-x-1/2 -translate-y-1/2 transform">
+                <span
+                  className="absolute block h-0.5 w-5 transform transition duration-300 ease-in-out"
+                  style={{
+                    backgroundColor: isMenuOpen
+                      ? isIndexPage
+                        ? '#f5f5f5'
+                        : '#000000'
+                      : isIndexPage
+                        ? '#f5f5f5'
+                        : '#000000',
+                    transform: isMenuOpen ? 'rotate(45deg)' : 'translateY(-6px)',
+                  }}
+                ></span>
+                <span
+                  className="absolute block h-0.5 w-5 transform transition duration-300 ease-in-out"
+                  style={{
+                    backgroundColor: isMenuOpen
+                      ? isIndexPage
+                        ? '#f5f5f5'
+                        : '#000000'
+                      : isIndexPage
+                        ? '#f5f5f5'
+                        : '#000000',
+                    opacity: isMenuOpen ? 0 : 1,
+                  }}
+                ></span>
+                <span
+                  className="absolute block h-0.5 w-5 transform transition duration-300 ease-in-out"
+                  style={{
+                    backgroundColor: isMenuOpen
+                      ? isIndexPage
+                        ? '#f5f5f5'
+                        : '#000000'
+                      : isIndexPage
+                        ? '#f5f5f5'
+                        : '#000000',
+                    transform: isMenuOpen ? 'rotate(-45deg)' : 'translateY(6px)',
+                  }}
+                ></span>
+              </div>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -285,7 +408,7 @@ export default function Navbar() {
                 {/* Proyectos */}
                 <div>
                   <Link
-                    href="/"
+                    href={navLinks.projects}
                     className="block text-2xl font-bold transition-opacity hover:opacity-60"
                     style={{
                       color:
@@ -299,7 +422,7 @@ export default function Navbar() {
                     }}
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    Proyectos
+                    {t.projects}
                   </Link>
                   {(isIndexPage || isProjectPage) && (
                     <div
@@ -314,7 +437,7 @@ export default function Navbar() {
                 {/* Sobre mí */}
                 <div>
                   <Link
-                    href="/about"
+                    href={navLinks.about}
                     className="block text-2xl font-bold transition-opacity hover:opacity-60"
                     style={{
                       color: isAboutPage
@@ -327,7 +450,7 @@ export default function Navbar() {
                     }}
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    Sobre mí
+                    {t.about}
                   </Link>
                   {isAboutPage && (
                     <div
@@ -342,7 +465,7 @@ export default function Navbar() {
                 {/* Contacto */}
                 <div>
                   <Link
-                    href="/contact"
+                    href={navLinks.contact}
                     className="block text-2xl font-bold transition-opacity hover:opacity-60"
                     style={{
                       color: isContactPage
@@ -355,7 +478,7 @@ export default function Navbar() {
                     }}
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    Contacto
+                    {t.contact}
                   </Link>
                   {isContactPage && (
                     <div
@@ -407,7 +530,7 @@ export default function Navbar() {
                     className="text-sm font-medium"
                     style={{ color: isIndexPage ? '#f5f5f5' : '#000000' }}
                   >
-                    Ubicación
+                    {t.location}
                   </p>
                   <p
                     className="text-sm"
@@ -427,7 +550,7 @@ export default function Navbar() {
                     className="text-sm font-medium"
                     style={{ color: isIndexPage ? '#f5f5f5' : '#000000' }}
                   >
-                    Sígueme
+                    {t.followMe}
                   </p>
                   <div className="flex justify-center space-x-6">
                     <a
