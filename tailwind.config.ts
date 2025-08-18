@@ -9,22 +9,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Verde Bosque Vibrante
-        background: '#059669',
+        // Principales
+        background: '#66CCFF',
         foreground: '#ffffff',
-        primary: {
-          50: '#f0fdf4',
-          100: '#dcfce7',
-          500: '#059669',
-          600: '#047857',
-          700: '#065f46',
-        },
-        // Colores específicos para el diseño
-        'project-title': '#000000', // Negro para títulos de proyectos
-        'project-date': '#ffffff', // Blanco para fechas
-        // Grises personalizados para otras secciones
+
+        // Gray
         gray: {
-          50: '#f9fafb',
+          50: '#f5f5f5',
           100: '#f3f4f6',
           200: '#e5e7eb',
           300: '#d1d5db',
@@ -34,12 +25,6 @@ const config: Config = {
           700: '#374151',
           800: '#1f2937',
           900: '#111827',
-        },
-        // Colores básicos
-        black: '#000000',
-        white: {
-          DEFAULT: '#ffffff',
-          warm: '#FAFAFA', 
         },
       },
       fontFamily: {

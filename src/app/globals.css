@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 :root {
-  --background: #059669;
+  --background: #66CCFF;
   --foreground: #ffffff;
 }
 
@@ -48,39 +48,22 @@ body {
   transition: font-size 0.5s ease, color 0.3s ease, -webkit-text-stroke 0.3s ease;
 }
 
-/* Estado de scroll: transparente con borde fino */
-.name-text.text-transparent {
-  color: transparent;
-  -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.3);
-}
-
-/* Estado de scroll en páginas NO-INDEX: transparente con borde negro fino */
-.name-text.text-transparent.black-stroke {
+/* Estado scrolled en páginas no-index */
+.name-text.scrolled {
+  color: transparent !important;
   -webkit-text-stroke: 0.5px rgba(0, 0, 0, 0.3);
 }
 
-/* Hover del logo en INDEX: white-warm relleno → Transparente con borde white-warm */
+/* Hover del logo en INDEX: white-warm relleno → Transparente con borde BLANCO */
 .name-hover.index-page:hover .name-text {
-  color: transparent;
+  color: transparent !important;
   -webkit-text-stroke: 1px #F5F5F5;
-}
-
-/* Hover cuando está scrolled en INDEX (ya transparente): Transparente con borde → white-warm relleno */
-.name-hover.index-page:hover .name-text.text-transparent {
-  color: #F5F5F5;
-  -webkit-text-stroke: 0px transparent;
 }
 
 /* Hover del logo en páginas NO-INDEX: Negro relleno → Transparente con borde negro */
 .name-hover:not(.index-page):hover .name-text {
-  color: transparent;
+  color: transparent !important;
   -webkit-text-stroke: 1px rgba(0, 0, 0, 0.8);
-}
-
-/* Hover cuando está scrolled en páginas NO-INDEX (ya transparente): Transparente con borde → Negro relleno */
-.name-hover:not(.index-page):hover .name-text.text-transparent {
-  color: #000000;
-  -webkit-text-stroke: 0px transparent;
 }
 
 /* Título del proyecto con relleno sólido */

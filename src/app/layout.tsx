@@ -16,7 +16,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: 'Pepe Ruiz - AI & Full Stack Developer',
-  description: 'Portfolio de Pepe Ruiz, desarrollador Full Stack especializado en IA y Data Science.',
+  description:
+    'Portfolio de Pepe Ruiz, desarrollador Full Stack especializado en IA y Data Science.',
 }
 
 export default function RootLayout({
@@ -30,9 +31,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Navbar />
-        <main className="min-h-screen">
-          {children}
-        </main>
+        <main className="min-h-screen">{children}</main>
         <Footer />
       </body>
     </html>

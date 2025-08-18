@@ -17,7 +17,10 @@ export default function Navbar() {
 
   // Efecto scroll solo para páginas que NO son home
   useEffect(() => {
-    if (isIndexPage) return
+    if (isIndexPage) {
+      setIsScrolled(false)
+      return
+    }
 
     const handleScroll = () => {
       const scrolled = window.scrollY > 100
@@ -32,7 +35,11 @@ export default function Navbar() {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement
-      if (isMenuOpen && !target.closest('.menu-container') && !target.closest('.menu-overlay')) {
+      if (
+        isMenuOpen &&
+        !target.closest('.menu-container') &&
+        !target.closest('.menu-overlay')
+      ) {
         setIsMenuOpen(false)
       }
     }
@@ -46,48 +53,79 @@ export default function Navbar() {
   const getDesktopNavigation = () => {
     return (
       <div className="hidden space-x-8 lg:flex">
-        {/* Projects */}
+        {/* Proyectos */}
         <div className="relative">
-          <Link 
-            href="/" 
-            className={`text-base font-medium transition-opacity hover:opacity-60 ${
-              isIndexPage || isProjectPage ? (isIndexPage ? 'text-white-warm' : 'text-black') : (isIndexPage ? 'text-white-warm' : 'text-gray-600')
-            }`}
+          <Link
+            href="/"
+            className="text-base font-medium transition-opacity hover:opacity-60"
+            style={{
+              color:
+                isIndexPage || isProjectPage
+                  ? isIndexPage
+                    ? '#f5f5f5'
+                    : '#000000'
+                  : isIndexPage
+                    ? '#f5f5f5'
+                    : '#4b5563',
+            }}
           >
-            Projects
+            Proyectos
           </Link>
           {(isIndexPage || isProjectPage) && (
-            <div className={`absolute -bottom-1 left-0 right-0 h-0.5 ${isIndexPage ? 'bg-white-warm' : 'bg-black'}`}></div>
+            <div
+              className="absolute right-0 -bottom-1 left-0 h-0.5"
+              style={{ backgroundColor: isIndexPage ? '#f5f5f5' : '#000000' }}
+            ></div>
           )}
         </div>
 
-        {/* About */}
+        {/* Sobre mí */}
         <div className="relative">
-          <Link 
-            href="/about" 
-            className={`text-base font-medium transition-opacity hover:opacity-60 ${
-              isAboutPage ? (isIndexPage ? 'text-white-warm' : 'text-black') : (isIndexPage ? 'text-white-warm' : 'text-gray-600')
-            }`}
+          <Link
+            href="/about"
+            className="text-base font-medium transition-opacity hover:opacity-60"
+            style={{
+              color: isAboutPage
+                ? isIndexPage
+                  ? '#f5f5f5'
+                  : '#000000'
+                : isIndexPage
+                  ? '#f5f5f5'
+                  : '#4b5563',
+            }}
           >
-            About
+            Sobre mí
           </Link>
           {isAboutPage && (
-            <div className={`absolute -bottom-1 left-0 right-0 h-0.5 ${isIndexPage ? 'bg-white-warm' : 'bg-black'}`}></div>
+            <div
+              className="absolute right-0 -bottom-1 left-0 h-0.5"
+              style={{ backgroundColor: isIndexPage ? '#f5f5f5' : '#000000' }}
+            ></div>
           )}
         </div>
 
-        {/* Contact */}
+        {/* Contacto */}
         <div className="relative">
-          <Link 
+          <Link
             href="/contact"
-            className={`text-base font-medium transition-opacity hover:opacity-60 ${
-              isContactPage ? (isIndexPage ? 'text-white-warm' : 'text-black') : (isIndexPage ? 'text-white-warm' : 'text-gray-600')
-            }`}
+            className="text-base font-medium transition-opacity hover:opacity-60"
+            style={{
+              color: isContactPage
+                ? isIndexPage
+                  ? '#f5f5f5'
+                  : '#000000'
+                : isIndexPage
+                  ? '#f5f5f5'
+                  : '#4b5563',
+            }}
           >
-            Contact
+            Contacto
           </Link>
           {isContactPage && (
-            <div className={`absolute -bottom-1 left-0 right-0 h-0.5 ${isIndexPage ? 'bg-white-warm' : 'bg-black'}`}></div>
+            <div
+              className="absolute right-0 -bottom-1 left-0 h-0.5"
+              style={{ backgroundColor: isIndexPage ? '#f5f5f5' : '#000000' }}
+            ></div>
           )}
         </div>
       </div>
@@ -98,22 +136,30 @@ export default function Navbar() {
     <>
       {/* Logo */}
       <div className="fixed top-4 left-4 z-50 md:top-8 md:left-8 lg:top-12 lg:left-12">
-        <Link href="/" className={`name-hover group block ${isIndexPage ? 'index-page' : ''}`}>
+        <Link
+          href="/"
+          className={`name-hover group block ${isIndexPage ? 'index-page' : ''}`}
+        >
           <div className="space-y-0">
             <h1
               className={`name-text leading-[0.9] font-black uppercase ${
                 isIndexPage
                   ? 'text-2xl md:text-4xl lg:text-6xl'
                   : 'text-xl md:text-2xl lg:text-3xl'
-              } ${
-                isMenuOpen 
-                  ? (isIndexPage ? 'text-white-warm' : 'text-black')
-                  : !isIndexPage && isScrolled 
-                    ? 'text-transparent' + (!isIndexPage ? ' black-stroke' : '')
-                    : isIndexPage 
-                      ? 'text-white-warm' 
-                      : 'text-black'
+              } ${!isIndexPage && isScrolled ? 'scrolled' : ''} ${
+                isMenuOpen
+                  ? 'transition-all duration-300'
+                  : 'transition-all duration-300'
               }`}
+              style={{
+                color: isMenuOpen
+                  ? isIndexPage
+                    ? '#f5f5f5'
+                    : '#000000'
+                  : isIndexPage
+                    ? '#f5f5f5'
+                    : '#000000',
+              }}
             >
               {SITE_CONFIG.name.split(' ')[0]}
             </h1>
@@ -122,32 +168,46 @@ export default function Navbar() {
                 isIndexPage
                   ? 'text-2xl md:text-4xl lg:text-6xl'
                   : 'text-xl md:text-2xl lg:text-3xl'
-              } ${
-                isMenuOpen 
-                  ? (isIndexPage ? 'text-white-warm' : 'text-black')
-                  : !isIndexPage && isScrolled 
-                    ? 'text-transparent' + (!isIndexPage ? ' black-stroke' : '')
-                    : isIndexPage 
-                      ? 'text-white-warm' 
-                      : 'text-black'
+              } ${!isIndexPage && isScrolled ? 'scrolled' : ''} ${
+                isMenuOpen
+                  ? 'transition-all duration-300'
+                  : 'transition-all duration-300'
               }`}
+              style={{
+                color: isMenuOpen
+                  ? isIndexPage
+                    ? '#f5f5f5'
+                    : '#000000'
+                  : isIndexPage
+                    ? '#f5f5f5'
+                    : '#000000',
+              }}
             >
               {SITE_CONFIG.name.split(' ')[1]}
             </h1>
-            <p 
+            <p
               className={`font-medium transition-all duration-500 ${
                 isIndexPage
                   ? 'mt-2 text-xs md:mt-4 md:text-lg lg:mt-6 lg:text-xl'
                   : 'mt-1 text-xs md:mt-2 md:text-sm lg:mt-3 lg:text-base'
               } ${
-                isMenuOpen 
-                  ? (isIndexPage ? 'text-white-warm opacity-100 transform translate-y-0' : 'text-black opacity-100 transform translate-y-0')
-                  : !isIndexPage && isScrolled 
-                    ? 'opacity-0 transform -translate-y-2' 
-                    : isIndexPage 
-                      ? 'text-white-warm opacity-100 transform translate-y-0'
-                      : 'text-black opacity-100 transform translate-y-0'
+                isMenuOpen
+                  ? 'translate-y-0 transform opacity-100'
+                  : !isIndexPage && isScrolled
+                    ? '-translate-y-2 transform opacity-0'
+                    : 'translate-y-0 transform opacity-100'
               }`}
+              style={{
+                color: isMenuOpen
+                  ? isIndexPage
+                    ? '#f5f5f5'
+                    : '#000000'
+                  : !isIndexPage && isScrolled
+                    ? 'transparent'
+                    : isIndexPage
+                      ? '#f5f5f5'
+                      : '#000000',
+              }}
             >
               {SITE_CONFIG.title}
             </p>
@@ -164,30 +224,48 @@ export default function Navbar() {
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="group relative h-10 w-10"
-            aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
+            aria-label={isMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
           >
             <span className="sr-only">Menú</span>
-            <div className="absolute left-1/2 top-1/2 block w-5 -translate-x-1/2 -translate-y-1/2 transform">
+            <div className="absolute top-1/2 left-1/2 block w-5 -translate-x-1/2 -translate-y-1/2 transform">
               <span
-                className={`absolute block h-0.5 w-5 transform transition duration-300 ease-in-out ${
-                  isMenuOpen 
-                    ? (isIndexPage ? 'rotate-45 bg-white' : 'rotate-45 bg-black')
-                    : `-translate-y-1.5 ${isIndexPage ? 'bg-white' : 'bg-black'}`
-                }`}
+                className="absolute block h-0.5 w-5 transform transition duration-300 ease-in-out"
+                style={{
+                  backgroundColor: isMenuOpen
+                    ? isIndexPage
+                      ? '#f5f5f5'
+                      : '#000000'
+                    : isIndexPage
+                      ? '#f5f5f5'
+                      : '#000000',
+                  transform: isMenuOpen ? 'rotate(45deg)' : 'translateY(-6px)',
+                }}
               ></span>
               <span
-                className={`absolute block h-0.5 w-5 transform transition duration-300 ease-in-out ${
-                  isMenuOpen 
-                    ? (isIndexPage ? 'opacity-0 bg-white' : 'opacity-0 bg-black')
-                    : `${isIndexPage ? 'bg-white' : 'bg-black'}`
-                }`}
+                className="absolute block h-0.5 w-5 transform transition duration-300 ease-in-out"
+                style={{
+                  backgroundColor: isMenuOpen
+                    ? isIndexPage
+                      ? '#f5f5f5'
+                      : '#000000'
+                    : isIndexPage
+                      ? '#f5f5f5'
+                      : '#000000',
+                  opacity: isMenuOpen ? 0 : 1,
+                }}
               ></span>
               <span
-                className={`absolute block h-0.5 w-5 transform transition duration-300 ease-in-out ${
-                  isMenuOpen 
-                    ? (isIndexPage ? '-rotate-45 bg-white' : '-rotate-45 bg-black')
-                    : `translate-y-1.5 ${isIndexPage ? 'bg-white' : 'bg-black'}`
-                }`}
+                className="absolute block h-0.5 w-5 transform transition duration-300 ease-in-out"
+                style={{
+                  backgroundColor: isMenuOpen
+                    ? isIndexPage
+                      ? '#f5f5f5'
+                      : '#000000'
+                    : isIndexPage
+                      ? '#f5f5f5'
+                      : '#000000',
+                  transform: isMenuOpen ? 'rotate(-45deg)' : 'translateY(6px)',
+                }}
               ></span>
             </div>
           </button>
@@ -196,65 +274,96 @@ export default function Navbar() {
 
       {/* Menú fullscreen mobile */}
       {isMenuOpen && (
-        <div 
+        <div
           className="menu-overlay fixed inset-0 z-40 lg:hidden"
-          style={{ backgroundColor: isIndexPage ? '#047857' : '#E5E5E5' }}
+          style={{ backgroundColor: isIndexPage ? '#4DABF7' : '#E5E5E5' }}
         >
           <div className="flex h-full w-full flex-col items-center justify-center">
             <div className="w-full max-w-md px-8">
               {/* Enlaces de navegación */}
-              <div className="space-y-8 text-center mb-16">
-                {/* Projects */}
+              <div className="mb-16 space-y-8 text-center">
+                {/* Proyectos */}
                 <div>
                   <Link
                     href="/"
-                    className={`block text-2xl font-bold transition-opacity hover:opacity-60 ${
-                      isIndexPage || isProjectPage 
-                        ? (isIndexPage ? 'text-white-warm' : 'text-black') 
-                        : (isIndexPage ? 'text-white-warm opacity-70' : 'text-black opacity-70')
-                    }`}
+                    className="block text-2xl font-bold transition-opacity hover:opacity-60"
+                    style={{
+                      color:
+                        isIndexPage || isProjectPage
+                          ? isIndexPage
+                            ? '#f5f5f5'
+                            : '#000000'
+                          : isIndexPage
+                            ? 'rgba(245, 245, 245, 0.7)'
+                            : 'rgba(0, 0, 0, 0.7)',
+                    }}
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    Projects
+                    Proyectos
                   </Link>
                   {(isIndexPage || isProjectPage) && (
-                    <div className={`mx-auto mt-2 h-0.5 w-12 ${isIndexPage ? 'bg-white-warm' : 'bg-black'}`}></div>
+                    <div
+                      className="mx-auto mt-2 h-0.5 w-12"
+                      style={{
+                        backgroundColor: isIndexPage ? '#f5f5f5' : '#000000',
+                      }}
+                    ></div>
                   )}
                 </div>
 
-                {/* About */}
+                {/* Sobre mí */}
                 <div>
                   <Link
                     href="/about"
-                    className={`block text-2xl font-bold transition-opacity hover:opacity-60 ${
-                      isAboutPage 
-                        ? (isIndexPage ? 'text-white-warm' : 'text-black') 
-                        : (isIndexPage ? 'text-white-warm opacity-70' : 'text-black opacity-70')
-                    }`}
+                    className="block text-2xl font-bold transition-opacity hover:opacity-60"
+                    style={{
+                      color: isAboutPage
+                        ? isIndexPage
+                          ? '#f5f5f5'
+                          : '#000000'
+                        : isIndexPage
+                          ? 'rgba(245, 245, 245, 0.7)'
+                          : 'rgba(0, 0, 0, 0.7)',
+                    }}
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    About
+                    Sobre mí
                   </Link>
                   {isAboutPage && (
-                    <div className={`mx-auto mt-2 h-0.5 w-12 ${isIndexPage ? 'bg-white-warm' : 'bg-black'}`}></div>
+                    <div
+                      className="mx-auto mt-2 h-0.5 w-12"
+                      style={{
+                        backgroundColor: isIndexPage ? '#f5f5f5' : '#000000',
+                      }}
+                    ></div>
                   )}
                 </div>
 
-                {/* Contact */}
+                {/* Contacto */}
                 <div>
                   <Link
                     href="/contact"
-                    className={`block text-2xl font-bold transition-opacity hover:opacity-60 ${
-                      isContactPage 
-                        ? (isIndexPage ? 'text-white-warm' : 'text-black') 
-                        : (isIndexPage ? 'text-white-warm opacity-70' : 'text-black opacity-70')
-                    }`}
+                    className="block text-2xl font-bold transition-opacity hover:opacity-60"
+                    style={{
+                      color: isContactPage
+                        ? isIndexPage
+                          ? '#f5f5f5'
+                          : '#000000'
+                        : isIndexPage
+                          ? 'rgba(245, 245, 245, 0.7)'
+                          : 'rgba(0, 0, 0, 0.7)',
+                    }}
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    Contact
+                    Contacto
                   </Link>
                   {isContactPage && (
-                    <div className={`mx-auto mt-2 h-0.5 w-12 ${isIndexPage ? 'bg-white-warm' : 'bg-black'}`}></div>
+                    <div
+                      className="mx-auto mt-2 h-0.5 w-12"
+                      style={{
+                        backgroundColor: isIndexPage ? '#f5f5f5' : '#000000',
+                      }}
+                    ></div>
                   )}
                 </div>
               </div>
@@ -263,41 +372,74 @@ export default function Navbar() {
               <div className="space-y-6 text-center">
                 {/* Contact info */}
                 <div className="space-y-2">
-                  <p className={`text-sm font-medium ${isIndexPage ? 'text-white-warm' : 'text-black'}`}>
-                    Contact
+                  <p
+                    className="text-sm font-medium"
+                    style={{ color: isIndexPage ? '#f5f5f5' : '#000000' }}
+                  >
+                    Contacto
                   </p>
                   <a
                     href={SITE_CONFIG.links.email}
-                    className={`block text-sm transition-opacity hover:opacity-100 ${isIndexPage ? 'text-white-warm opacity-70' : 'text-black opacity-70'}`}
+                    className="block text-sm transition-opacity hover:opacity-100"
+                    style={{
+                      color: isIndexPage
+                        ? 'rgba(245, 245, 245, 0.7)'
+                        : 'rgba(0, 0, 0, 0.7)',
+                    }}
                   >
                     {SITE_CONFIG.email}
                   </a>
-                  <p className={`text-sm ${isIndexPage ? 'text-white-warm opacity-70' : 'text-black opacity-70'}`}>
+                  <p
+                    className="text-sm"
+                    style={{
+                      color: isIndexPage
+                        ? 'rgba(245, 245, 245, 0.7)'
+                        : 'rgba(0, 0, 0, 0.7)',
+                    }}
+                  >
                     {SITE_CONFIG.phone}
                   </p>
                 </div>
 
                 {/* Location */}
                 <div className="space-y-2">
-                  <p className={`text-sm font-medium ${isIndexPage ? 'text-white-warm' : 'text-black'}`}>
-                    Location
+                  <p
+                    className="text-sm font-medium"
+                    style={{ color: isIndexPage ? '#f5f5f5' : '#000000' }}
+                  >
+                    Ubicación
                   </p>
-                  <p className={`text-sm ${isIndexPage ? 'text-white-warm opacity-70' : 'text-black opacity-70'}`}>
+                  <p
+                    className="text-sm"
+                    style={{
+                      color: isIndexPage
+                        ? 'rgba(245, 245, 245, 0.7)'
+                        : 'rgba(0, 0, 0, 0.7)',
+                    }}
+                  >
                     {SITE_CONFIG.location}
                   </p>
                 </div>
 
                 {/* Social links */}
                 <div className="space-y-2">
-                  <p className={`text-sm font-medium ${isIndexPage ? 'text-white-warm' : 'text-black'}`}>
-                    Follow
+                  <p
+                    className="text-sm font-medium"
+                    style={{ color: isIndexPage ? '#f5f5f5' : '#000000' }}
+                  >
+                    Sígueme
                   </p>
                   <div className="flex justify-center space-x-6">
                     <a
                       href={SITE_CONFIG.links.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`text-sm transition-opacity hover:opacity-100 ${isIndexPage ? 'text-white-warm opacity-70' : 'text-black opacity-70'}`}
+                      className="text-sm transition-opacity hover:opacity-100"
+                      style={{
+                        color: isIndexPage
+                          ? 'rgba(245, 245, 245, 0.7)'
+                          : 'rgba(0, 0, 0, 0.7)',
+                      }}
                     >
                       GitHub
                     </a>
@@ -305,7 +447,12 @@ export default function Navbar() {
                       href={SITE_CONFIG.links.linkedin}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`text-sm transition-opacity hover:opacity-100 ${isIndexPage ? 'text-white-warm opacity-70' : 'text-black opacity-70'}`}
+                      className="text-sm transition-opacity hover:opacity-100"
+                      style={{
+                        color: isIndexPage
+                          ? 'rgba(245, 245, 245, 0.7)'
+                          : 'rgba(0, 0, 0, 0.7)',
+                      }}
                     >
                       LinkedIn
                     </a>

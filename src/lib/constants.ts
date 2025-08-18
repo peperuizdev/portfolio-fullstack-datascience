@@ -7,12 +7,14 @@ export const SITE_CONFIG = {
   email: 'jorsqn@gmail.com',
   location: 'Madrid, España',
   phone: '606 772 774',
+  profileImage: '/images/pepe-ruiz-profile.jpg',
 
   // Enlaces sociales
   links: {
     github: 'https://github.com/peperuizdev',
     linkedin: 'https://www.linkedin.com/in/peperuiznieto/',
     email: 'mailto:jorsqn@gmail.com',
+    cv: '/cv/cv-pepe-ruiz.pdf',
   },
 
   // Stack tecnológico principal

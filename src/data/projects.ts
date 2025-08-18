@@ -4,7 +4,7 @@ export const projects: Project[] = [
   {
     id: 'predictor-academico',
     slug: 'predictor-academico',
-    title: 'PREDICTOR ACADEMICO',
+    title: 'PREDICTOR ACADÉMICO',
     description:
       'Sistema de clasificación multiclase para predecir el éxito académico de estudiantes universitarios usando XGBoost y Random Forest.',
     longDescription:

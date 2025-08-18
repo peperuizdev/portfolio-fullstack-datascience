@@ -42,9 +42,12 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   }
 
   return (
-    <div className="relative min-h-screen bg-gray-50 text-black">
+    <div
+      className="relative min-h-screen text-black"
+      style={{ backgroundColor: '#f5f5f5' }}
+    >
       {/* Hero Section */}
-      <section className="relative mt-40 h-[60vh] w-full md:mt-44 md:h-[65vh] lg:mt-48 lg:h-[70vh]">
+      <section className="relative mt-40 h-[60vh] w-full md:mt-48 md:h-[65vh] lg:mt-64 lg:h-[70vh]">
         <div className="h-full w-full">
           <img
             src={project.image}
@@ -57,7 +60,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
         {/* Título principal */}
         <div className="absolute top-0 right-1/4 z-10 -translate-y-1/2 transform">
-          <h1 className="project-title-outline text-right text-3xl leading-[0.8] font-black md:text-5xl lg:text-6xl xl:text-7xl">
+          <h1 className="project-title-outline text-right text-5xl leading-[0.8] font-black md:text-6xl lg:text-8xl">
             {project.title.split(' ').map((word, index) => (
               <span key={index} className="block">
                 {word}
@@ -66,24 +69,35 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           </h1>
         </div>
 
-        {/* Descripción y enlace */}
-        <div className="absolute bottom-8 left-8 right-8 z-10 md:bottom-12 md:left-12 md:right-12">
-          <div className="max-w-6xl mx-auto">
+        {/* Descripción y enlaces */}
+        <div className="absolute right-8 bottom-8 left-8 z-10 md:right-12 md:bottom-12 md:left-12">
+          <div className="mx-auto max-w-6xl">
             <div className="mb-6">
-              <p className="text-lg leading-relaxed text-white md:text-xl lg:text-2xl font-medium drop-shadow-lg max-w-4xl">
+              <p className="max-w-4xl text-base leading-relaxed font-medium text-white drop-shadow-lg md:text-lg lg:text-xl xl:text-2xl">
                 {project.description}
               </p>
             </div>
-            <div className="flex justify-start">
+            <div className="flex flex-wrap gap-3 sm:gap-4">
               {project.githubUrl && (
                 <a
                   href={project.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-white/90 backdrop-blur-sm px-6 py-3 font-medium text-black transition-all hover:bg-white hover:scale-105"
+                  className="inline-flex items-center gap-2 bg-white/90 px-4 py-2 text-sm font-medium text-black backdrop-blur-sm transition-all hover:scale-105 hover:bg-white md:px-6 md:py-3 md:text-base"
                 >
                   <Github className="h-4 w-4" />
                   Ver en GitHub
+                </a>
+              )}
+              {project.liveUrl && (
+                <a
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-white/90 px-4 py-2 text-sm font-medium text-black backdrop-blur-sm transition-all hover:scale-105 hover:bg-white md:px-6 md:py-3 md:text-base"
+                >
+                  <ExternalLink className="h-4 w-4" />
+                  Ver proyecto en vivo
                 </a>
               )}
             </div>
@@ -92,18 +106,21 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       </section>
 
       {/* Contexto del proyecto */}
-      <section className="bg-white-warm py-20 md:py-24">
+      <section
+        className="py-16 md:py-20 lg:py-24"
+        style={{ backgroundColor: '#f5f5f5' }}
+      >
         <div className="mx-auto max-w-6xl px-8 md:px-12">
-          <div className="grid gap-16 lg:grid-cols-3">
+          <div className="grid gap-12 lg:grid-cols-3 lg:gap-16">
             {/* Contenido principal */}
-            <div className="space-y-12 lg:col-span-2">
+            <div className="space-y-10 lg:col-span-2 lg:space-y-12">
               {/* El Problema */}
               {project.problem && (
                 <div>
-                  <h2 className="mb-6 text-3xl font-black uppercase md:text-4xl">
+                  <h2 className="mb-4 text-2xl font-black uppercase md:text-3xl lg:mb-6 lg:text-4xl">
                     El Problema
                   </h2>
-                  <p className="text-lg leading-relaxed text-gray-700 md:text-xl">
+                  <p className="text-base leading-relaxed text-gray-700 md:text-lg lg:text-xl">
                     {project.problem}
                   </p>
                 </div>
@@ -112,10 +129,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               {/* La Solución */}
               {project.solution && (
                 <div>
-                  <h2 className="mb-6 text-3xl font-black uppercase md:text-4xl">
+                  <h2 className="mb-4 text-2xl font-black uppercase md:text-3xl lg:mb-6 lg:text-4xl">
                     La Solución
                   </h2>
-                  <p className="text-lg leading-relaxed text-gray-700 md:text-xl">
+                  <p className="text-base leading-relaxed text-gray-700 md:text-lg lg:text-xl">
                     {project.solution}
                   </p>
                 </div>
@@ -124,47 +141,32 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               {/* Impacto */}
               {project.impact && (
                 <div>
-                  <h2 className="mb-6 text-3xl font-black uppercase md:text-4xl">
+                  <h2 className="mb-4 text-2xl font-black uppercase md:text-3xl lg:mb-6 lg:text-4xl">
                     Impacto
                   </h2>
-                  <p className="text-lg leading-relaxed text-gray-700 md:text-xl">
+                  <p className="text-base leading-relaxed text-gray-700 md:text-lg lg:text-xl">
                     {project.impact}
                   </p>
-                </div>
-              )}
-
-              {/* Botón de acción */}
-              {project.liveUrl && (
-                <div className="pt-6">
-                  <a
-                    href={project.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 bg-green-600 px-8 py-4 font-medium text-white-warm transition-colors hover:bg-green-700 text-lg"
-                  >
-                    <ExternalLink className="h-5 w-5" />
-                    Ver proyecto en vivo
-                  </a>
                 </div>
               )}
             </div>
 
             {/* Información lateral */}
-            <div className="space-y-8">
+            <div className="space-y-6 lg:space-y-8">
               <div>
-                <h3 className="mb-2 text-xs font-semibold tracking-wider text-gray-400 uppercase">
+                <h3 className="mb-2 text-xs font-semibold tracking-wider text-gray-400 uppercase lg:mb-3">
                   Categoría
                 </h3>
-                <p className="text-lg font-medium">
+                <p className="text-base font-medium md:text-lg">
                   {getCategoryLabel(project.category)}
                 </p>
               </div>
 
               <div>
-                <h3 className="mb-2 text-xs font-semibold tracking-wider text-gray-400 uppercase">
+                <h3 className="mb-2 text-xs font-semibold tracking-wider text-gray-400 uppercase lg:mb-3">
                   Fecha de finalización
                 </h3>
-                <p className="text-lg font-medium">
+                <p className="text-base font-medium md:text-lg">
                   {new Date(project.completedAt + '-01').toLocaleDateString(
                     'es-ES',
                     {
@@ -176,14 +178,14 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               </div>
 
               <div>
-                <h3 className="mb-2 text-xs font-semibold tracking-wider text-gray-400 uppercase">
+                <h3 className="mb-2 text-xs font-semibold tracking-wider text-gray-400 uppercase lg:mb-3">
                   Stack tecnológico
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {project.technologies.map((tech) => (
                     <span
                       key={tech}
-                      className="inline-block bg-gray-100 px-3 py-1 text-sm font-medium text-gray-800"
+                      className="inline-block bg-gray-200 px-2 py-1 text-xs font-medium text-gray-800 md:px-3 md:text-sm"
                     >
                       {tech}
                     </span>
@@ -194,14 +196,14 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               {/* Puntos destacados en sidebar */}
               {project.highlights && (
                 <div>
-                  <h3 className="mb-4 text-xs font-semibold tracking-wider text-gray-400 uppercase">
+                  <h3 className="mb-3 text-xs font-semibold tracking-wider text-gray-400 uppercase lg:mb-4">
                     Puntos destacados
                   </h3>
-                  <ul className="space-y-3">
+                  <ul className="space-y-2 lg:space-y-3">
                     {project.highlights.map((highlight, index) => (
                       <li key={index} className="flex items-start">
-                        <span className="mt-2 mr-3 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-green-600"></span>
-                        <span className="text-sm text-gray-600">
+                        <span className="mt-2 mr-3 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-blue-500"></span>
+                        <span className="text-xs text-gray-600 md:text-sm">
                           {highlight}
                         </span>
                       </li>
@@ -217,9 +219,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       {/* Capturas del proyecto  */}
       <section>
         {/* Vista Desktop */}
-        <div className="bg-white py-16 md:py-20">
+        <div className="bg-white py-12 md:py-16 lg:py-20">
           <div className="mx-auto max-w-7xl px-8 md:px-12">
-            <h3 className="mb-12 text-center text-2xl font-bold text-gray-900">
+            <h3 className="mb-8 text-center text-xl font-bold text-gray-900 md:text-2xl lg:mb-12">
               Vista Desktop
             </h3>
             <div className="mx-auto max-w-6xl">
@@ -233,35 +235,38 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         </div>
 
         {/* Vista Tablet */}
-        <div className="bg-white-warm py-16 md:py-20">
+        <div
+          className="py-12 md:py-16 lg:py-20"
+          style={{ backgroundColor: '#f5f5f5' }}
+        >
           <div className="mx-auto max-w-7xl px-8 md:px-12">
-            <h3 className="mb-12 text-center text-2xl font-bold text-gray-900">
+            <h3 className="mb-8 text-center text-xl font-bold text-gray-900 md:text-2xl lg:mb-12">
               Vista Tablet
             </h3>
             <div className="flex justify-center">
               <img
                 src={project.images.tablet}
                 alt={`${project.title} - Vista tablet`}
-                className="w-full max-w-lg object-contain rounded-lg"
+                className="w-full max-w-lg rounded-lg object-contain"
               />
             </div>
           </div>
         </div>
 
         {/* Vista Mobile */}
-        <div className="bg-white py-16 md:py-20">
+        <div className="bg-white py-12 md:py-16 lg:py-20">
           <div className="mx-auto max-w-7xl px-8 md:px-12">
-            <h3 className="mb-12 text-center text-2xl font-bold text-gray-900">
+            <h3 className="mb-8 text-center text-xl font-bold text-gray-900 md:text-2xl lg:mb-12">
               Vista Móvil
             </h3>
             <div className="flex justify-center">
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-4xl">
+              <div className="grid max-w-2xl grid-cols-1 gap-6 sm:grid-cols-3 lg:gap-8">
                 {project.images.mobile.map((mobileImage, index) => (
                   <div key={index} className="flex justify-center">
                     <img
                       src={mobileImage}
                       alt={`${project.title} - Vista móvil ${index + 1}`}
-                      className="w-full max-w-52 object-contain rounded-lg"
+                      className="w-full max-w-40 rounded-lg object-contain"
                     />
                   </div>
                 ))}
@@ -272,19 +277,24 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       </section>
 
       {/* Características principales */}
-      <section className="bg-white-warm py-20 md:py-24">
+      <section
+        className="py-16 md:py-20 lg:py-24"
+        style={{ backgroundColor: '#f5f5f5' }}
+      >
         <div className="mx-auto max-w-6xl px-8 md:px-12">
-          <div className="max-w-4xl mx-auto">
+          <div className="mx-auto max-w-4xl">
             {project.keyFeatures && (
               <div>
-                <h2 className="mb-12 text-3xl font-black uppercase md:text-4xl text-center">
+                <h2 className="mb-8 text-center text-2xl font-black uppercase md:text-3xl lg:mb-12 lg:text-4xl">
                   Características principales
                 </h2>
-                <ul className="space-y-6">
+                <ul className="space-y-4 lg:space-y-6">
                   {project.keyFeatures.map((feature, index) => (
                     <li key={index} className="flex items-start">
-                      <span className="mt-3 mr-4 h-2 w-2 flex-shrink-0 rounded-full bg-green-600"></span>
-                      <span className="text-lg text-gray-700 leading-relaxed">{feature}</span>
+                      <span className="mt-2 mr-3 h-2 w-2 flex-shrink-0 rounded-full bg-blue-500 lg:mt-3 lg:mr-4"></span>
+                      <span className="text-base leading-relaxed text-gray-700 md:text-lg lg:text-xl">
+                        {feature}
+                      </span>
                     </li>
                   ))}
                 </ul>
@@ -295,14 +305,17 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       </section>
 
       {/* Siguiente proyecto */}
-      <section className="bg-warm-white py-20 md:py-24">
+      <section
+        className="py-16 md:py-20 lg:py-24"
+        style={{ backgroundColor: '#f5f5f5' }}
+      >
         <div className="mx-auto max-w-6xl px-8 text-right md:px-12">
-          <p className="mb-6 text-sm font-semibold tracking-wider text-gray-500 uppercase">
+          <p className="mb-4 text-xs font-semibold tracking-wider text-gray-500 uppercase md:text-sm lg:mb-6">
             Siguiente proyecto
           </p>
           <a
             href={`/projects/${nextProject.slug}`}
-            className="next-project-hover block text-4xl leading-[0.8] font-black md:text-6xl lg:text-7xl"
+            className="next-project-hover block text-3xl leading-[0.8] font-black md:text-5xl lg:text-6xl xl:text-7xl"
           >
             {nextProject.title.split(' ').map((word, index) => (
               <span key={index} className="block">

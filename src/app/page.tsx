@@ -57,7 +57,7 @@ export default function Home() {
   }
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-background text-foreground">
+    <div className="bg-background text-foreground relative min-h-screen overflow-x-hidden">
       {/* Proyectos */}
       <main className="min-h-screen w-full">
         <div className="ml-auto min-h-screen w-full pt-32 pr-4 pb-32 md:w-4/5 md:pt-40 md:pr-8 lg:w-3/4 lg:pt-48 lg:pr-12">
@@ -65,14 +65,14 @@ export default function Home() {
             {projects.map((project) => (
               <div key={project.id} className="space-y-2 md:space-y-4">
                 <div className="text-right">
-                  <span className="text-black text-xs font-medium tracking-wider md:text-sm">
+                  <span className="text-xs font-medium tracking-wider text-black md:text-sm">
                     {formatDate(project.completedAt)}
                   </span>
                 </div>
 
                 <a
                   href={`/projects/${project.slug}`}
-                  className="project-hover block text-right text-4xl leading-none text-project-title md:text-6xl lg:text-8xl"
+                  className="project-hover text-project-title block text-right text-4xl leading-none md:text-6xl lg:text-8xl"
                 >
                   {formatProjectTitle(project.title)}
                 </a>
