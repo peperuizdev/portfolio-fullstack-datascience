@@ -1,5 +1,9 @@
+'use client'
+
+import { use } from 'react'
 import { getSiteConfig } from '@/lib/constants'
 import Link from 'next/link'
+import { motion } from 'framer-motion'
 import ContactForm from './ContactForm'
 import { Locale } from '@/lib/i18n'
 
@@ -9,8 +13,8 @@ interface ContactPageProps {
   }>
 }
 
-export default async function ContactPage({ params }: ContactPageProps) {
-  const { lang } = await params
+export default function ContactPage({ params }: ContactPageProps) {
+  const { lang } = use(params)
   const siteConfig = getSiteConfig(lang)
 
   return (
@@ -21,11 +25,20 @@ export default async function ContactPage({ params }: ContactPageProps) {
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 md:pt-40 md:pb-24 lg:pt-48 lg:pb-32">
         <div className="mx-auto max-w-6xl px-8 md:px-12">
-          {/* Título principal - justificado a la izquierda en todos los dispositivos */}
+          {/* Título principal - justificado a la izquierda en todos los dispositivos con animación */}
           <div className="mb-16 text-left md:mb-20">
-            <h1 className="name-text text-5xl leading-[0.8] font-black uppercase md:text-6xl lg:text-8xl">
+            <motion.h1
+              className="name-text text-5xl leading-[0.8] font-black uppercase md:text-6xl lg:text-8xl"
+              initial={{ opacity: 0, x: 80 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{
+                duration: 4,
+                ease: [0.25, 0.1, 0.25, 1]
+              }}
+              style={{ transform: 'translateZ(0)' }}
+            >
               CONTACTO
-            </h1>
+            </motion.h1>
           </div>
 
           <div className="grid gap-16 lg:grid-cols-2 lg:gap-20">
@@ -115,16 +128,4 @@ export default async function ContactPage({ params }: ContactPageProps) {
       </section>
     </div>
   )
-}
-
-export async function generateMetadata({ params }: ContactPageProps) {
-  const { lang } = await params
-  const siteConfig = getSiteConfig(lang)
-  
-  return {
-    title: `${lang === 'es' ? 'Contacto' : 'Contact'} - ${siteConfig.name}`,
-    description: lang === 'es'
-      ? `Contacta con ${siteConfig.name} para colaborar en tu próximo proyecto. ${siteConfig.title} especializado en soluciones web con IA.`
-      : `Contact ${siteConfig.name} to collaborate on your next project. ${siteConfig.title} specialized in web solutions with AI.`,
-  }
 }

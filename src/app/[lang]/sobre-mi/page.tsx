@@ -1,6 +1,10 @@
+'use client'
+
+import { use } from 'react'
 import { getSiteConfig } from '@/lib/constants'
 import Link from 'next/link'
 import { Download } from 'lucide-react'
+import { motion } from 'framer-motion'
 import { Locale } from '@/lib/i18n'
 
 interface AboutPageProps {
@@ -9,8 +13,8 @@ interface AboutPageProps {
   }>
 }
 
-export default async function AboutPage({ params }: AboutPageProps) {
-  const { lang } = await params
+export default function AboutPage({ params }: AboutPageProps) {
+  const { lang } = use(params)
   const siteConfig = getSiteConfig(lang)
 
   return (
@@ -21,20 +25,38 @@ export default async function AboutPage({ params }: AboutPageProps) {
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 md:pt-40 md:pb-24 lg:pt-48 lg:pb-32">
         <div className="mx-auto max-w-6xl px-8 md:px-12">
-          {/* Título principal desktop - justificado a la izquierda */}
+          {/* Título principal desktop - justificado a la izquierda con animación */}
           <div className="mb-16 hidden text-left md:mb-20 lg:block">
-            <h1 className="name-text text-6xl leading-[0.8] font-black uppercase lg:text-8xl">
+            <motion.h1
+              className="name-text text-6xl leading-[0.8] font-black uppercase lg:text-8xl"
+              initial={{ opacity: 0, x: 80 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{
+                duration: 4,
+                ease: [0.25, 0.1, 0.25, 1]
+              }}
+              style={{ transform: 'translateZ(0)' }}
+            >
               SOBRE MÍ
-            </h1>
+            </motion.h1>
           </div>
 
-          {/* Título móvil centrado */}
+          {/* Título móvil centrado con animación */}
           <div className="mb-16 text-center lg:hidden">
-            <h1 className="name-text text-5xl leading-[0.8] font-black uppercase md:text-6xl">
+            <motion.h1
+              className="name-text text-5xl leading-[0.8] font-black uppercase md:text-6xl"
+              initial={{ opacity: 0, x: 80 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{
+                duration: 4,
+                ease: [0.25, 0.1, 0.25, 1]
+              }}
+              style={{ transform: 'translateZ(0)' }}
+            >
               SOBRE
               <br />
               MÍ
-            </h1>
+            </motion.h1>
           </div>
 
           {/* Foto de perfil móvil - debajo del título */}
@@ -211,16 +233,4 @@ export default async function AboutPage({ params }: AboutPageProps) {
       </section>
     </div>
   )
-}
-
-export async function generateMetadata({ params }: AboutPageProps) {
-  const { lang } = await params
-  const siteConfig = getSiteConfig(lang)
-  
-  return {
-    title: `${lang === 'es' ? 'Sobre mí' : 'About'} - ${siteConfig.name}`,
-    description: lang === 'es' 
-      ? `Conoce más sobre ${siteConfig.name}, ${siteConfig.title} especializado en crear soluciones web escalables con IA.`
-      : `Learn more about ${siteConfig.name}, ${siteConfig.title} specialized in creating scalable web solutions with AI.`,
-  }
 }

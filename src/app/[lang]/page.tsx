@@ -1,18 +1,19 @@
 'use client'
 
+import { use } from 'react'
 import { motion } from 'framer-motion'
 import { getProjects } from '@/data/projects'
 import { getMonths } from '@/lib/constants'
 import { Locale } from '@/lib/i18n'
 
 interface HomePageProps {
-  params: {
+  params: Promise<{
     lang: Locale
-  }
+  }>
 }
 
 export default function Home({ params }: HomePageProps) {
-  const { lang } = params
+  const { lang } = use(params)
   const projects = getProjects(lang)
   const months = getMonths(lang)
 

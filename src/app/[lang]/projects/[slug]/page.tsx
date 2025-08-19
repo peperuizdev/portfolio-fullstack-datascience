@@ -1,4 +1,8 @@
+'use client'
+
+import { use } from 'react'
 import { notFound } from 'next/navigation'
+import { motion } from 'framer-motion'
 import { ExternalLink, Github } from 'lucide-react'
 import { getProjects } from '@/data/projects'
 import { getSiteConfig, getCategories } from '@/lib/constants'
@@ -25,8 +29,8 @@ function getNextProject(currentSlug: string, lang: Locale) {
   return projects[nextIndex]
 }
 
-export default async function ProjectPage({ params }: ProjectPageProps) {
-  const { slug, lang } = await params
+export default function ProjectPage({ params }: ProjectPageProps) {
+  const { slug, lang } = use(params)
   const siteConfig = getSiteConfig(lang)
   const categories = getCategories(lang)
   const project = getProjectBySlug(slug, lang)
@@ -96,15 +100,24 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-black/20"></div>
         </div>
 
-        {/* Título principal */}
+        {/* Título principal con animación */}
         <div className="absolute top-0 right-1/4 z-10 -translate-y-1/2 transform">
-          <h1 className="project-title-outline text-right text-5xl leading-[0.8] font-black md:text-6xl lg:text-8xl">
+          <motion.h1
+            className="project-title-outline text-right text-5xl leading-[0.8] font-black md:text-6xl lg:text-8xl"
+            initial={{ opacity: 0, x: 80 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{
+              duration: 4,
+              ease: [0.25, 0.1, 0.25, 1]
+            }}
+            style={{ transform: 'translateZ(0)' }}
+          >
             {project.title.split(' ').map((word, index) => (
               <span key={index} className="block">
                 {word}
               </span>
             ))}
-          </h1>
+          </motion.h1>
         </div>
 
         {/* Descripción y enlaces */}
@@ -365,21 +378,4 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       </section>
     </div>
   )
-}
-
-export async function generateMetadata({ params }: ProjectPageProps) {
-  const { slug, lang } = await params
-  const siteConfig = getSiteConfig(lang)
-  const project = getProjectBySlug(slug, lang)
-
-  if (!project) {
-    return {
-      title: lang === 'es' ? 'Proyecto no encontrado' : 'Project not found',
-    }
-  }
-
-  return {
-    title: `${project.title} - ${siteConfig.name}`,
-    description: project.description,
-  }
 }
