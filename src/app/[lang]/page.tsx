@@ -1,15 +1,18 @@
+'use client'
+
+import { motion } from 'framer-motion'
 import { getProjects } from '@/data/projects'
 import { getMonths } from '@/lib/constants'
 import { Locale } from '@/lib/i18n'
 
 interface HomePageProps {
-  params: Promise<{
+  params: {
     lang: Locale
-  }>
+  }
 }
 
-export default async function Home({ params }: HomePageProps) {
-  const { lang } = await params
+export default function Home({ params }: HomePageProps) {
+  const { lang } = params
   const projects = getProjects(lang)
   const months = getMonths(lang)
 
@@ -51,7 +54,7 @@ export default async function Home({ params }: HomePageProps) {
 
   const formatDate = (dateString: string) => {
     const [year, month] = dateString.split('-')
-    return `${months[month] || month} ${year}`
+    return `${months[month as keyof typeof months] || month} ${year}`
   }
 
   return (
@@ -60,8 +63,22 @@ export default async function Home({ params }: HomePageProps) {
       <main className="min-h-screen w-full">
         <div className="ml-auto min-h-screen w-full pt-32 pr-4 pb-32 md:w-4/5 md:pt-40 md:pr-8 lg:w-3/4 lg:pt-48 lg:pr-12">
           <div className="space-y-16 md:space-y-20 lg:space-y-24">
-            {projects.map((project) => (
-              <div key={project.id} className="space-y-2 md:space-y-4">
+            {projects.map((project, index) => (
+              <motion.div
+                key={project.id}
+                className="space-y-1 md:space-y-2"
+                initial={{ opacity: 0, x: -180 }}
+                animate={{
+                  opacity: 1,
+                  x: 0,
+                  transition: {
+                    duration: 2,
+                    delay: index * 0.3,
+                    ease: [0.25, 0.1, 0.25, 1]
+                  }
+                }}
+                style={{ transform: 'translateZ(0)' }}
+              >
                 <div className="text-right">
                   <span className="text-xs font-medium tracking-wider text-black md:text-sm">
                     {formatDate(project.completedAt)}
@@ -74,7 +91,7 @@ export default async function Home({ params }: HomePageProps) {
                 >
                   {formatProjectTitle(project.title)}
                 </a>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
