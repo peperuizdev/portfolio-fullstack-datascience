@@ -2,13 +2,14 @@
 
 import { useState, useEffect } from 'react'
 import { Locale } from '@/lib/i18n'
+import { sendContactEmail, initEmailJS, type ContactFormData } from '@/lib/emailjs'
 
 interface ContactFormProps {
   lang: Locale
 }
 
 export default function ContactForm({ lang }: ContactFormProps) {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<ContactFormData>({
     name: '',
     email: '',
     subject: '',
@@ -25,6 +26,11 @@ export default function ContactForm({ lang }: ContactFormProps) {
   const [submitStatus, setSubmitStatus] = useState<
     'idle' | 'success' | 'error'
   >('idle')
+
+  // Inicializar EmailJS al montar el componente
+  useEffect(() => {
+    initEmailJS()
+  }, [])
 
   // Auto-hide success message after 5 seconds
   useEffect(() => {
@@ -116,14 +122,19 @@ export default function ContactForm({ lang }: ContactFormProps) {
 
     setIsSubmitting(true)
 
-    // Simulate form submission
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-      setSubmitStatus('success')
-      setFormData({ name: '', email: '', subject: '', message: '' })
-      setErrors({ name: '', email: '', subject: '', message: '' })
-      setShowErrors(false)
+      const success = await sendContactEmail(formData)
+      
+      if (success) {
+        setSubmitStatus('success')
+        setFormData({ name: '', email: '', subject: '', message: '' })
+        setErrors({ name: '', email: '', subject: '', message: '' })
+        setShowErrors(false)
+      } else {
+        setSubmitStatus('error')
+      }
     } catch (error) {
+      console.error('Error sending email:', error)
       setSubmitStatus('error')
     } finally {
       setIsSubmitting(false)
