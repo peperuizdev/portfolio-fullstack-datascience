@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { SITE_CONFIG } from '@/lib/constants'
+import { getSiteConfig } from '@/lib/constants'
 import { Locale, getLocalizedPath, isValidLocale } from '@/lib/i18n'
 
 export default function Navbar() {
@@ -15,6 +15,7 @@ export default function Navbar() {
   // Extraer idioma de la URL
   const pathSegments = pathname.split('/').filter(Boolean)
   const currentLang = (pathSegments[0] && isValidLocale(pathSegments[0]) ? pathSegments[0] : 'es') as Locale
+  const siteConfig = getSiteConfig(currentLang)
 
   // Determinar en qué página estamos
   const currentPath = pathname.replace(`/${currentLang}`, '') || '/'
@@ -131,6 +132,7 @@ export default function Navbar() {
                     : isIndexPage
                       ? '#f5f5f5'
                       : '#4b5563',
+                fontWeight: (isIndexPage || isProjectPage) ? '600' : '400'
               }}
             >
               {t.projects}
@@ -156,6 +158,7 @@ export default function Navbar() {
                   : isIndexPage
                     ? '#f5f5f5'
                     : '#4b5563',
+                fontWeight: isAboutPage ? '600' : '400'
               }}
             >
               {t.about}
@@ -181,6 +184,7 @@ export default function Navbar() {
                   : isIndexPage
                     ? '#f5f5f5'
                     : '#4b5563',
+                fontWeight: isContactPage ? '600' : '400'
               }}
             >
               {t.contact}
@@ -199,28 +203,46 @@ export default function Navbar() {
           <span className="mx-3 text-sm opacity-30" style={{ color: isIndexPage ? '#f5f5f5' : '#000000' }}>
             |
           </span>
-          <div className="flex items-center space-x-2">
-            <button
-              onClick={() => switchLanguage('es')}
-              className={`text-sm font-medium transition-opacity hover:opacity-60 ${
-                currentLang === 'es' ? '' : 'opacity-50'
-              }`}
-              style={{ color: isIndexPage ? '#f5f5f5' : '#000000' }}
-            >
-              ES
-            </button>
-            <span className="text-sm opacity-30" style={{ color: isIndexPage ? '#f5f5f5' : '#000000' }}>
-              |
-            </span>
-            <button
-              onClick={() => switchLanguage('en')}
-              className={`text-sm font-medium transition-opacity hover:opacity-60 ${
-                currentLang === 'en' ? '' : 'opacity-50'
-              }`}
-              style={{ color: isIndexPage ? '#f5f5f5' : '#000000' }}
-            >
-              EN
-            </button>
+          <div className="flex items-center space-x-6">
+            {/* ES */}
+            <div className="relative">
+              <button
+                onClick={() => switchLanguage('es')}
+                className="cursor-pointer text-sm font-medium transition-opacity hover:opacity-60"
+                style={{ 
+                  color: isIndexPage ? '#f5f5f5' : '#000000',
+                  fontWeight: currentLang === 'es' ? '600' : '400'
+                }}
+              >
+                ES
+              </button>
+              {currentLang === 'es' && (
+                <div
+                  className="absolute right-0 -bottom-1 left-0 h-0.5"
+                  style={{ backgroundColor: isIndexPage ? '#f5f5f5' : '#000000' }}
+                ></div>
+              )}
+            </div>
+
+            {/* EN */}
+            <div className="relative">
+              <button
+                onClick={() => switchLanguage('en')}
+                className="cursor-pointer text-sm font-medium transition-opacity hover:opacity-60"
+                style={{ 
+                  color: isIndexPage ? '#f5f5f5' : '#000000',
+                  fontWeight: currentLang === 'en' ? '600' : '400'
+                }}
+              >
+                EN
+              </button>
+              {currentLang === 'en' && (
+                <div
+                  className="absolute right-0 -bottom-1 left-0 h-0.5"
+                  style={{ backgroundColor: isIndexPage ? '#f5f5f5' : '#000000' }}
+                ></div>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -256,7 +278,7 @@ export default function Navbar() {
                     : '#000000',
               }}
             >
-              {SITE_CONFIG.name.split(' ')[0]}
+              {siteConfig.name.split(' ')[0]}
             </h1>
             <h1
               className={`name-text leading-[0.9] font-black uppercase ${
@@ -278,7 +300,7 @@ export default function Navbar() {
                     : '#000000',
               }}
             >
-              {SITE_CONFIG.name.split(' ')[1]}
+              {siteConfig.name.split(' ')[1]}
             </h1>
             <p
               className={`font-medium transition-all duration-500 ${
@@ -304,7 +326,7 @@ export default function Navbar() {
                       : '#000000',
               }}
             >
-              {SITE_CONFIG.title}
+              {siteConfig.title}
             </p>
           </div>
         </Link>
@@ -317,28 +339,46 @@ export default function Navbar() {
         {/* Mobile: selector de idioma + menú hamburguesa */}
         <div className="flex items-center space-x-4 lg:hidden">
           {/* Selector de idioma - Mobile */}
-          <div className="flex items-center space-x-1">
-            <button
-              onClick={() => switchLanguage('es')}
-              className={`text-sm font-medium transition-opacity hover:opacity-60 ${
-                currentLang === 'es' ? '' : 'opacity-50'
-              }`}
-              style={{ color: isIndexPage ? '#f5f5f5' : '#000000' }}
-            >
-              ES
-            </button>
-            <span className="text-xs opacity-30" style={{ color: isIndexPage ? '#f5f5f5' : '#000000' }}>
-              |
-            </span>
-            <button
-              onClick={() => switchLanguage('en')}
-              className={`text-sm font-medium transition-opacity hover:opacity-60 ${
-                currentLang === 'en' ? '' : 'opacity-50'
-              }`}
-              style={{ color: isIndexPage ? '#f5f5f5' : '#000000' }}
-            >
-              EN
-            </button>
+          <div className="flex items-center space-x-4 pb-[0.66rem]">
+            {/* ES */}
+            <div className="relative">
+              <button
+                onClick={() => switchLanguage('es')}
+                className="cursor-pointer text-sm font-medium transition-opacity hover:opacity-60"
+                style={{ 
+                  color: isIndexPage ? '#f5f5f5' : '#000000',
+                  fontWeight: currentLang === 'es' ? '600' : '400'
+                }}
+              >
+                ES
+              </button>
+              {currentLang === 'es' && (
+                <div
+                  className="absolute right-0 -bottom-1 left-0 h-0.5"
+                  style={{ backgroundColor: isIndexPage ? '#f5f5f5' : '#000000' }}
+                ></div>
+              )}
+            </div>
+
+            {/* EN */}
+            <div className="relative">
+              <button
+                onClick={() => switchLanguage('en')}
+                className="cursor-pointer text-sm font-medium transition-opacity hover:opacity-60"
+                style={{ 
+                  color: isIndexPage ? '#f5f5f5' : '#000000',
+                  fontWeight: currentLang === 'en' ? '600' : '400'
+                }}
+              >
+                EN
+              </button>
+              {currentLang === 'en' && (
+                <div
+                  className="absolute right-0 -bottom-1 left-0 h-0.5"
+                  style={{ backgroundColor: isIndexPage ? '#f5f5f5' : '#000000' }}
+                ></div>
+              )}
+            </div>
           </div>
 
           {/* Menú hamburguesa */}
@@ -419,6 +459,7 @@ export default function Navbar() {
                           : isIndexPage
                             ? 'rgba(245, 245, 245, 0.7)'
                             : 'rgba(0, 0, 0, 0.7)',
+                      fontWeight: (isIndexPage || isProjectPage) ? '800' : '700'
                     }}
                     onClick={() => setIsMenuOpen(false)}
                   >
@@ -447,6 +488,7 @@ export default function Navbar() {
                         : isIndexPage
                           ? 'rgba(245, 245, 245, 0.7)'
                           : 'rgba(0, 0, 0, 0.7)',
+                      fontWeight: isAboutPage ? '800' : '700'
                     }}
                     onClick={() => setIsMenuOpen(false)}
                   >
@@ -475,6 +517,7 @@ export default function Navbar() {
                         : isIndexPage
                           ? 'rgba(245, 245, 245, 0.7)'
                           : 'rgba(0, 0, 0, 0.7)',
+                      fontWeight: isContactPage ? '800' : '700'
                     }}
                     onClick={() => setIsMenuOpen(false)}
                   >
@@ -502,7 +545,7 @@ export default function Navbar() {
                     Contacto
                   </p>
                   <a
-                    href={SITE_CONFIG.links.email}
+                    href={siteConfig.links.email}
                     className="block text-sm transition-opacity hover:opacity-100"
                     style={{
                       color: isIndexPage
@@ -510,7 +553,7 @@ export default function Navbar() {
                         : 'rgba(0, 0, 0, 0.7)',
                     }}
                   >
-                    {SITE_CONFIG.email}
+                    {siteConfig.email}
                   </a>
                   <p
                     className="text-sm"
@@ -520,7 +563,7 @@ export default function Navbar() {
                         : 'rgba(0, 0, 0, 0.7)',
                     }}
                   >
-                    {SITE_CONFIG.phone}
+                    {siteConfig.phone}
                   </p>
                 </div>
 
@@ -540,7 +583,7 @@ export default function Navbar() {
                         : 'rgba(0, 0, 0, 0.7)',
                     }}
                   >
-                    {SITE_CONFIG.location}
+                    {siteConfig.location}
                   </p>
                 </div>
 
@@ -554,7 +597,7 @@ export default function Navbar() {
                   </p>
                   <div className="flex justify-center space-x-6">
                     <a
-                      href={SITE_CONFIG.links.github}
+                      href={siteConfig.links.github}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-sm transition-opacity hover:opacity-100"
@@ -567,7 +610,7 @@ export default function Navbar() {
                       GitHub
                     </a>
                     <a
-                      href={SITE_CONFIG.links.linkedin}
+                      href={siteConfig.links.linkedin}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-sm transition-opacity hover:opacity-100"

@@ -1,10 +1,37 @@
 'use client'
-import { SITE_CONFIG } from '@/lib/constants'
+import { getSiteConfig } from '@/lib/constants'
 import { usePathname } from 'next/navigation'
+import { Locale, isValidLocale } from '@/lib/i18n'
 
 export default function Footer() {
   const pathname = usePathname()
-  const isIndexPage = pathname === '/'
+  
+  // Extraer idioma de la URL
+  const pathSegments = pathname.split('/').filter(Boolean)
+  const currentLang = (pathSegments[0] && isValidLocale(pathSegments[0]) ? pathSegments[0] : 'es') as Locale
+  const siteConfig = getSiteConfig(currentLang)
+  
+  // Determinar si es página index
+  const currentPath = pathname.replace(`/${currentLang}`, '') || '/'
+  const isIndexPage = currentPath === '/'
+
+  // Traducciones
+  const footerTexts = {
+    es: {
+      location: 'Ubicación',
+      contact: 'Contacto',
+      followMe: 'Sígueme',
+      allRightsReserved: 'Todos los derechos reservados',
+    },
+    en: {
+      location: 'Location',
+      contact: 'Contact',
+      followMe: 'Follow me',
+      allRightsReserved: 'All rights reserved',
+    }
+  }
+
+  const t = footerTexts[currentLang]
 
   return (
     <footer
@@ -20,7 +47,7 @@ export default function Footer() {
             className="text-sm"
             style={{ color: isIndexPage ? '#d1d5db' : '#6b7280' }}
           >
-            © 2025 {SITE_CONFIG.name}
+            © 2025 {siteConfig.name}
           </p>
         </div>
 
@@ -35,13 +62,13 @@ export default function Footer() {
                   className="text-sm font-medium"
                   style={{ color: isIndexPage ? '#f5f5f5' : '#000000' }}
                 >
-                  Ubicación
+                  {t.location}
                 </p>
                 <p
                   className="text-sm"
                   style={{ color: isIndexPage ? '#f5f5f5' : '#4b5563' }}
                 >
-                  {SITE_CONFIG.location}
+                  {siteConfig.location}
                 </p>
               </div>
 
@@ -51,20 +78,20 @@ export default function Footer() {
                   className="text-sm font-medium"
                   style={{ color: isIndexPage ? '#f5f5f5' : '#000000' }}
                 >
-                  Contacto
+                  {t.contact}
                 </p>
                 <a
-                  href={SITE_CONFIG.links.email}
+                  href={siteConfig.links.email}
                   className="block text-sm transition-opacity hover:opacity-60"
                   style={{ color: isIndexPage ? '#f5f5f5' : '#4b5563' }}
                 >
-                  {SITE_CONFIG.email}
+                  {siteConfig.email}
                 </a>
                 <p
                   className="text-sm"
                   style={{ color: isIndexPage ? '#f5f5f5' : '#4b5563' }}
                 >
-                  {SITE_CONFIG.phone}
+                  {siteConfig.phone}
                 </p>
               </div>
 
@@ -74,10 +101,10 @@ export default function Footer() {
                   className="text-sm font-medium"
                   style={{ color: isIndexPage ? '#f5f5f5' : '#000000' }}
                 >
-                  Sígueme
+                  {t.followMe}
                 </p>
                 <a
-                  href={SITE_CONFIG.links.github}
+                  href={siteConfig.links.github}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block text-sm transition-opacity hover:opacity-60"
@@ -86,7 +113,7 @@ export default function Footer() {
                   GitHub
                 </a>
                 <a
-                  href={SITE_CONFIG.links.linkedin}
+                  href={siteConfig.links.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block text-sm transition-opacity hover:opacity-60"
@@ -103,13 +130,13 @@ export default function Footer() {
                 className="text-sm"
                 style={{ color: isIndexPage ? '#f5f5f5' : '#000000' }}
               >
-                © 2025 {SITE_CONFIG.name}
+                © 2025 {siteConfig.name}
               </p>
               <p
                 className="text-sm"
                 style={{ color: isIndexPage ? '#f5f5f5' : '#000000' }}
               >
-                Todos los derechos reservados
+                {t.allRightsReserved}
               </p>
             </div>
           </div>

@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
 import { ExternalLink, Github } from 'lucide-react'
-import { projects } from '@/data/projects'
-import { SITE_CONFIG } from '@/lib/constants'
+import { getProjects } from '@/data/projects'
+import { getSiteConfig, getCategories } from '@/lib/constants'
 import { Locale } from '@/lib/i18n'
 
 interface ProjectPageProps {
@@ -11,11 +11,13 @@ interface ProjectPageProps {
   }>
 }
 
-function getProjectBySlug(slug: string) {
+function getProjectBySlug(slug: string, lang: Locale) {
+  const projects = getProjects(lang)
   return projects.find((project) => project.slug === slug)
 }
 
-function getNextProject(currentSlug: string) {
+function getNextProject(currentSlug: string, lang: Locale) {
+  const projects = getProjects(lang)
   const currentIndex = projects.findIndex(
     (project) => project.slug === currentSlug
   )
@@ -25,30 +27,18 @@ function getNextProject(currentSlug: string) {
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
   const { slug, lang } = await params
-  const project = getProjectBySlug(slug)
+  const siteConfig = getSiteConfig(lang)
+  const categories = getCategories(lang)
+  const project = getProjectBySlug(slug, lang)
 
   if (!project) {
     notFound()
   }
 
-  const nextProject = getNextProject(slug)
+  const nextProject = getNextProject(slug, lang)
 
   const getCategoryLabel = (category: string) => {
-    const categories = {
-      es: {
-        ai: 'Inteligencia Artificial',
-        fullstack: 'Full Stack',
-        frontend: 'Frontend',
-        backend: 'Backend',
-      },
-      en: {
-        ai: 'Artificial Intelligence',
-        fullstack: 'Full Stack',
-        frontend: 'Frontend',
-        backend: 'Backend',
-      }
-    }
-    return categories[lang][category as keyof typeof categories.es] || category
+    return categories[category as keyof typeof categories] || category
   }
 
   // Textos por idioma
@@ -379,7 +369,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
 export async function generateMetadata({ params }: ProjectPageProps) {
   const { slug, lang } = await params
-  const project = getProjectBySlug(slug)
+  const siteConfig = getSiteConfig(lang)
+  const project = getProjectBySlug(slug, lang)
 
   if (!project) {
     return {
@@ -388,7 +379,7 @@ export async function generateMetadata({ params }: ProjectPageProps) {
   }
 
   return {
-    title: `${project.title} - ${SITE_CONFIG.name}`,
+    title: `${project.title} - ${siteConfig.name}`,
     description: project.description,
   }
 }

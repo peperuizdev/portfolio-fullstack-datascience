@@ -1,4 +1,4 @@
-import { SITE_CONFIG } from '@/lib/constants'
+import { getSiteConfig } from '@/lib/constants'
 import Link from 'next/link'
 import ContactForm from './ContactForm'
 import { Locale } from '@/lib/i18n'
@@ -11,6 +11,7 @@ interface ContactPageProps {
 
 export default async function ContactPage({ params }: ContactPageProps) {
   const { lang } = await params
+  const siteConfig = getSiteConfig(lang)
 
   return (
     <div
@@ -52,10 +53,10 @@ export default async function ContactPage({ params }: ContactPageProps) {
                     Email
                   </h3>
                   <a
-                    href={SITE_CONFIG.links.email}
+                    href={siteConfig.links.email}
                     className="text-lg font-medium text-black transition-opacity hover:opacity-60"
                   >
-                    {SITE_CONFIG.email}
+                    {siteConfig.email}
                   </a>
                 </div>
 
@@ -64,10 +65,10 @@ export default async function ContactPage({ params }: ContactPageProps) {
                     Phone
                   </h3>
                   <a
-                    href={`tel:${SITE_CONFIG.phone.replace(/\s/g, '')}`}
+                    href={`tel:${siteConfig.phone.replace(/\s/g, '')}`}
                     className="text-lg font-medium text-black transition-opacity hover:opacity-60"
                   >
-                    {SITE_CONFIG.phone}
+                    {siteConfig.phone}
                   </a>
                 </div>
 
@@ -75,7 +76,7 @@ export default async function ContactPage({ params }: ContactPageProps) {
                   <h3 className="mb-3 text-xs font-semibold tracking-wider text-gray-400 uppercase">
                     Location
                   </h3>
-                  <p className="text-lg font-medium">{SITE_CONFIG.location}</p>
+                  <p className="text-lg font-medium">{siteConfig.location}</p>
                 </div>
               </div>
             </div>
@@ -118,9 +119,12 @@ export default async function ContactPage({ params }: ContactPageProps) {
 
 export async function generateMetadata({ params }: ContactPageProps) {
   const { lang } = await params
+  const siteConfig = getSiteConfig(lang)
   
   return {
-    title: `Contact - ${SITE_CONFIG.name}`,
-    description: `Contact ${SITE_CONFIG.name} to collaborate on your next project. ${SITE_CONFIG.title} specialized in web solutions with AI.`,
+    title: `${lang === 'es' ? 'Contacto' : 'Contact'} - ${siteConfig.name}`,
+    description: lang === 'es'
+      ? `Contacta con ${siteConfig.name} para colaborar en tu próximo proyecto. ${siteConfig.title} especializado en soluciones web con IA.`
+      : `Contact ${siteConfig.name} to collaborate on your next project. ${siteConfig.title} specialized in web solutions with AI.`,
   }
 }

@@ -1,4 +1,5 @@
-import { projects } from '@/data/projects'
+import { getProjects } from '@/data/projects'
+import { getMonths } from '@/lib/constants'
 import { Locale } from '@/lib/i18n'
 
 interface HomePageProps {
@@ -9,6 +10,8 @@ interface HomePageProps {
 
 export default async function Home({ params }: HomePageProps) {
   const { lang } = await params
+  const projects = getProjects(lang)
+  const months = getMonths(lang)
 
   const formatProjectTitle = (title: string) => {
     const words = title.split(' ')
@@ -48,19 +51,7 @@ export default async function Home({ params }: HomePageProps) {
 
   const formatDate = (dateString: string) => {
     const [year, month] = dateString.split('-')
-    const months = {
-      es: {
-        '01': 'ENE', '02': 'FEB', '03': 'MAR', '04': 'ABR',
-        '05': 'MAY', '06': 'JUN', '07': 'JUL', '08': 'AGO',
-        '09': 'SEP', '10': 'OCT', '11': 'NOV', '12': 'DIC',
-      },
-      en: {
-        '01': 'JAN', '02': 'FEB', '03': 'MAR', '04': 'APR',
-        '05': 'MAY', '06': 'JUN', '07': 'JUL', '08': 'AUG',
-        '09': 'SEP', '10': 'OCT', '11': 'NOV', '12': 'DEC',
-      }
-    }
-    return `${months[lang][month as keyof typeof months.es] || month} ${year}`
+    return `${months[month] || month} ${year}`
   }
 
   return (

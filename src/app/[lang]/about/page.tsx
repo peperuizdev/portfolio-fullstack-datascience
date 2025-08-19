@@ -1,4 +1,4 @@
-import { SITE_CONFIG } from '@/lib/constants'
+import { getSiteConfig } from '@/lib/constants'
 import Link from 'next/link'
 import { Download } from 'lucide-react'
 import { Locale } from '@/lib/i18n'
@@ -11,6 +11,7 @@ interface AboutPageProps {
 
 export default async function AboutPage({ params }: AboutPageProps) {
   const { lang } = await params
+  const siteConfig = getSiteConfig(lang)
 
   return (
     <div
@@ -40,8 +41,8 @@ export default async function AboutPage({ params }: AboutPageProps) {
           <div className="mb-12 flex justify-center lg:hidden">
             <div className="relative">
               <img
-                src={SITE_CONFIG.profileImage}
-                alt={`${SITE_CONFIG.name} - Profile picture`}
+                src={siteConfig.profileImage}
+                alt={`${siteConfig.name} - Profile picture`}
                 className="h-40 w-40 rounded-full object-cover shadow-lg md:h-48 md:w-48"
               />
             </div>
@@ -56,7 +57,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
                   Who am I?
                 </h2>
                 <p className="mb-6 text-lg leading-relaxed text-gray-700 md:text-xl">
-                  I'm {SITE_CONFIG.name}, a Full Stack developer passionate about
+                  I'm {siteConfig.name}, a Full Stack developer passionate about
                   artificial intelligence and data science. I specialize in creating
                   scalable web solutions that integrate modern technologies with
                   machine learning algorithms.
@@ -100,8 +101,8 @@ export default async function AboutPage({ params }: AboutPageProps) {
               <div className="hidden justify-start lg:flex">
                 <div className="relative">
                   <img
-                    src={SITE_CONFIG.profileImage}
-                    alt={`${SITE_CONFIG.name} - Profile picture`}
+                    src={siteConfig.profileImage}
+                    alt={`${siteConfig.name} - Profile picture`}
                     className="h-40 w-40 rounded-full object-cover shadow-lg lg:h-48 lg:w-48"
                   />
                 </div>
@@ -111,14 +112,14 @@ export default async function AboutPage({ params }: AboutPageProps) {
                 <h3 className="mb-3 text-xs font-semibold tracking-wider text-gray-400 uppercase">
                   Location
                 </h3>
-                <p className="text-lg font-medium">{SITE_CONFIG.location}</p>
+                <p className="text-lg font-medium">{siteConfig.location}</p>
               </div>
 
               <div>
                 <h3 className="mb-3 text-xs font-semibold tracking-wider text-gray-400 uppercase">
                   Specialization
                 </h3>
-                <p className="text-lg font-medium">{SITE_CONFIG.title}</p>
+                <p className="text-lg font-medium">{siteConfig.title}</p>
               </div>
 
               <div>
@@ -126,7 +127,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
                   Main Stack
                 </h3>
                 <div className="flex flex-wrap gap-2">
-                  {SITE_CONFIG.primaryStack.map((tech) => (
+                  {siteConfig.primaryStack.map((tech) => (
                     <span
                       key={tech}
                       className="inline-block bg-gray-200 px-3 py-1 text-sm font-medium text-gray-800"
@@ -143,7 +144,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
                 </h3>
                 <div className="space-y-3">
                   <a
-                    href={SITE_CONFIG.links.github}
+                    href={siteConfig.links.github}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block text-lg font-medium text-black transition-opacity hover:opacity-60"
@@ -151,7 +152,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
                     GitHub
                   </a>
                   <a
-                    href={SITE_CONFIG.links.linkedin}
+                    href={siteConfig.links.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block text-lg font-medium text-black transition-opacity hover:opacity-60"
@@ -167,7 +168,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
                   Resume
                 </h3>
                 <a
-                  href={SITE_CONFIG.links.cv}
+                  href={siteConfig.links.cv}
                   download
                   className="inline-flex items-center gap-2 bg-black px-6 py-3 text-sm font-medium text-white transition-all hover:scale-105 hover:bg-gray-800"
                 >
@@ -212,9 +213,12 @@ export default async function AboutPage({ params }: AboutPageProps) {
 
 export async function generateMetadata({ params }: AboutPageProps) {
   const { lang } = await params
+  const siteConfig = getSiteConfig(lang)
   
   return {
-    title: `About - ${SITE_CONFIG.name}`,
-    description: `Learn more about ${SITE_CONFIG.name}, ${SITE_CONFIG.title} specialized in creating scalable web solutions with AI.`,
+    title: `${lang === 'es' ? 'Sobre mí' : 'About'} - ${siteConfig.name}`,
+    description: lang === 'es' 
+      ? `Conoce más sobre ${siteConfig.name}, ${siteConfig.title} especializado en crear soluciones web escalables con IA.`
+      : `Learn more about ${siteConfig.name}, ${siteConfig.title} specialized in creating scalable web solutions with AI.`,
   }
 }
