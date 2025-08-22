@@ -97,7 +97,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
             className="h-full w-full object-cover"
           />
           {/* Overlay para contraste */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-black/20"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/100 via-black/30 to-transparent"></div>
         </div>
 
         {/* Título principal con animación */}
@@ -217,14 +217,20 @@ export default function ProjectPage({ params }: ProjectPageProps) {
                 <h3 className="mb-2 text-xs font-semibold tracking-wider text-gray-400 uppercase lg:mb-3">
                   {t.completedAt}
                 </h3>
-                <p className="text-base font-medium md:text-lg">
-                  {new Date(project.completedAt + '-01').toLocaleDateString(
-                    lang === 'es' ? 'es-ES' : 'en-US',
-                    {
-                      year: 'numeric',
-                      month: 'long',
-                    }
-                  )}
+                  <p className="text-base font-medium md:text-lg">
+                    {(() => {
+                      const date = new Date(project.completedAt + '-01').toLocaleDateString(
+                        lang === 'es' ? 'es-ES' : 'en-US',
+                        {
+                          year: 'numeric',
+                          month: 'long',
+                        }
+                      )
+                      // Capitalizar primera letra solo para español
+                      return lang === 'es' 
+                        ? date.charAt(0).toUpperCase() + date.slice(1)
+                        : date
+                    })()}
                 </p>
               </div>
 

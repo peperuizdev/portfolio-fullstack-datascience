@@ -16,22 +16,35 @@ const SITE_CONFIG_BASE = {
     email: 'mailto:jorsqn@gmail.com',
   },
 
-  // Stack tecnológico principal
+  // Stack tecnológico principal ampliado
   primaryStack: [
     'React',
     'Next.js',
     'TypeScript',
+    'JavaScript',
     'Python',
     'Django',
     'FastAPI',
-    'Machine Learning',
+    'Node.js',
+    'Express',
+    'PyTorch',
+    'LangChain',
+    'Scikit-Learn',
+    'XGBoost',
+    'spaCy',
+    'MySQL',
+    'PostgreSQL',
+    'Supabase',
+    'Docker',
+    'Git',
+    'Tailwind CSS',
   ],
 }
 
 // Configuración en español
 const SITE_CONFIG_ES = {
   ...SITE_CONFIG_BASE,
-  title: 'AI & Full Stack Developer',
+  title: 'Full Stack & AI Developer',
   description: 'Desarrollador Full Stack especializado en IA y Data Science. Creo soluciones web escalables con React, Next.js, Django y Python, integrando Machine Learning y análisis de datos. Mi experiencia abarca desde interfaces responsivas hasta modelos predictivos con XGBoost y redes neuronales.',
   
   // Enlaces con CV en español
@@ -60,7 +73,7 @@ const SITE_CONFIG_ES = {
   // Hero section
   hero: {
     greeting: 'Hola, soy Pepe 👋',
-    headline: 'AI & Full Stack Developer',
+    headline: 'Full Stack & IA Developer',
     subheadline: 'Transformo ideas en soluciones digitales inteligentes',
     cta: 'Ver mis proyectos',
   },
@@ -68,7 +81,7 @@ const SITE_CONFIG_ES = {
   // Meta descriptions por página
   meta: {
     home: 'Portfolio de Pepe Ruiz, desarrollador Full Stack especializado en IA y Data Science. Proyectos con React, Next.js, Django, Python y Machine Learning.',
-    about: 'Conoce más sobre Pepe Ruiz, AI & Full Stack Developer especializado en crear soluciones web escalables con inteligencia artificial.',
+    about: 'Conoce más sobre Pepe Ruiz, Full Stack especializado en IA para crear soluciones web escalables con inteligencia artificial.',
     contact: 'Contacta con Pepe Ruiz para colaborar en tu próximo proyecto. Desarrollador Full Stack especializado en soluciones web con IA.',
     projects: 'Proyectos de Pepe Ruiz combinando desarrollo web con inteligencia artificial. React, Django, Python, Machine Learning y más.',
   },
@@ -77,8 +90,8 @@ const SITE_CONFIG_ES = {
 // Configuración en inglés
 const SITE_CONFIG_EN = {
   ...SITE_CONFIG_BASE,
-  location: 'Madrid, Spain', // En inglés
-  title: 'AI & Full Stack Developer',
+  location: 'Madrid, Spain', 
+  title: 'Full Stack & AI Developer',
   description: 'Full Stack Developer specialized in AI and Data Science. I create scalable web solutions with React, Next.js, Django, and Python, integrating Machine Learning and data analysis. My experience spans from responsive interfaces to predictive models with XGBoost and neural networks.',
   
   // Enlaces con CV en inglés
@@ -107,7 +120,7 @@ const SITE_CONFIG_EN = {
   // Hero section
   hero: {
     greeting: 'Hi, I\'m Pepe 👋',
-    headline: 'AI & Full Stack Developer',
+    headline: 'Full Stack & AI Developer',
     subheadline: 'I transform ideas into intelligent digital solutions',
     cta: 'View my projects',
   },
@@ -115,7 +128,7 @@ const SITE_CONFIG_EN = {
   // Meta descriptions por página
   meta: {
     home: 'Portfolio of Pepe Ruiz, Full Stack developer specialized in AI and Data Science. Projects with React, Next.js, Django, Python, and Machine Learning.',
-    about: 'Learn more about Pepe Ruiz, AI & Full Stack Developer specialized in creating scalable web solutions with artificial intelligence.',
+    about: 'Learn more about Pepe Ruiz, Full Stack specialized in AI for creating scalable web solutions with artificial intelligence.',
     contact: 'Contact Pepe Ruiz to collaborate on your next project. Full Stack developer specialized in web solutions with AI.',
     projects: 'Projects by Pepe Ruiz combining web development with artificial intelligence. React, Django, Python, Machine Learning, and more.',
   },
@@ -134,11 +147,13 @@ export const getCategories = (locale: Locale) => {
   return locale === 'es' ? {
     ai: 'Inteligencia Artificial',
     fullstack: 'Full Stack',
+    'ai-fullstack': 'Inteligencia Artificial & Full Stack',
     frontend: 'Frontend',
     backend: 'Backend',
   } : {
     ai: 'Artificial Intelligence',
     fullstack: 'Full Stack',
+    'ai-fullstack': 'Artificial Intelligence & Full Stack',
     frontend: 'Frontend',
     backend: 'Backend',
   }

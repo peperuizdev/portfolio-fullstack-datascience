@@ -79,16 +79,10 @@ export default function AboutPage({ params }: AboutPageProps) {
                   Who am I?
                 </h2>
                 <p className="mb-6 text-lg leading-relaxed text-gray-700 md:text-xl">
-                  I'm {siteConfig.name}, a Full Stack developer passionate about
-                  artificial intelligence and data science. I specialize in creating
-                  scalable web solutions that integrate modern technologies with
-                  machine learning algorithms.
+                  I'm {siteConfig.name}, a Full Stack developer specialized in AI and Data Science. My path in technology has an unconventional origin: I began my career in Audiovisual Communication and Branded Content, where I learned to build compelling narratives and approach challenges from a creative perspective.
                 </p>
                 <p className="text-lg leading-relaxed text-gray-700 md:text-xl">
-                  My experience spans from developing responsive interfaces with
-                  React and Next.js to implementing predictive models with Python,
-                  XGBoost, and neural networks. I enjoy transforming complex ideas
-                  into functional and elegant applications.
+                  Those storytelling and creative thinking skills are now the foundation of how I develop intelligent digital solutions. I create scalable web applications that combine Machine Learning with data analysis, using tools like React, Django, FastAPI, and Python.
                 </p>
               </div>
 
@@ -97,10 +91,10 @@ export default function AboutPage({ params }: AboutPageProps) {
                   My approach
                 </h2>
                 <p className="text-lg leading-relaxed text-gray-700 md:text-xl">
-                  I believe in the power of technology to solve real problems. My
-                  approach combines good development practices with the latest
-                  innovations in AI, always seeking the perfect balance between
-                  functionality, performance, and user experience.
+                  The years I spent working directly with people taught me the importance of listening, understanding real needs, and solving problems empathetically. These skills complement my technical knowledge to create software that truly connects with those who use it.
+                </p>
+                <p className="mt-6 text-lg leading-relaxed text-gray-700 md:text-xl">
+                  I work well in agile teams and enjoy collaborative environments, where I can combine my technical experience with my understanding of the human factor in technology.
                 </p>
               </div>
 
@@ -108,11 +102,11 @@ export default function AboutPage({ params }: AboutPageProps) {
                 <h2 className="mb-6 text-2xl font-black uppercase md:text-3xl">
                   Experience
                 </h2>
+                <p className="mb-6 text-lg leading-relaxed text-gray-700 md:text-xl">
+                  I've worked on fascinating projects, from systems that predict behaviors to platforms that facilitate educational management. My experience spans machine learning models, intelligent classification systems, and sentiment analysis.
+                </p>
                 <p className="text-lg leading-relaxed text-gray-700 md:text-xl">
-                  I have worked on projects ranging from predictive analysis
-                  applications to educational management platforms. My main stack
-                  includes React, Django, FastAPI, and machine learning tools like
-                  Scikit-Learn and XGBoost.
+                  What motivates me most is merging my technical training in AI with my understanding of people, creating digital experiences that solve real problems intuitively.
                 </p>
               </div>
             </div>
@@ -141,7 +135,7 @@ export default function AboutPage({ params }: AboutPageProps) {
                 <h3 className="mb-3 text-xs font-semibold tracking-wider text-gray-400 uppercase">
                   Specialization
                 </h3>
-                <p className="text-lg font-medium">{siteConfig.title}</p>
+                <p className="text-lg font-medium">Full Stack specialized in AI</p>
               </div>
 
               <div>
@@ -149,7 +143,7 @@ export default function AboutPage({ params }: AboutPageProps) {
                   Main Stack
                 </h3>
                 <div className="flex flex-wrap gap-2">
-                  {siteConfig.primaryStack.map((tech) => (
+                  {['React', 'Next.js', 'TypeScript', 'JavaScript', 'Python', 'Django', 'FastAPI', 'Node.js', 'Express', 'PyTorch', 'LangChain', 'Scikit-Learn', 'XGBoost', 'spaCy', 'MySQL', 'PostgreSQL', 'Supabase', 'Docker', 'Git', 'Tailwind CSS'].map((tech) => (
                     <span
                       key={tech}
                       className="inline-block bg-gray-200 px-3 py-1 text-sm font-medium text-gray-800"

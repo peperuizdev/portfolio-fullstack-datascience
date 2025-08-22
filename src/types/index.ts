@@ -17,7 +17,7 @@ export interface Project {
   technologies: string[]
   liveUrl?: string
   githubUrl?: string
-  category: 'fullstack' | 'ai' | 'frontend' | 'backend'
+  category: 'fullstack' | 'ai' | 'frontend' | 'backend' | 'ai-fullstack'
   featured: boolean
   completedAt: string
   highlights?: string[]

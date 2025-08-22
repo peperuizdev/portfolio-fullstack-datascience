@@ -31,7 +31,7 @@ const projectsBase = [
       'Framer Motion',
     ],
     githubUrl: 'https://github.com/mikewig/project-ai-llms-group-4',
-    category: 'ai' as const,
+    category: 'ai-fullstack' as const,
     featured: true,
     completedAt: '2025-08',
   },
@@ -40,7 +40,7 @@ const projectsBase = [
     slug: 'feelflow-ai',
     image: '/images/projects/feelflow-ai/hero.png',
     images: {
-      desktop: '/images/projects/feelflow-ai/desktop.jpg',
+      desktop: '/images/projects/feelflow-ai/desktop.png',
       tablet: '/images/projects/feelflow-ai/tablet.png',
       mobile: [
         '/images/projects/feelflow-ai/mobile-1.png',
@@ -64,7 +64,7 @@ const projectsBase = [
       'Recharts',
     ],
     githubUrl: 'https://github.com/Yael-Parra/sentiment-analyzer-inc',
-    category: 'ai' as const,
+    category: 'ai-fullstack' as const,
     featured: true,
     completedAt: '2025-07',
   },
@@ -95,7 +95,7 @@ const projectsBase = [
     ],
     liveUrl: 'https://student-predictor-oelj.onrender.com/',
     githubUrl: 'https://github.com/Jorgeluuu/Multiclass_Clasification',
-    category: 'ai' as const,
+    category: 'ai-fullstack' as const,
     featured: true,
     completedAt: '2025-05',
   },
@@ -198,7 +198,7 @@ const projectsBase = [
 const projectsContentES = {
   'magic-post': {
     title: 'MAGIC POST',
-    description: 'Aplicación web full-stack que utiliza inteligencia artificial avanzada para automatizar la creación de contenido optimizado para redes sociales y plataformas digitales.',
+    description: 'Aplicación web full-stack que utiliza inteligencia artificial avanzada para automatizar la creación de contenido optimizado para redes sociales y plataformas digitales',
     longDescription: 'Sistema integral que combina múltiples LLMs, generación de imágenes con IA, análisis financiero y búsqueda semántica para transformar ideas en contenido profesional personalizado. Incluye motor multi-LLM con OpenRouter, sistema RAG con Pinecone Vector Database y herramientas especializadas para análisis financiero y divulgación científica.',
     problem: 'La creación de contenido para redes sociales y plataformas digitales requiere horas de trabajo manual, desde la conceptualización hasta la adaptación para diferentes plataformas y audiencias. Los equipos de marketing y creadores de contenido necesitan producir contenido constante, personalizado y de calidad, pero carecen de herramientas que automaticen este proceso de manera inteligente y contextual.',
     solution: 'Desarrollo de una plataforma integral que combina múltiples LLMs (LLaMA 3, Mistral 7B, GPT-3.5) con generación de imágenes IA y análisis de datos en tiempo real. El sistema incluye un motor RAG con Pinecone para contexto empresarial, herramientas especializadas para análisis financiero con datos reales y funcionalidades de divulgación científica integrando papers de ArXiv.',
@@ -223,7 +223,7 @@ const projectsContentES = {
   },
   'feelflow-ai': {
     title: 'FEELFLOW AI',
-    description: 'Aplicación web full-stack que utiliza inteligencia artificial avanzada para analizar el sentimiento y detectar 12 tipos específicos de toxicidad en comentarios de YouTube.',
+    description: 'Aplicación web full-stack que utiliza inteligencia artificial avanzada para analizar el sentimiento y detectar 12 tipos específicos de toxicidad en comentarios de YouTube',
     longDescription: 'Sistema completo que transforma datos no estructurados de redes sociales en insights accionables para creadores de contenido, marcas y analistas digitales. Implementa un modelo BiLSTM híbrido con arquitectura de atención múltiple, alcanzando F1-macro de 95.8% en detección simultánea de toxicidad.',
     problem: 'Los creadores de contenido y marcas en YouTube enfrentan el desafío de moderar miles de comentarios manualmente, sin herramientas eficaces para detectar automáticamente contenido tóxico, discurso de odio, amenazas y otros tipos de comportamiento problemático. Esta moderación manual consume recursos significativos y es propensa a errores humanos.',
     solution: 'Desarrollo de un sistema de IA que combina análisis de sentimiento con detección multi-clase de toxicidad usando un modelo BiLSTM híbrido personalizado. El sistema procesa comentarios de YouTube en tiempo real, identifica 12 tipos específicos de toxicidad y proporciona métricas de riesgo calibradas a través de un dashboard interactivo.',
@@ -248,7 +248,7 @@ const projectsContentES = {
   },
   'predictor-academico': {
     title: 'PREDICTOR ACADÉMICO',
-    description: 'Sistema de clasificación multiclase para predecir el éxito académico de estudiantes universitarios usando XGBoost y Random Forest.',
+    description: 'Sistema de clasificación multiclase para predecir el éxito académico de estudiantes universitarios usando XGBoost y Random Forest',
     longDescription: 'Aplicación web completa que implementa un sistema de machine learning para predecir el rendimiento académico. Clasifica estudiantes en tres categorías: Dropout (Abandono), Graduate (Graduado) y Enrolled (Matriculado). Utiliza un pipeline de preprocesamiento robusto y modelos optimizados para análisis predictivo basado en factores académicos y socioeconómicos.',
     problem: 'Las universidades enfrentan altas tasas de abandono estudiantil que afectan tanto a las instituciones educativas como a los estudiantes. Sin herramientas predictivas tempranas, es difícil identificar a los estudiantes en riesgo y proporcionar el apoyo necesario antes de que abandonen sus estudios. Esta situación genera pérdidas económicas para las instituciones y frustraciones personales para los estudiantes.',
     solution: 'Desarrollo de un sistema predictivo basado en machine learning que analiza múltiples factores académicos y socioeconómicos para identificar patrones de riesgo. El sistema utiliza algoritmos XGBoost y Random Forest con una precisión del 85%, permitiendo intervenciones tempranas y personalizadas. La interfaz web facilita el acceso a las predicciones en tiempo real.',
@@ -271,7 +271,7 @@ const projectsContentES = {
   },
   'datashop-analytics': {
     title: 'DATASHOP ANALYTICS',
-    description: 'Aplicación web que utiliza machine learning para predecir el comportamiento de compra en e-commerce basándose en datos reales de Google Analytics.',
+    description: 'Aplicación web que utiliza machine learning para predecir el comportamiento de compra en e-commerce basándose en datos reales de Google Analytics',
     longDescription: 'Proyecto colaborativo que transforma patrones de navegación por sesiones en predicciones accionables para equipos de marketing y UX. Implementa múltiples algoritmos de machine learning optimizados con Optuna, alcanzando 89.5% de precisión en la predicción de intención de compra.',
     problem: 'Los equipos de marketing y UX en e-commerce carecen de herramientas predictivas para identificar usuarios con alta probabilidad de conversión en tiempo real. Sin estas capacidades, es difícil personalizar experiencias, optimizar campañas y mejorar las tasas de conversión basándose en patrones de comportamiento de navegación.',
     solution: 'Desarrollo de una aplicación web con dashboard interactivo que utiliza algoritmos de machine learning (XGBoost, LightGBM, Random Forest, SVM) para predecir probabilidad de compra. El sistema incluye un simulador de comportamiento en tiempo real y genera recomendaciones automáticas de marketing y UX personalizadas.',
@@ -295,7 +295,7 @@ const projectsContentES = {
   },
   'critical-lens': {
     title: 'THE CRITICAL LENS',
-    description: 'Plataforma web para combatir la desinformación mediante análisis automatizado de credibilidad y verificación de hechos.',
+    description: 'Plataforma web para combatir la desinformación mediante análisis automatizado de credibilidad y verificación de hechos',
     longDescription: 'Aplicación desarrollada con Django que implementa herramientas basadas en pensamiento crítico para evaluar la credibilidad de noticias y contenidos. Incluye un analizador automático que evalúa múltiples aspectos del contenido, sistema de scraping para extraer verificaciones de hechos, y estadísticas sobre desinformación. Los criterios de análisis se basan en los estándares de la Fundación para el Pensamiento Crítico.',
     problem: 'En la era digital actual, donde la información fluye sin control, discernir la verdad se ha vuelto más difícil que nunca. La desinformación se propaga rápidamente a través de redes sociales y medios digitales, y los ciudadanos carecen de herramientas accesibles para evaluar la credibilidad de los contenidos que consumen diariamente.',
     solution: 'Desarrollo de una plataforma que automatiza el análisis de credibilidad mediante algoritmos basados en principios del pensamiento crítico. El sistema evalúa títulos, autores, contenido y fuentes, proporcionando retroalimentación detallada. Incluye scraping automatizado de portales de fact-checking y una base de datos de verificaciones para análisis estadístico.',
@@ -318,7 +318,7 @@ const projectsContentES = {
   },
   'orange-digital-center': {
     title: 'ODC MANAGER',
-    description: 'Aplicación para gestionar y centralizar inscripciones a cursos de Orange Digital Center con panel administrativo completo.',
+    description: 'Aplicación para gestionar y centralizar inscripciones a cursos de Orange Digital Center con panel administrativo completo',
     longDescription: 'Sistema integral de gestión educativa diseñado específicamente para Orange Digital Center. Incluye un panel administrativo robusto con estadísticas en tiempo real, generación de reportes en CSV y PDF, y una arquitectura de base de datos relacional escalable. La aplicación sigue el libro de estilo de Orange y ofrece una experiencia de usuario optimizada.',
     problem: 'Orange Digital Center enfrentaba ineficiencias en la gestión manual de inscripciones a cursos, requiriendo que los administradores se redirigiesen constantemente a plataformas externas. Esto generaba duplicación de trabajo, falta de centralización de datos, dificultades para generar reportes y una experiencia fragmentada tanto para administradores como para estudiantes.',
     solution: 'Desarrollo de una aplicación web centralizada que integra todo el proceso de gestión educativa en una sola plataforma. Incluye panel administrativo con estadísticas en tiempo real, sistema de autenticación seguro, generación automática de reportes y una interfaz intuitiva que sigue los estándares de diseño de Orange.',
@@ -345,7 +345,7 @@ const projectsContentES = {
 const projectsContentEN = {
   'magic-post': {
     title: 'MAGIC POST',
-    description: 'Full-stack web application that uses advanced artificial intelligence to automate the creation of optimized content for social media and digital platforms.',
+    description: 'Full-stack web application that uses advanced artificial intelligence to automate the creation of optimized content for social media and digital platforms',
     longDescription: 'Comprehensive system that combines multiple LLMs, AI image generation, financial analysis, and semantic search to transform ideas into personalized professional content. Includes multi-LLM engine with OpenRouter, RAG system with Pinecone Vector Database, and specialized tools for financial analysis and scientific dissemination.',
     problem: 'Creating content for social media and digital platforms requires hours of manual work, from conceptualization to adaptation for different platforms and audiences. Marketing teams and content creators need to produce constant, personalized, quality content, but lack tools that automate this process intelligently and contextually.',
     solution: 'Development of a comprehensive platform that combines multiple LLMs (LLaMA 3, Mistral 7B, GPT-3.5) with AI image generation and real-time data analysis. The system includes a RAG engine with Pinecone for business context, specialized tools for financial analysis with real data, and scientific dissemination functionalities integrating ArXiv papers.',
@@ -370,7 +370,7 @@ const projectsContentEN = {
   },
   'feelflow-ai': {
     title: 'FEELFLOW AI',
-    description: 'Full-stack web application that uses advanced artificial intelligence to analyze sentiment and detect 12 specific types of toxicity in YouTube comments.',
+    description: 'Full-stack web application that uses advanced artificial intelligence to analyze sentiment and detect 12 specific types of toxicity in YouTube comments',
     longDescription: 'Complete system that transforms unstructured social media data into actionable insights for content creators, brands, and digital analysts. Implements a hybrid BiLSTM model with multiple attention architecture, achieving F1-macro of 95.8% in simultaneous toxicity detection.',
     problem: 'Content creators and brands on YouTube face the challenge of manually moderating thousands of comments, without effective tools to automatically detect toxic content, hate speech, threats, and other types of problematic behavior. This manual moderation consumes significant resources and is prone to human error.',
     solution: 'Development of an AI system that combines sentiment analysis with multi-class toxicity detection using a custom hybrid BiLSTM model. The system processes YouTube comments in real-time, identifies 12 specific types of toxicity, and provides calibrated risk metrics through an interactive dashboard.',
@@ -395,7 +395,7 @@ const projectsContentEN = {
   },
   'predictor-academico': {
     title: 'ACADEMIC PREDICTOR',
-    description: 'Multiclass classification system to predict academic success of university students using XGBoost and Random Forest.',
+    description: 'Multiclass classification system to predict academic success of university students using XGBoost and Random Forest',
     longDescription: 'Complete web application that implements a machine learning system to predict academic performance. Classifies students into three categories: Dropout, Graduate, and Enrolled. Uses a robust preprocessing pipeline and optimized models for predictive analysis based on academic and socioeconomic factors.',
     problem: 'Universities face high student dropout rates that affect both educational institutions and students. Without early predictive tools, it is difficult to identify at-risk students and provide necessary support before they drop out. This situation generates economic losses for institutions and personal frustrations for students.',
     solution: 'Development of a predictive system based on machine learning that analyzes multiple academic and socioeconomic factors to identify risk patterns. The system uses XGBoost and Random Forest algorithms with 85% accuracy, enabling early and personalized interventions. The web interface facilitates access to real-time predictions.',
@@ -418,7 +418,7 @@ const projectsContentEN = {
   },
   'datashop-analytics': {
     title: 'DATASHOP ANALYTICS',
-    description: 'Web application that uses machine learning to predict purchase behavior in e-commerce based on real Google Analytics data.',
+    description: 'Web application that uses machine learning to predict purchase behavior in e-commerce based on real Google Analytics data',
     longDescription: 'Collaborative project that transforms session navigation patterns into actionable predictions for marketing and UX teams. Implements multiple machine learning algorithms optimized with Optuna, achieving 89.5% accuracy in purchase intention prediction.',
     problem: 'Marketing and UX teams in e-commerce lack predictive tools to identify users with high conversion probability in real-time. Without these capabilities, it is difficult to personalize experiences, optimize campaigns, and improve conversion rates based on navigation behavior patterns.',
     solution: 'Development of a web application with interactive dashboard that uses machine learning algorithms (XGBoost, LightGBM, Random Forest, SVM) to predict purchase probability. The system includes a real-time behavior simulator and generates automatic personalized marketing and UX recommendations.',
@@ -442,7 +442,7 @@ const projectsContentEN = {
   },
   'critical-lens': {
     title: 'THE CRITICAL LENS',
-    description: 'Web platform to combat misinformation through automated credibility analysis and fact-checking.',
+    description: 'Web platform to combat misinformation through automated credibility analysis and fact-checking',
     longDescription: 'Django-developed application that implements tools based on critical thinking to evaluate the credibility of news and content. Includes an automatic analyzer that evaluates multiple aspects of content, scraping system to extract fact-checks, and misinformation statistics. Analysis criteria are based on Foundation for Critical Thinking standards.',
     problem: 'In today\'s digital age, where information flows uncontrolled, discerning truth has become more difficult than ever. Misinformation spreads rapidly through social media and digital platforms, and citizens lack accessible tools to evaluate the credibility of content they consume daily.',
     solution: 'Development of a platform that automates credibility analysis through algorithms based on critical thinking principles. The system evaluates titles, authors, content, and sources, providing detailed feedback. Includes automated scraping of fact-checking portals and a verification database for statistical analysis.',
@@ -465,7 +465,7 @@ const projectsContentEN = {
   },
   'orange-digital-center': {
     title: 'ODC MANAGER',
-    description: 'Application to manage and centralize Orange Digital Center course enrollments with complete administrative panel.',
+    description: 'Application to manage and centralize Orange Digital Center course enrollments with complete administrative panel',
     longDescription: 'Comprehensive educational management system designed specifically for Orange Digital Center. Includes a robust administrative panel with real-time statistics, CSV and PDF report generation, and a scalable relational database architecture. The application follows Orange\'s style guide and offers an optimized user experience.',
     problem: 'Orange Digital Center faced inefficiencies in manual course enrollment management, requiring administrators to constantly redirect to external platforms. This generated work duplication, lack of data centralization, difficulties in generating reports, and a fragmented experience for both administrators and students.',
     solution: 'Development of a centralized web application that integrates the entire educational management process into a single platform. Includes administrative panel with real-time statistics, secure authentication system, automatic report generation, and an intuitive interface that follows Orange design standards.',
