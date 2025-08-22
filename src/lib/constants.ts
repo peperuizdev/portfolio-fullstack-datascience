@@ -14,7 +14,6 @@ const SITE_CONFIG_BASE = {
     github: 'https://github.com/peperuizdev',
     linkedin: 'https://www.linkedin.com/in/peperuiznieto/',
     email: 'mailto:jorsqn@gmail.com',
-    cv: '/cv/cv-pepe-ruiz.pdf',
   },
 
   // Stack tecnológico principal
@@ -34,6 +33,12 @@ const SITE_CONFIG_ES = {
   ...SITE_CONFIG_BASE,
   title: 'AI & Full Stack Developer',
   description: 'Desarrollador Full Stack especializado en IA y Data Science. Creo soluciones web escalables con React, Next.js, Django y Python, integrando Machine Learning y análisis de datos. Mi experiencia abarca desde interfaces responsivas hasta modelos predictivos con XGBoost y redes neuronales.',
+  
+  // Enlaces con CV en español
+  links: {
+    ...SITE_CONFIG_BASE.links,
+    cv: '/cv/cv-pepe-ruiz-spanish.pdf',
+  },
   
   // Keywords para SEO
   keywords: [
@@ -75,6 +80,12 @@ const SITE_CONFIG_EN = {
   location: 'Madrid, Spain', // En inglés
   title: 'AI & Full Stack Developer',
   description: 'Full Stack Developer specialized in AI and Data Science. I create scalable web solutions with React, Next.js, Django, and Python, integrating Machine Learning and data analysis. My experience spans from responsive interfaces to predictive models with XGBoost and neural networks.',
+  
+  // Enlaces con CV en inglés
+  links: {
+    ...SITE_CONFIG_BASE.links,
+    cv: '/cv/cv-pepe-ruiz-english.pdf',
+  },
   
   // Keywords para SEO
   keywords: [

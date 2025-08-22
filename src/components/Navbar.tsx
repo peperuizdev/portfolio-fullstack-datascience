@@ -207,8 +207,8 @@ export default function Navbar() {
             {/* ES */}
             <div className="relative">
               <button
-                onClick={() => switchLanguage('es')}
-                className="cursor-pointer text-sm font-medium transition-opacity hover:opacity-60"
+              onClick={currentLang !== 'es' ? () => switchLanguage('es') : undefined}
+              className={`text-sm font-medium transition-opacity ${currentLang === 'es' ? 'cursor-default' : 'cursor-pointer hover:opacity-60'}`}
                 style={{ 
                   color: isIndexPage ? '#f5f5f5' : '#000000',
                   fontWeight: currentLang === 'es' ? '600' : '400'
@@ -227,8 +227,8 @@ export default function Navbar() {
             {/* EN */}
             <div className="relative">
               <button
-                onClick={() => switchLanguage('en')}
-                className="cursor-pointer text-sm font-medium transition-opacity hover:opacity-60"
+                onClick={currentLang !== 'en' ? () => switchLanguage('en') : undefined}
+                className={`text-sm font-medium transition-opacity ${currentLang === 'en' ? 'cursor-default' : 'cursor-pointer hover:opacity-60'}`}
                 style={{ 
                   color: isIndexPage ? '#f5f5f5' : '#000000',
                   fontWeight: currentLang === 'en' ? '600' : '400'
@@ -343,8 +343,8 @@ export default function Navbar() {
             {/* ES */}
             <div className="relative">
               <button
-                onClick={() => switchLanguage('es')}
-                className="cursor-pointer text-sm font-medium transition-opacity hover:opacity-60"
+                onClick={currentLang !== 'es' ? () => switchLanguage('es') : undefined}
+                className={`text-sm font-medium transition-opacity ${currentLang === 'es' ? 'cursor-default' : 'cursor-pointer hover:opacity-60'}`}
                 style={{ 
                   color: isIndexPage ? '#f5f5f5' : '#000000',
                   fontWeight: currentLang === 'es' ? '600' : '400'
@@ -363,8 +363,8 @@ export default function Navbar() {
             {/* EN */}
             <div className="relative">
               <button
-                onClick={() => switchLanguage('en')}
-                className="cursor-pointer text-sm font-medium transition-opacity hover:opacity-60"
+                onClick={currentLang !== 'en' ? () => switchLanguage('en') : undefined}
+                className={`text-sm font-medium transition-opacity ${currentLang === 'en' ? 'cursor-default' : 'cursor-pointer hover:opacity-60'}`}
                 style={{ 
                   color: isIndexPage ? '#f5f5f5' : '#000000',
                   fontWeight: currentLang === 'en' ? '600' : '400'
