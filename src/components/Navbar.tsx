@@ -438,7 +438,7 @@ export default function Navbar() {
           className="menu-overlay fixed inset-0 z-40 lg:hidden"
           style={{ backgroundColor: isIndexPage ? '#4DABF7' : '#E5E5E5' }}
         >
-          <div className="flex h-full w-full flex-col items-center justify-center">
+          <div className="flex min-h-screen w-full flex-col items-center justify-center">
             <div className="w-full max-w-md px-8">
               {/* Enlaces de navegación */}
               <div className="mb-16 space-y-8 text-center">

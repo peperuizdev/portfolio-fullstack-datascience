@@ -45,7 +45,7 @@ export default function Footer() {
         <div className="block text-center lg:hidden">
           <p
             className="text-sm"
-            style={{ color: isIndexPage ? '#d1d5db' : '#6b7280' }}
+            style={{ color: isIndexPage ? '#f5f5f5' : '#6b7280' }}
           >
             © 2025 {siteConfig.name}
           </p>
