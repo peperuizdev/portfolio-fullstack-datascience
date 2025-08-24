@@ -40,6 +40,22 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [isIndexPage])
 
+  // Controlar overflow del body cuando se abre/cierra el menú
+  useEffect(() => {
+    if (isMenuOpen) {
+      // Bloquear scroll del body
+      document.body.style.overflow = 'hidden'
+    } else {
+      // Restaurar scroll del body
+      document.body.style.overflow = 'unset'
+    }
+
+    // Cleanup: restaurar scroll cuando se desmonta el componente
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [isMenuOpen])
+
   // Cerrar menú al hacer clic fuera
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -263,7 +279,7 @@ export default function Navbar() {
                 isIndexPage
                   ? 'text-2xl md:text-4xl lg:text-6xl'
                   : 'text-xl md:text-2xl lg:text-3xl'
-              } ${!isIndexPage && isScrolled ? 'scrolled' : ''} ${
+              } ${!isIndexPage && isScrolled && !isMenuOpen ? 'scrolled' : ''} ${
                 isMenuOpen
                   ? 'transition-all duration-300'
                   : 'transition-all duration-300'
@@ -285,7 +301,7 @@ export default function Navbar() {
                 isIndexPage
                   ? 'text-2xl md:text-4xl lg:text-6xl'
                   : 'text-xl md:text-2xl lg:text-3xl'
-              } ${!isIndexPage && isScrolled ? 'scrolled' : ''} ${
+              } ${!isIndexPage && isScrolled && !isMenuOpen ? 'scrolled' : ''} ${
                 isMenuOpen
                   ? 'transition-all duration-300'
                   : 'transition-all duration-300'
@@ -339,12 +355,12 @@ export default function Navbar() {
         {/* Mobile: selector de idioma + menú hamburguesa */}
         <div className="flex items-center space-x-4 lg:hidden">
           {/* Selector de idioma - Mobile */}
-          <div className="flex items-center space-x-4 pb-[0.66rem]">
+          <div className="flex items-center space-x-4 pb-[0.9rem]">
             {/* ES */}
             <div className="relative">
               <button
                 onClick={currentLang !== 'es' ? () => switchLanguage('es') : undefined}
-                className={`text-sm font-medium transition-opacity ${currentLang === 'es' ? 'cursor-default' : 'cursor-pointer hover:opacity-60'}`}
+                className={`text-xs font-medium transition-opacity ${currentLang === 'es' ? 'cursor-default' : 'cursor-pointer hover:opacity-60'}`}
                 style={{ 
                   color: isIndexPage ? '#f5f5f5' : '#000000',
                   fontWeight: currentLang === 'es' ? '600' : '400'
@@ -354,7 +370,7 @@ export default function Navbar() {
               </button>
               {currentLang === 'es' && (
                 <div
-                  className="absolute right-0 -bottom-1 left-0 h-0.5"
+                  className="absolute right-0 -bottom-[0.05rem] left-0 h-0.5"
                   style={{ backgroundColor: isIndexPage ? '#f5f5f5' : '#000000' }}
                 ></div>
               )}
@@ -364,7 +380,7 @@ export default function Navbar() {
             <div className="relative">
               <button
                 onClick={currentLang !== 'en' ? () => switchLanguage('en') : undefined}
-                className={`text-sm font-medium transition-opacity ${currentLang === 'en' ? 'cursor-default' : 'cursor-pointer hover:opacity-60'}`}
+                className={`text-xs font-medium transition-opacity ${currentLang === 'en' ? 'cursor-default' : 'cursor-pointer hover:opacity-60'}`}
                 style={{ 
                   color: isIndexPage ? '#f5f5f5' : '#000000',
                   fontWeight: currentLang === 'en' ? '600' : '400'
@@ -374,7 +390,7 @@ export default function Navbar() {
               </button>
               {currentLang === 'en' && (
                 <div
-                  className="absolute right-0 -bottom-1 left-0 h-0.5"
+                  className="absolute right-0 -bottom-[0.05rem] left-0 h-0.5"
                   style={{ backgroundColor: isIndexPage ? '#f5f5f5' : '#000000' }}
                 ></div>
               )}

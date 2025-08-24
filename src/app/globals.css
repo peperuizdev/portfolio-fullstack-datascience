@@ -60,6 +60,19 @@ body {
   -webkit-text-stroke: 1px rgba(0, 0, 0, 0.8);
 }
 
+/* Desactivar hover en dispositivos móviles/táctiles */
+@media (hover: none) {
+  .name-hover.index-page:hover .name-text {
+    color: #F5F5F5 !important;
+    -webkit-text-stroke: 0px transparent !important;
+  }
+  
+  .name-hover:not(.index-page):hover .name-text {
+    color: #000000 !important;
+    -webkit-text-stroke: 0px transparent !important;
+  }
+}
+
 /* Título del proyecto con relleno sólido */
 .project-title-outline {
   color: #000000;
@@ -67,6 +80,14 @@ body {
   font-family: 'Arial Black', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 900;
   letter-spacing: -0.02em;
+}
+
+/* Peso adicional para títulos de proyecto en móviles */
+@media (max-width: 768px) {
+  .project-title-outline {
+    font-weight: 900 !important;
+    font-family: 'Arial Black', Arial, sans-serif !important;
+  }
 }
 
 /* Siguiente proyecto - hover inverso (borde → relleno) */

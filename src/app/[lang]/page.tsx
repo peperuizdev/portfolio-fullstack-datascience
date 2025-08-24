@@ -62,7 +62,7 @@ export default function Home({ params }: HomePageProps) {
     <div className="bg-background text-foreground relative min-h-screen overflow-x-hidden">
       {/* Proyectos */}
       <main className="min-h-screen w-full">
-        <div className="ml-auto min-h-screen w-full pt-32 pr-4 pb-32 md:w-4/5 md:pt-40 md:pr-8 lg:w-3/4 lg:pt-48 lg:pr-12">
+       <div className="ml-auto min-h-screen w-full pt-32 pr-4 pb-14 md:w-4/5 md:pt-40 md:pr-8 lg:w-3/4 lg:pt-48 lg:pr-12">
           <div className="space-y-16 md:space-y-20 lg:space-y-24">
             {projects.map((project, index) => (
               <motion.div
@@ -88,7 +88,7 @@ export default function Home({ params }: HomePageProps) {
 
                 <a
                   href={`/${lang}/projects/${project.slug}`}
-                  className="project-hover text-project-title block text-right text-4xl leading-none md:text-6xl lg:text-8xl"
+                  className="project-hover text-project-title block text-right text-4xl font-black leading-none md:text-6xl md:font-normal lg:text-8xl lg:font-normal"
                 >
                   {formatProjectTitle(project.title)}
                 </a>
