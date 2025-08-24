@@ -354,48 +354,29 @@ export default function Navbar() {
 
         {/* Mobile: selector de idioma + menú hamburguesa */}
         <div className="flex items-center space-x-4 lg:hidden">
-          {/* Selector de idioma - Mobile */}
-          <div className="flex items-center space-x-4 pb-[0.9rem]">
-            {/* ES */}
-            <div className="relative">
-              <button
-                onClick={currentLang !== 'es' ? () => switchLanguage('es') : undefined}
-                className={`text-xs font-medium transition-opacity ${currentLang === 'es' ? 'cursor-default' : 'cursor-pointer hover:opacity-60'}`}
-                style={{ 
-                  color: isIndexPage ? '#f5f5f5' : '#000000',
-                  fontWeight: currentLang === 'es' ? '600' : '400'
-                }}
-              >
-                ES
-              </button>
-              {currentLang === 'es' && (
-                <div
-                  className="absolute right-0 -bottom-[0.05rem] left-0 h-0.5"
-                  style={{ backgroundColor: isIndexPage ? '#f5f5f5' : '#000000' }}
-                ></div>
-              )}
-            </div>
+          {/* ES */}
+          <button
+            onClick={currentLang !== 'es' ? () => switchLanguage('es') : undefined}
+            className={`text-sm font-medium transition-opacity ${currentLang === 'es' ? 'cursor-default' : 'cursor-pointer hover:opacity-60'}`}
+            style={{ 
+              color: isIndexPage ? '#f5f5f5' : '#000000',
+              fontWeight: currentLang === 'es' ? '800' : '400'
+            }}
+          >
+            ES
+          </button>
 
-            {/* EN */}
-            <div className="relative">
-              <button
-                onClick={currentLang !== 'en' ? () => switchLanguage('en') : undefined}
-                className={`text-xs font-medium transition-opacity ${currentLang === 'en' ? 'cursor-default' : 'cursor-pointer hover:opacity-60'}`}
-                style={{ 
-                  color: isIndexPage ? '#f5f5f5' : '#000000',
-                  fontWeight: currentLang === 'en' ? '600' : '400'
-                }}
-              >
-                EN
-              </button>
-              {currentLang === 'en' && (
-                <div
-                  className="absolute right-0 -bottom-[0.05rem] left-0 h-0.5"
-                  style={{ backgroundColor: isIndexPage ? '#f5f5f5' : '#000000' }}
-                ></div>
-              )}
-            </div>
-          </div>
+          {/* EN */}
+          <button
+            onClick={currentLang !== 'en' ? () => switchLanguage('en') : undefined}
+            className={`text-sm font-medium transition-opacity ${currentLang === 'en' ? 'cursor-default' : 'cursor-pointer hover:opacity-60'}`}
+            style={{ 
+              color: isIndexPage ? '#f5f5f5' : '#000000',
+              fontWeight: currentLang === 'en' ? '800' : '400'
+            }}
+          >
+            EN
+          </button>
 
           {/* Menú hamburguesa */}
           <div className="menu-container">
