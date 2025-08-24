@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Pepe Ruiz - AI & Full Stack Developer',
+  title: 'Pepe Ruiz Portfolio',
   description:
     'Portfolio de Pepe Ruiz, desarrollador Full Stack especializado en IA y Data Science.',
 }
