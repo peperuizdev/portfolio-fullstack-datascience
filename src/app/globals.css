@@ -13,6 +13,7 @@
   --font-mono: var(--font-geist-mono);
 }
 
+
 body {
   background: #F5F5F5;
   color: var(--foreground);
@@ -102,12 +103,4 @@ body {
 .next-project-hover:hover {
   -webkit-text-stroke: 0px transparent;
   color: #000000;
-}
-
-/* Desactivar hover en dispositivos móviles para siguiente proyecto */
-@media (hover: none) {
-  .next-project-hover:hover {
-    -webkit-text-stroke: 1px #000000 !important;
-    color: transparent !important;
-  }
 }
