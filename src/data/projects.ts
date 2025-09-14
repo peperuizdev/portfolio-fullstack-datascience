@@ -4,6 +4,39 @@ import { Locale } from '@/lib/i18n'
 // Datos base de proyectos (información que no cambia entre idiomas)
 const projectsBase = [
   {
+    id: 'logotracker-pro',
+    slug: 'logotracker-pro',
+    image: '/images/projects/logotracker-pro/hero.png',
+    images: {
+      desktop: '/images/projects/logotracker-pro/desktop.png',
+      tablet: '/images/projects/logotracker-pro/tablet.png',
+      mobile: [
+        '/images/projects/logotracker-pro/mobile-1.png',
+        '/images/projects/logotracker-pro/mobile-2.png',
+        '/images/projects/logotracker-pro/mobile-3.png',
+      ],
+    },
+    technologies: [
+      'YOLO11',
+      'OpenCV',
+      'PyTorch',
+      'FastAPI',
+      'React',
+      'Vite',
+      'Tailwind CSS',
+      'Supabase',
+      'PostgreSQL',
+      'Docker',
+      'yt-dlp',
+      'Hugging Face Hub',
+      'Python',
+    ],
+    githubUrl: 'https://github.com/andalons/computer_vision_G5',
+    category: 'ai-fullstack' as const,
+    featured: true,
+    completedAt: '2025-09',
+  },
+  {
     id: 'magic-post',
     slug: 'magic-post',
     image: '/images/projects/magic-post/hero.png',
@@ -196,6 +229,31 @@ const projectsBase = [
 
 // Contenido en español
 const projectsContentES = {
+  'logotracker-pro': {
+    title: 'LOGOTRACKER PRO',
+    description: 'Plataforma de inteligencia artificial que automatiza la detección de logos en videos de influencers, transformando la verificación manual de campañas publicitarias en análisis preciso y escalable',
+    longDescription: 'Sistema integral que combina computer vision avanzada con análisis de compliance contractual. Utiliza modelos YOLO11 especializados para detectar logos de Nike y Adidas con 98% de precisión, procesando videos desde YouTube/TikTok y generando reportes automáticos con métricas de ROI.',
+    problem: 'Las agencias de marketing gastan más de 200 horas mensuales verificando manualmente si el contenido de influencers cumple con los requisitos de exposición de marca. Este proceso manual tiene tasas de error del 20% y consume recursos significativos que podrían destinarse a actividades estratégicas.',
+    solution: 'Desarrollo de una plataforma de IA que automatiza completamente la verificación de campañas mediante modelos YOLO11 especializados. El sistema descarga videos automáticamente, realiza análisis frame-by-frame, calcula métricas de exposición temporal y genera reportes con recomendaciones estratégicas basadas en compliance contractual.',
+    impact: 'Reduce análisis de campañas de 4+ horas manuales a 15 minutos automatizados, elimina errores humanos del 20%, proporciona métricas precisas de exposición temporal y compliance. Incluye análisis de cost-effectiveness y recomendaciones para optimización de colaboraciones con influencers.',
+    highlights: [
+      'Sistema YOLO11 especializado con 98% precisión y 93% recall',
+      'Detección automática de logos Nike y Adidas',
+      'Pipeline automatizado desde URL hasta métricas',
+      'Dashboard con carrusel de detecciones y análisis ROI',
+      'Base de datos empresarial con Supabase/PostgreSQL',
+      'Reportes PDF exportables con recomendaciones estratégicas',
+      'Arquitectura microservicios con Docker',
+    ],
+    keyFeatures: [
+      'Procesamiento frame-by-frame con OpenCV y generación de screenshots',
+      'Descarga automática de videos vía yt-dlp desde YouTube/TikTok',
+      'Cálculo de métricas de exposición temporal y compliance contractual',
+      'Interfaz React con visualizaciones interactivas de métricas',
+      'API RESTful escalable con documentación Swagger/OpenAPI',
+      'Sistema de gestión de campañas y seguimiento de contratos',
+    ],
+  },
   'magic-post': {
     title: 'MAGIC POST',
     description: 'Aplicación web full-stack que utiliza inteligencia artificial avanzada para automatizar la creación de contenido optimizado para redes sociales y plataformas digitales',
@@ -343,6 +401,31 @@ const projectsContentES = {
 
 // Contenido en inglés
 const projectsContentEN = {
+  'logotracker-pro': {
+    title: 'LOGOTRACKER PRO',
+    description: 'Artificial intelligence platform that automates logo detection in influencer videos, transforming manual advertising campaign verification into precise and scalable analysis',
+    longDescription: 'Comprehensive system that combines advanced computer vision with contractual compliance analysis. Uses specialized YOLO11 models to detect Nike and Adidas logos with 98% precision, processing videos from YouTube/TikTok and generating automatic reports with ROI metrics.',
+    problem: 'Marketing agencies spend over 200 hours monthly manually verifying if influencer content meets brand exposure requirements. This manual process has 20% error rates and consumes significant resources that could be allocated to strategic activities.',
+    solution: 'Development of an AI platform that completely automates campaign verification through specialized YOLO11 models. The system automatically downloads videos, performs frame-by-frame analysis, calculates temporal exposure metrics, and generates reports with strategic recommendations based on contractual compliance.',
+    impact: 'Reduces campaign analysis from 4+ manual hours to 15 automated minutes, eliminates 20% human errors, provides precise temporal exposure and compliance metrics. Includes cost-effectiveness analysis and recommendations for optimizing influencer collaborations.',
+    highlights: [
+      'Specialized YOLO11 system with 98% precision and 93% recall',
+      'Automatic detection of Nike and Adidas logos',
+      'Automated pipeline from URL to metrics',
+      'Dashboard with detection carousel and ROI analysis',
+      'Enterprise database with Supabase/PostgreSQL',
+      'Exportable PDF reports with strategic recommendations',
+      'Microservices architecture with Docker',
+    ],
+    keyFeatures: [
+      'Frame-by-frame processing with OpenCV and screenshot generation',
+      'Automatic video download via yt-dlp from YouTube/TikTok',
+      'Calculation of temporal exposure metrics and contractual compliance',
+      'React interface with interactive metrics visualizations',
+      'Scalable RESTful API with Swagger/OpenAPI documentation',
+      'Campaign management system and contract tracking',
+    ],
+  },
   'magic-post': {
     title: 'MAGIC POST',
     description: 'Full-stack web application that uses advanced artificial intelligence to automate the creation of optimized content for social media and digital platforms',
