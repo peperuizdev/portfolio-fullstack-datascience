@@ -230,7 +230,7 @@ const projectsBase = [
 // Contenido en español
 const projectsContentES = {
   'logotracker-pro': {
-    title: 'LOGOTR ACKER PRO',
+    title: 'LOGO TRACKER PRO',
     description: 'Plataforma de inteligencia artificial que automatiza la detección de logos en videos de influencers, transformando la verificación manual de campañas publicitarias en análisis preciso y escalable',
     longDescription: 'Sistema integral que combina computer vision avanzada con análisis de compliance contractual. Utiliza modelos YOLO11 especializados para detectar logos de Nike y Adidas con 98% de precisión, procesando videos desde YouTube/TikTok y generando reportes automáticos con métricas de ROI.',
     problem: 'Las agencias de marketing gastan más de 200 horas mensuales verificando manualmente si el contenido de influencers cumple con los requisitos de exposición de marca. Este proceso manual tiene tasas de error del 20% y consume recursos significativos que podrían destinarse a actividades estratégicas.',
