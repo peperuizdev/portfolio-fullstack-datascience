@@ -17,9 +17,6 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://peperuiz.dev'),
-  verification: {
-    google: 'tkICI9NtqADpVideUmfxc0DXc5SuAXBSkmW_AVAsPcU',
-  },
 }
 
 export default function RootLayout({
@@ -29,6 +26,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
+      <head>
+        <meta name="google-site-verification" content="tkICI9NtqADpVideUmfxc0DXc5SuAXBSkmW_AVAsPcU" />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Navbar />
         <main>{children}</main>
