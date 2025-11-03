@@ -15,9 +15,11 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 })
 
-// Metadata BASE mínima (se sobrescribe en layouts de idioma)
 export const metadata: Metadata = {
   metadataBase: new URL('https://peperuiz.dev'),
+  verification: {
+    google: 'tkICI9NtqADpVideUmfxc0DXc5SuAXBSkmW_AVAsPcU',
+  },
 }
 
 export default function RootLayout({
