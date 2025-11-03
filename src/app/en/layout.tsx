@@ -47,10 +47,11 @@ export const metadata: Metadata = {
       'Professional portfolio of Pepe Ruiz, Full Stack Developer specialized in AI, Machine Learning and Data Science.',
     images: [
       {
-        url: '/og-image.jpg',
+        url: 'https://peperuiz.dev/og-image.jpg',  
         width: 1200,
         height: 630,
         alt: 'Pepe Ruiz - Full Stack Developer & Data Scientist',
+        type: 'image/jpeg',  
       }
     ],
   },
