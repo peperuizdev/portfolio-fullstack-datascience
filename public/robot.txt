@@ -1,0 +1,37 @@
+# https://peperuiz.dev/robots.txt
+# Last updated: 2025-11-03
+
+# Permitir a todos los bots rastrear el sitio
+User-agent: *
+Allow: /
+
+# Bloquear la raíz (solo redirige a /es o /en)
+Disallow: /$
+
+# Permitir explícitamente páginas de idiomas
+Allow: /es
+Allow: /en
+
+# Bloquear archivos internos y directorios privados (opcional)
+Disallow: /api/
+Disallow: /_next/
+Disallow: /.*\.map$
+
+# Sitemap principal
+Sitemap: https://peperuiz.dev/sitemap.xml
+
+# Crawl-delay para ser respetuosos con el servidor
+Crawl-delay: 1
+
+# Configuración específica para bots principales
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 0
+
+User-agent: LinkedInBot
+Allow: /
+Crawl-delay: 1
