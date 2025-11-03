@@ -15,15 +15,9 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 })
 
-// Metadata mínima para la raíz
+// Metadata BASE mínima (se sobrescribe en layouts de idioma)
 export const metadata: Metadata = {
   metadataBase: new URL('https://peperuiz.dev'),
-  title: 'Pepe Ruiz Portfolio',
-  description: 'Portfolio de Pepe Ruiz - Full Stack Developer & Data Scientist',
-  robots: {
-    index: false,
-    follow: true,
-  },
 }
 
 export default function RootLayout({
