@@ -9,7 +9,7 @@
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate || echo 'Prisma generate failed, but continuing...'"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
