@@ -4,12 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && next build",
+    "build": "DATABASE_URL=${DATABASE_URL:-postgresql://localhost:5432/fallback} prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
-    "postinstall": "prisma generate || echo 'Prisma generate failed, but continuing...'"
+    "postinstall": "DATABASE_URL=${DATABASE_URL:-postgresql://localhost:5432/fallback} prisma generate || echo 'Prisma generate failed, but continuing...'"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
