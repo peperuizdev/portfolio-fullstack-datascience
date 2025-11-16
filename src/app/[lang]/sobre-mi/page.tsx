@@ -1,6 +1,7 @@
 'use client'
 
 import { use } from 'react'
+import Image from 'next/image'
 import { getSiteConfig } from '@/lib/constants'
 import Link from 'next/link'
 import { Download } from 'lucide-react'
@@ -62,10 +63,12 @@ export default function AboutPage({ params }: AboutPageProps) {
           {/* Foto de perfil móvil - debajo del título */}
           <div className="mb-12 flex justify-center lg:hidden">
             <div className="relative">
-              <img
+              <Image
                 src={siteConfig.profileImage}
                 alt={`${siteConfig.name} - Foto de perfil`}
                 className="h-40 w-40 rounded-full object-cover shadow-lg md:h-48 md:w-48"
+                width={192}
+                height={192}
               />
             </div>
           </div>
@@ -79,10 +82,20 @@ export default function AboutPage({ params }: AboutPageProps) {
                   ¿Quién soy?
                 </h2>
                 <p className="mb-6 text-lg leading-relaxed text-gray-700 md:text-xl">
-                  Soy {siteConfig.name}, desarrollador Full Stack especializado en IA y Data Science. Mi camino en la tecnología tiene un origen poco convencional: comencé mi carrera en Comunicación Audiovisual y Branded Content, donde aprendí a construir narrativas convincentes y a abordar los desafíos desde una perspectiva creativa.
+                  Soy {siteConfig.name}, desarrollador Full Stack especializado en
+                  IA y soluciones inteligentes. Mi camino en la tecnología tiene
+                  un origen poco convencional: comencé mi carrera en Comunicación
+                  Audiovisual y Branded Content, donde aprendí a construir
+                  narrativas convincentes y a abordar los desafíos desde una
+                  perspectiva creativa.
                 </p>
                 <p className="text-lg leading-relaxed text-gray-700 md:text-xl">
-                  Esas habilidades de storytelling y pensamiento creativo son ahora la base de cómo desarrollo soluciones digitales inteligentes. Creo aplicaciones web escalables que combinan Machine Learning con análisis de datos, usando herramientas como React, Django, FastAPI y Python.
+                  Esas habilidades de storytelling y pensamiento creativo ahora se
+                  traducen en cómo desarrollo soluciones digitales. Creo
+                  aplicaciones web escalables que integran Computer Vision,
+                  sistemas RAG para generación de contenido y modelos de Deep
+                  Learning, utilizando tecnologías como React, FastAPI, PyTorch y
+                  LangChain.
                 </p>
               </div>
 
@@ -91,22 +104,34 @@ export default function AboutPage({ params }: AboutPageProps) {
                   Mi enfoque
                 </h2>
                 <p className="text-lg leading-relaxed text-gray-700 md:text-xl">
-                  Los años que pasé trabajando directamente con personas me enseñaron la importancia de escuchar, entender las necesidades reales y resolver problemas de manera empática. Estas habilidades complementan mis conocimientos técnicos para crear software que realmente conecta con quien lo usa.
+                  Los años que pasé trabajando directamente con personas me
+                  enseñaron la importancia de escuchar, entender las necesidades
+                  reales y resolver problemas de manera empática. Estas
+                  habilidades complementan mi expertise técnico para crear
+                  software que realmente conecta con quien lo usa.
                 </p>
                 <p className="mt-6 text-lg leading-relaxed text-gray-700 md:text-xl">
-                  Me desenvuelvo bien en equipos ágiles y disfruto de los entornos colaborativos, donde puedo combinar mi experiencia técnica con mi comprensión del factor humano en la tecnología.
+                  Me desenvuelvo bien en equipos ágiles y disfruto de los entornos
+                  colaborativos, donde puedo combinar mi formación técnica con mi
+                  comprensión profunda del usuario final.
                 </p>
               </div>
 
               <div>
                 <h2 className="mb-6 text-2xl font-black uppercase md:text-3xl">
-                  Experiencia
+                  Lo que hago
                 </h2>
                 <p className="mb-6 text-lg leading-relaxed text-gray-700 md:text-xl">
-                  He trabajado en proyectos fascinantes, desde sistemas que predicen comportamientos hasta plataformas que facilitan la gestión educativa. Mi experiencia abarca modelos de machine learning, sistemas de clasificación inteligente y análisis de sentimiento.
+                  He desarrollado proyectos de IA con resultados medibles: sistemas
+                  de Computer Vision con precisión del 98% para detección automática
+                  en video, motores de análisis de sentimiento con F1-macro de 95.8%
+                  para detectar toxicidad, y plataformas de generación de contenido
+                  empresarial con RAG y múltiples LLMs.
                 </p>
                 <p className="text-lg leading-relaxed text-gray-700 md:text-xl">
-                  Lo que más me motiva es fusionar mi formación técnica en IA con mi comprensión de las personas, creando experiencias digitales que resuelven problemas reales de manera intuitiva.
+                  Lo que me motiva es crear experiencias digitales que combinan
+                  tecnología de vanguardia con diseño centrado en el usuario,
+                  resolviendo problemas reales de manera intuitiva y efectiva.
                 </p>
               </div>
             </div>
@@ -116,10 +141,12 @@ export default function AboutPage({ params }: AboutPageProps) {
               {/* Foto de perfil desktop - justificada a la izquierda en sidebar */}
               <div className="hidden justify-start lg:flex">
                 <div className="relative">
-                  <img
+                  <Image
                     src={siteConfig.profileImage}
                     alt={`${siteConfig.name} - Foto de perfil`}
                     className="h-40 w-40 rounded-full object-cover shadow-lg lg:h-48 lg:w-48"
+                    width={192}
+                    height={192}
                   />
                 </div>
               </div>
@@ -143,7 +170,29 @@ export default function AboutPage({ params }: AboutPageProps) {
                   Stack principal
                 </h3>
                 <div className="flex flex-wrap gap-2">
-                  {['React', 'Next.js', 'TypeScript', 'JavaScript', 'Python', 'Django', 'FastAPI', 'Node.js', 'Express', 'PyTorch', 'LangChain', 'Scikit-Learn', 'XGBoost', 'spaCy', 'MySQL', 'PostgreSQL', 'Supabase', 'Docker', 'Git', 'Tailwind CSS'].map((tech) => (
+                  {[
+                    'React',
+                    'Next.js',
+                    'TypeScript',
+                    'JavaScript',
+                    'Python',
+                    'FastAPI',
+                    'Node.js',
+                    'Express',
+                    'PyTorch',
+                    'LangChain',
+                    'Scikit-Learn',
+                    'XGBoost',
+                    'spaCy',
+                    'Computer Vision',
+                    'RAG',
+                    'MySQL',
+                    'PostgreSQL',
+                    'Supabase',
+                    'Docker',
+                    'Git',
+                    'Tailwind CSS'
+                  ].map((tech) => (
                     <span
                       key={tech}
                       className="inline-block bg-gray-200 px-3 py-1 text-sm font-medium text-gray-800"

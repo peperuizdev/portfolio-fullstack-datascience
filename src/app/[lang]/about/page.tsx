@@ -1,6 +1,7 @@
 'use client'
 
 import { use } from 'react'
+import Image from 'next/image'
 import { getSiteConfig } from '@/lib/constants'
 import Link from 'next/link'
 import { Download } from 'lucide-react'
@@ -25,7 +26,7 @@ export default function AboutPage({ params }: AboutPageProps) {
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 md:pt-40 md:pb-24 lg:pt-48 lg:pb-32">
         <div className="mx-auto max-w-6xl px-8 md:px-12">
-          {/* Título principal desktop - justificado a la izquierda con animación */}
+          {/* Desktop title - left aligned with animation */}
           <div className="mb-16 hidden text-left md:mb-20 lg:block">
             <motion.h1
               className="name-text text-6xl leading-[0.8] font-black uppercase lg:text-8xl"
@@ -41,7 +42,7 @@ export default function AboutPage({ params }: AboutPageProps) {
             </motion.h1>
           </div>
 
-          {/* Título móvil centrado con animación */}
+          {/* Mobile centered title with animation */}
           <div className="mb-16 text-center lg:hidden">
             <motion.h1
               className="name-text text-5xl leading-[0.8] font-black uppercase md:text-6xl"
@@ -59,30 +60,32 @@ export default function AboutPage({ params }: AboutPageProps) {
             </motion.h1>
           </div>
 
-          {/* Foto de perfil móvil - debajo del título */}
+          {/* Mobile profile image under title */}
           <div className="mb-12 flex justify-center lg:hidden">
             <div className="relative">
-              <img
+              <Image
                 src={siteConfig.profileImage}
                 alt={`${siteConfig.name} - Profile picture`}
                 className="h-40 w-40 rounded-full object-cover shadow-lg md:h-48 md:w-48"
+                width={192}
+                height={192}
               />
             </div>
           </div>
 
-          {/* Contenido principal */}
+          {/* Main content */}
           <div className="grid gap-16 lg:grid-cols-3 lg:gap-20">
-            {/* Descripción principal */}
+            {/* Main description */}
             <div className="space-y-8 lg:col-span-2">
               <div>
                 <h2 className="mb-6 text-2xl font-black uppercase md:text-3xl">
                   Who am I?
                 </h2>
                 <p className="mb-6 text-lg leading-relaxed text-gray-700 md:text-xl">
-                  I'm {siteConfig.name}, a Full Stack developer specialized in AI and Data Science. My path in technology has an unconventional origin: I began my career in Audiovisual Communication and Branded Content, where I learned to build compelling narratives and approach challenges from a creative perspective.
+                  I am {siteConfig.name}, a Full Stack developer focused on AI and intelligent solutions. My path into technology is not traditional: I began in Audiovisual Communication and Branded Content, where I learned to shape compelling narratives and approach problems from a creative angle.
                 </p>
                 <p className="text-lg leading-relaxed text-gray-700 md:text-xl">
-                  Those storytelling and creative thinking skills are now the foundation of how I develop intelligent digital solutions. I create scalable web applications that combine Machine Learning with data analysis, using tools like React, Django, FastAPI, and Python.
+                  Those storytelling and creative thinking skills now inform how I build digital solutions. I design scalable web applications that combine Computer Vision, Retrieval-Augmented Generation (RAG) systems for content generation, and Deep Learning models, using technologies such as React, FastAPI, PyTorch and LangChain.
                 </p>
               </div>
 
@@ -91,35 +94,37 @@ export default function AboutPage({ params }: AboutPageProps) {
                   My approach
                 </h2>
                 <p className="text-lg leading-relaxed text-gray-700 md:text-xl">
-                  The years I spent working directly with people taught me the importance of listening, understanding real needs, and solving problems empathetically. These skills complement my technical knowledge to create software that truly connects with those who use it.
+                  Years working directly with people taught me the value of listening, understanding real needs, and solving problems with empathy. These human-centered skills complement my technical expertise and help me build software that truly connects with its users.
                 </p>
                 <p className="mt-6 text-lg leading-relaxed text-gray-700 md:text-xl">
-                  I work well in agile teams and enjoy collaborative environments, where I can combine my technical experience with my understanding of the human factor in technology.
+                  I thrive in agile teams and collaborative environments where I can combine technical craft with deep user understanding.
                 </p>
               </div>
 
               <div>
                 <h2 className="mb-6 text-2xl font-black uppercase md:text-3xl">
-                  Experience
+                  What I do
                 </h2>
                 <p className="mb-6 text-lg leading-relaxed text-gray-700 md:text-xl">
-                  I've worked on fascinating projects, from systems that predict behaviors to platforms that facilitate educational management. My experience spans machine learning models, intelligent classification systems, and sentiment analysis.
+                  I have delivered AI projects with measurable outcomes: Computer Vision systems achieving 98% accuracy for automatic video detection, sentiment analysis engines with an F1-macro of 95.8% for toxicity detection, and enterprise content generation platforms built with RAG and multiple LLMs.
                 </p>
                 <p className="text-lg leading-relaxed text-gray-700 md:text-xl">
-                  What motivates me most is merging my technical training in AI with my understanding of people, creating digital experiences that solve real problems intuitively.
+                  I am motivated by creating digital experiences that pair state-of-the-art technology with user-centered design to solve real problems in an intuitive and effective way.
                 </p>
               </div>
             </div>
 
-            {/* Información lateral */}
+            {/* Sidebar information */}
             <div className="space-y-8">
-              {/* Foto de perfil desktop - justificada a la izquierda en sidebar */}
+              {/* Desktop profile image in sidebar */}
               <div className="hidden justify-start lg:flex">
                 <div className="relative">
-                  <img
+                  <Image
                     src={siteConfig.profileImage}
                     alt={`${siteConfig.name} - Profile picture`}
                     className="h-40 w-40 rounded-full object-cover shadow-lg lg:h-48 lg:w-48"
+                    width={192}
+                    height={192}
                   />
                 </div>
               </div>
@@ -135,15 +140,37 @@ export default function AboutPage({ params }: AboutPageProps) {
                 <h3 className="mb-3 text-xs font-semibold tracking-wider text-gray-400 uppercase">
                   Specialization
                 </h3>
-                <p className="text-lg font-medium">Full Stack specialized in AI</p>
+                <p className="text-lg font-medium">Full Stack focused on AI</p>
               </div>
 
               <div>
                 <h3 className="mb-3 text-xs font-semibold tracking-wider text-gray-400 uppercase">
-                  Main Stack
+                  Main stack
                 </h3>
                 <div className="flex flex-wrap gap-2">
-                  {['React', 'Next.js', 'TypeScript', 'JavaScript', 'Python', 'Django', 'FastAPI', 'Node.js', 'Express', 'PyTorch', 'LangChain', 'Scikit-Learn', 'XGBoost', 'spaCy', 'MySQL', 'PostgreSQL', 'Supabase', 'Docker', 'Git', 'Tailwind CSS'].map((tech) => (
+                  {[
+                    'React',
+                    'Next.js',
+                    'TypeScript',
+                    'JavaScript',
+                    'Python',
+                    'FastAPI',
+                    'Node.js',
+                    'Express',
+                    'PyTorch',
+                    'LangChain',
+                    'Scikit-Learn',
+                    'XGBoost',
+                    'spaCy',
+                    'Computer Vision',
+                    'RAG',
+                    'MySQL',
+                    'PostgreSQL',
+                    'Supabase',
+                    'Docker',
+                    'Git',
+                    'Tailwind CSS'
+                  ].map((tech) => (
                     <span
                       key={tech}
                       className="inline-block bg-gray-200 px-3 py-1 text-sm font-medium text-gray-800"
@@ -178,7 +205,7 @@ export default function AboutPage({ params }: AboutPageProps) {
                 </div>
               </div>
 
-              {/* Botón de descarga CV */}
+              {/* Download CV button */}
               <div>
                 <h3 className="mb-3 text-xs font-semibold tracking-wider text-gray-400 uppercase">
                   Resume
@@ -201,11 +228,10 @@ export default function AboutPage({ params }: AboutPageProps) {
       <section className="bg-gray-50 py-20 md:py-24">
         <div className="mx-auto max-w-6xl px-8 text-center md:px-12">
           <h2 className="mb-8 text-3xl font-black uppercase md:text-4xl">
-            Let's work together?
+            Shall we work together?
           </h2>
           <p className="mb-8 text-lg text-gray-700 md:text-xl">
-            If you have an interesting project or want to collaborate, I'd love to
-            learn more details.
+            If you have an interesting project or want to collaborate, I would love to learn more.
           </p>
           <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
             <Link
