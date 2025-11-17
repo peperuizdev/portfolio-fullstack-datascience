@@ -4,9 +4,40 @@ import { Locale } from '@/lib/i18n'
 // Datos base de proyectos (información que no cambia entre idiomas)
 const projectsBase = [
   {
+    id: 'shield-ai',
+    slug: 'shield-ai',
+    image: '/images/projects/shield-ai/hero.png',
+    layoutType: 'technical' as const,
+    architectureDiagram: '/images/projects/shield-ai/architecture-diagram.png',
+    monitoringImage: '/images/projects/shield-ai/monitoring.png',
+    demoVideo: '/videos/shield-ai-demo.mp4',
+    technologies: [
+      'Python',
+      'FastAPI',
+      'React',
+      'Redis',
+      'Docker',
+      'HuggingFace Transformers',
+      'Groq API',
+      'Faker',
+      'Tailwind CSS',
+      'Prometheus',
+      'Grafana',
+      'OpenCV',
+      'RetinaFace',
+      'MTCNN',
+      'Nginx',
+    ],
+    githubUrl: 'https://github.com/peperuizdev/shield_ai',
+    category: 'ai-fullstack' as const,
+    featured: true,
+    completedAt: '2024-10',
+  },
+  {
     id: 'logotracker-pro',
     slug: 'logotracker-pro',
     image: '/images/projects/logotracker-pro/hero.png',
+    layoutType: 'visual' as const,
     images: {
       desktop: '/images/projects/logotracker-pro/desktop.png',
       tablet: '/images/projects/logotracker-pro/tablet.png',
@@ -40,6 +71,7 @@ const projectsBase = [
     id: 'magic-post',
     slug: 'magic-post',
     image: '/images/projects/magic-post/hero.png',
+    layoutType: 'visual' as const,
     images: {
       desktop: '/images/projects/magic-post/desktop.png',
       tablet: '/images/projects/magic-post/tablet.png',
@@ -72,6 +104,7 @@ const projectsBase = [
     id: 'feelflow-ai',
     slug: 'feelflow-ai',
     image: '/images/projects/feelflow-ai/hero.png',
+    layoutType: 'visual' as const,
     images: {
       desktop: '/images/projects/feelflow-ai/desktop.png',
       tablet: '/images/projects/feelflow-ai/tablet.png',
@@ -105,6 +138,7 @@ const projectsBase = [
     id: 'predictor-academico',
     slug: 'predictor-academico',
     image: '/images/projects/predictor-academico/hero.png',
+    layoutType: 'visual' as const,
     images: {
       desktop: '/images/projects/predictor-academico/desktop.png',
       tablet: '/images/projects/predictor-academico/tablet.png',
@@ -136,6 +170,7 @@ const projectsBase = [
     id: 'datashop-analytics',
     slug: 'datashop-analytics',
     image: '/images/projects/datashop-analytics/hero.png',
+    layoutType: 'visual' as const,
     images: {
       desktop: '/images/projects/datashop-analytics/desktop.png',
       tablet: '/images/projects/datashop-analytics/tablet.png',
@@ -170,6 +205,7 @@ const projectsBase = [
     id: 'critical-lens',
     slug: 'the-critical-lens',
     image: '/images/projects/critical-lens/hero.png',
+    layoutType: 'visual' as const,
     images: {
       desktop: '/images/projects/critical-lens/desktop.png',
       tablet: '/images/projects/critical-lens/tablet.png',
@@ -199,6 +235,7 @@ const projectsBase = [
     id: 'orange-digital-center',
     slug: 'orange-digital-center-manager',
     image: '/images/projects/orange-digital-center/hero.png',
+    layoutType: 'visual' as const,
     images: {
       desktop: '/images/projects/orange-digital-center/desktop.png',
       tablet: '/images/projects/orange-digital-center/tablet.png',
@@ -229,6 +266,34 @@ const projectsBase = [
 
 // Contenido en español
 const projectsContentES = {
+  'shield-ai': {
+    title: 'SHIELD AI',
+    description: 'Sistema empresarial de anonimización inteligente desarrollado para Scalian que protege datos personales enviados a LLMs, combinando IA, detección de PII y procesamiento en tiempo real para el cumplimiento normativo GDPR',
+    longDescription: 'Solución completa que protege la información personal que las empresas envían a modelos de lenguaje (LLMs). Integra detección automática de información personal mediante transformers de HuggingFace, anonimización inteligente con datos sintéticos, y desanonimización controlada de las respuestas. Incluye procesamiento de documentos (PDF/Word/Excel), anonimización de imágenes con detección facial, y sistema de streaming en tiempo real con tres paneles sincronizados.',
+    problem: 'Las organizaciones necesitan utilizar LLMs (inteligencia artificial) para procesar información, pero esto implica enviar datos personales a servicios externos. Carecen de herramientas que protejan automáticamente la información personal antes de enviarla a los LLMs mientras cumplen con GDPR. Los procesos manuales son propensos a errores y no escalan.',
+    solution: 'Desarrollo de una plataforma que actúa como intermediario seguro entre las empresas y los LLMs. El sistema detecta automáticamente información personal usando modelos de IA especializados para español, la reemplaza con datos sintéticos mediante Faker antes de enviar consultas a los LLMs, y restaura los datos originales en las respuestas recibidas. Todo esto mediante mapeos almacenados en Redis con TTL. Incluye interfaz React con streaming en tiempo real mostrando tres paneles: datos anonimizados enviados, respuesta del LLM, y respuesta final con datos restaurados.',
+    impact: 'Permite a las organizaciones utilizar LLMs de forma segura cumpliendo con GDPR, automatiza la protección de datos personales, reduce tiempos de procesamiento y proporciona trazabilidad completa con sistema de monitoreo Prometheus/Grafana. Sistema optimizado con procesamiento de ~500 documentos por minuto, ~50ms por documento en anonimización, <100ms de latencia en streaming y ~10ms por operación de desanonimización.',
+    highlights: [
+      'Protección automática de datos personales enviados a LLMs',
+      'Detección de PII con transformers optimizados para español',
+      'Anonimización inteligente con datos sintéticos usando Faker',
+      'Sistema de desanonimización con mapeos en Redis y TTL configurable',
+      'Procesamiento de múltiples formatos: texto, PDF, Word, Excel, imágenes',
+      'Anonimización de imágenes con detección facial (RetinaFace, MTCNN)',
+      'Streaming en tiempo real con tres paneles sincronizados',
+      'Stack de monitoreo completo: Prometheus, Grafana, AlertManager',
+    ],
+    keyFeatures: [
+      'Intermediario seguro entre empresas y LLMs externos (Groq API)',
+      'Backend FastAPI con endpoints RESTful y documentación Swagger automática',
+      'Detección de patrones regex mejorados: DNI, NIE, IBAN, teléfonos, emails con validación',
+      'Mapeo consistente: mismas entidades generan mismos reemplazos sintéticos',
+      'Sesiones aisladas: cada proceso mantiene su propio contexto sin mezcla de datos',
+      'Frontend React con Tailwind CSS, drag & drop para archivos',
+      'Sistema de métricas en tiempo real: detecciones, rendimiento, errores',
+      'Exportación de resultados en múltiples formatos con preservación de estructura',
+    ],
+  },
   'logotracker-pro': {
     title: 'LOGO TRACKER PRO',
     description: 'Plataforma de inteligencia artificial que automatiza la detección de logos en videos de influencers, transformando la verificación manual de campañas publicitarias en análisis preciso y escalable',
@@ -401,6 +466,34 @@ const projectsContentES = {
 
 // Contenido en inglés
 const projectsContentEN = {
+ 'shield-ai': {
+    title: 'SHIELD AI',
+    description: 'Enterprise intelligent data anonymization system developed for Scalian that protects personal data sent to LLMs, combining AI, PII detection, and real-time processing for GDPR compliance',
+    longDescription: 'Complete solution that protects personal information companies send to language models (LLMs). Integrates automatic personal information detection using HuggingFace transformers, intelligent anonymization with synthetic data, and controlled de-anonymization of responses. Includes document processing (PDF/Word/Excel), image anonymization with facial detection, and real-time streaming system with three synchronized panels.',
+    problem: 'Organizations need to use LLMs (artificial intelligence) to process information, but this involves sending personal data to external services. They lack tools that automatically protect personal information before sending it to LLMs while complying with GDPR. Manual processes are error-prone and do not scale.',
+    solution: 'Development of a platform that acts as a secure intermediary between companies and LLMs. The system automatically detects personal information using specialized AI models for Spanish, replaces it with synthetic data via Faker before sending queries to LLMs, and restores original data in received responses. All through mappings stored in Redis with TTL. Includes React interface with real-time streaming showing three panels: anonymized data sent, LLM response, and final response with restored data.',
+    impact: 'Enables organizations to use LLMs securely while complying with GDPR, automates personal data protection, reduces processing times and provides complete traceability with Prometheus/Grafana monitoring system. Optimized system with ~500 documents per minute processing, ~50ms per document anonymization, <100ms streaming latency and ~10ms per de-anonymization operation.',
+    highlights: [
+      'Automatic protection of personal data sent to LLMs',
+      'PII detection with transformers optimized for Spanish',
+      'Intelligent anonymization with realistic synthetic data using Faker',
+      'De-anonymization system with Redis mappings and configurable TTL',
+      'Multi-format processing: text, PDF, Word, Excel, images',
+      'Image anonymization with facial detection (RetinaFace, MTCNN)',
+      'Real-time streaming with three synchronized panels',
+      'Complete monitoring stack: Prometheus, Grafana, AlertManager',
+    ],
+    keyFeatures: [
+      'Secure intermediary between companies and external LLMs (Groq API)',
+      'FastAPI backend with RESTful endpoints and automatic Swagger documentation',
+      'Enhanced regex pattern detection: DNI, NIE, IBAN, phones, emails with validation',
+      'Consistent mapping: same entities generate same synthetic replacements',
+      'Isolated sessions: each process maintains its own context without data mixing',
+      'React frontend with Tailwind CSS, drag & drop for files',
+      'Real-time metrics system: detections, performance, errors',
+      'Multi-format result export with structure preservation',
+    ],
+  },
   'logotracker-pro': {
     title: 'LOGO TRACKER PRO',
     description: 'Artificial intelligence platform that automates logo detection in influencer videos, transforming manual advertising campaign verification into precise and scalable analysis',

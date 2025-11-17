@@ -9,11 +9,22 @@ export interface Project {
   solution?: string
   impact?: string
   image: string
-  images: {
+  layoutType: 'visual' | 'technical'
+  // Para proyectos con layout visual (frontend-heavy)
+  images?: {
     desktop: string
     tablet: string
     mobile: string[]
   }
+  // Para proyectos con layout técnico (backend/IA-heavy)
+  architectureDiagram?: string
+  monitoringImage?: string
+  demoVideo?: string
+  systemCapabilities?: {
+    title: string
+    description: string
+    metric: string
+  }[]
   technologies: string[]
   liveUrl?: string
   githubUrl?: string
