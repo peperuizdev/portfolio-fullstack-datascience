@@ -31,7 +31,7 @@ const projectsBase = [
     githubUrl: 'https://github.com/peperuizdev/shield_ai',
     category: 'ai-fullstack' as const,
     featured: true,
-    completedAt: '2024-10',
+    completedAt: '2025-10',
   },
   {
     id: 'logotracker-pro',
