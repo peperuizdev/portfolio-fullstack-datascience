@@ -240,7 +240,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
             <section className="bg-white py-12 md:py-16 lg:py-20">
               <div className="mx-auto max-w-7xl px-8 md:px-12">
                 <h3 className="mb-8 text-center text-xl font-bold text-gray-900 md:text-2xl lg:mb-12">{t.architecture}</h3>
-                <div className="mx-auto max-w-6xl">
+                <div className="mx-auto max-w-5xl">
                   <img src={project.architectureDiagram} alt={`${project.title} - ${t.architecture}`} className="w-full rounded-lg object-contain" />
                 </div>
               </div>
@@ -264,7 +264,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
             <section className="bg-white py-12 md:py-16 lg:py-20">
               <div className="mx-auto max-w-7xl px-8 md:px-12">
                 <h3 className="mb-8 text-center text-xl font-bold text-gray-900 md:text-2xl lg:mb-12">{t.monitoring}</h3>
-                <div className="mx-auto max-w-6xl">
+                <div className="mx-auto max-w-5xl">
                   <img src={project.monitoringImage} alt={`${project.title} - ${t.monitoring}`} className="w-full rounded-lg object-contain" />
                 </div>
               </div>
