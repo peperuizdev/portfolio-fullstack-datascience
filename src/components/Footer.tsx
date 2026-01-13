@@ -47,7 +47,7 @@ export default function Footer() {
             className="text-sm"
             style={{ color: isIndexPage ? '#f5f5f5' : '#6b7280' }}
           >
-            © 2025 {siteConfig.name}
+            © {new Date().getFullYear()} {siteConfig.name}
           </p>
         </div>
 
@@ -130,7 +130,7 @@ export default function Footer() {
                 className="text-sm"
                 style={{ color: isIndexPage ? '#f5f5f5' : '#000000' }}
               >
-                © 2025 {siteConfig.name}
+                © {new Date().getFullYear()} {siteConfig.name}
               </p>
               <p
                 className="text-sm"
